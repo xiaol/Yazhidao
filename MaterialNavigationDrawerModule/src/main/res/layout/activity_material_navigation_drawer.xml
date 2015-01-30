@@ -1,0 +1,65 @@
+<it.neokree.materialnavigationdrawer.util.MaterialDrawerLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/drawer_layout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fitsSystemWindows="false" >
+
+    <!-- Framelayout per la visualizzazione -->
+    <RelativeLayout
+        android:id="@+id/content"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" >
+
+        <ImageView
+            android:id="@+id/statusBar"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/statusMargin"
+            android:background="?attr/colorPrimary" />
+
+        <android.support.v7.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:layout_height="?attr/actionBarSize"
+            android:layout_width="match_parent"
+            android:background="?attr/colorPrimary"
+            android:layout_below="@+id/statusBar">
+        </android.support.v7.widget.Toolbar>
+
+        <FrameLayout
+            android:id="@+id/frame_container"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_below="@+id/toolbar">
+
+        <it.neokree.materialnavigationdrawer.ui.MyRelativeLayout
+            xmlns:tools="http://schemas.android.com/tools"
+            android:id="@+id/rl_content"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            tools:context=".MainActivity" >
+
+            <ImageView
+                android:id="@+id/iv_section"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/section1" />
+
+            <it.neokree.materialnavigationdrawer.ui.MyListView
+                android:id="@+id/mNewsShowList"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="15dp"
+                android:background="#f3f3fa"
+                android:dividerHeight="15dp"
+                android:scrollbars="none" >
+            </it.neokree.materialnavigationdrawer.ui.MyListView>
+
+        </it.neokree.materialnavigationdrawer.ui.MyRelativeLayout>
+        </FrameLayout>
+
+    </RelativeLayout>
+
+    <!-- RelativeLayout per il drawer da visualizzare -->
+    <include layout="@layout/layout_drawer" />
+
+</it.neokree.materialnavigationdrawer.util.MaterialDrawerLayout>

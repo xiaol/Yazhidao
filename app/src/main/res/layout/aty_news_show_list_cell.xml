@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android" android:orientation="vertical"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content" >
+    <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="100dp"
+            android:background="#33ffffff"
+            android:layout_margin="10dp"
+            >
+        <RelativeLayout android:layout_width="0dp" android:layout_height="match_parent" android:layout_weight="6">
+            <TextView android:id="@+id/mCellTitle" android:layout_width="wrap_content"
+                      android:layout_height="wrap_content"
+                      android:text="@string/mCellTitle" android:textSize="18sp" android:textColor="@color/black"/>
+            <RelativeLayout android:layout_width="wrap_content" android:layout_height="wrap_content"
+                            android:layout_below="@id/mCellTitle" android:layout_marginTop="15dp">
+                <TextView android:id="@+id/mCellSourceSiteName" android:layout_width="wrap_content"
+                          android:layout_height="wrap_content" android:text="网易新闻" android:textSize="12sp"
+                          android:textColor="@color/news_list_cell_sourcesitename"/>
+                <TextView android:id="@+id/mCellPraise" android:layout_width="wrap_content"
+                          android:layout_alignRight="@id/mCellSourceSiteName"
+                          android:layout_height="wrap_content" android:layout_alignParentRight="true"
+                          android:drawableLeft="@drawable/news_list_table_cell_unpraised" android:text="898人热赞"
+                          android:textSize="12sp" android:drawablePadding="5dp"/>
+
+            </RelativeLayout>
+        </RelativeLayout>
+        <RelativeLayout android:layout_width="0dp" android:layout_height="match_parent" android:layout_weight="4"
+                        android:layout_marginLeft="16dp">
+            <ImageView android:id="@+id/mCellImage" android:layout_width="wrap_content"
+                       android:layout_height="wrap_content"
+                       android:src="@drawable/default_load_image" android:scaleType="centerCrop"/>
+            <TextView android:id="@+id/mCellTemperature" android:layout_width="28dp" android:layout_height="17dp"
+                      android:background="@drawable/news_list_table_cell_temperature" android:gravity="center"
+                      android:text="36°C" android:textSize="12sp" android:layout_alignParentRight="true"
+                      android:layout_alignParentBottom="true" android:layout_marginRight="8dp"
+                      android:layout_marginBottom="8dp"/>
+
+        </RelativeLayout>
+    </LinearLayout>
+    <ImageView android:layout_width="match_parent" android:layout_height="1px"
+               android:src="@drawable/list_table_devider" android:layout_marginLeft="10dp"
+               android:layout_marginRight="10dp" />
+
+</LinearLayout>

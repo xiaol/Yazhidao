@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:orientation="vertical"
+              android:background="@color/news_list_bg"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent">
+    <com.news.yazhidao.ui.MyListView android:background="@color/news_list_bg" android:id="@+id/mNewsShowList"
+              android:layout_width="match_parent" android:layout_height="match_parent"
+             android:layout_margin="15dp" android:dividerHeight="15dp" android:scrollbars="none"
+            ></com.news.yazhidao.ui.MyListView>
+</LinearLayout>

@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.news.yazhidao.ui.MyRelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/rl_content"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".MainActivity" >
+
+    <ImageView
+        android:id="@+id/iv_section"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/section1" />
+
+    <com.news.yazhidao.ui.MyListView
+        android:id="@+id/mNewsShowList"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="15dp"
+        android:background="#f3f3fa"
+        android:dividerHeight="15dp"
+        android:scrollbars="none" >
+    </com.news.yazhidao.ui.MyListView>
+
+</com.news.yazhidao.ui.MyRelativeLayout>

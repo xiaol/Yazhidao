@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                android:id="@+id/mHomeLeftMenuHeader"
+                android:layout_width="match_parent"
+                android:background="@color/common_theme_color"
+                android:layout_height="52dp">
+    <RelativeLayout android:id="@+id/mNewsCommonHeaderLeftBack" android:layout_width="52dp" android:layout_height="52dp" android:gravity="left|center_vertical" android:layout_marginLeft="8dp">
+        <ImageView  android:layout_width="28dp" android:layout_height="22dp" android:layout_marginLeft="8dp"   android:src="@drawable/toward_left_back"/>
+    </RelativeLayout>
+    <TextView android:id="@+id/mNewsCommonHeaderTitle" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="关于" android:layout_centerInParent="true" android:textSize="16sp" android:textColor="@color/white"/>
+</RelativeLayout>
