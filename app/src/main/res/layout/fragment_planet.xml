@@ -16,7 +16,6 @@
         android:id="@+id/mNewsShowList"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="15dp"
         android:background="@color/news_list_bg"
         android:dividerHeight="15dp"
         android:scrollbars="none" >

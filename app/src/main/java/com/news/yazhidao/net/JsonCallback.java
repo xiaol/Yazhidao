@@ -1,6 +1,6 @@
 package com.news.yazhidao.net;
 
-import com.news.yazhidao.utils.GJsonUtil;
+import com.news.yazhidao.utils.GsonUtil;
 import com.news.yazhidao.utils.Logger;
 
 import java.lang.reflect.Type;
@@ -15,9 +15,9 @@ public abstract class JsonCallback<T> extends AbstractCallBack<T>{
     protected T bindData(String json) {
         Logger.i(">>> json ", json);
         if(mReturnClass!=null){
-            return GJsonUtil.deSerializedByClass(json, mReturnClass);
+            return GsonUtil.deSerializedByClass(json, mReturnClass);
         }else if(mReturnType!=null){
-            return GJsonUtil.deSerializedByType(json,mReturnType);
+            return GsonUtil.deSerializedByType(json, mReturnType);
         }
         return null;
     }

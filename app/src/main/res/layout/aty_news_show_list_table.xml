@@ -26,7 +26,7 @@
                    android:src="@drawable/default_load_image" android:scaleType="centerCrop"/>
         <TextView  android:id="@+id/mTableHeaderTitle" android:layout_alignParentBottom="true" android:layout_width="match_parent"
                   android:layout_height="wrap_content" android:textColor="@color/white" android:background="@drawable/news_list_table_main_title_bg"
-                  android:text="燕郊至北京动车今首发 早班侧最受欢迎早班侧最受欢迎" android:textSize="24sp" android:layout_centerHorizontal="true"
+                  android:text="燕郊至北京动车今首发 早班侧最受欢迎早班侧最受欢迎" android:textSize="24sp" android:layout_centerHorizontal="true" android:lines="2" android:ellipsize="end"
                   />
     </RelativeLayout>
     <ImageView android:id="@+id/mTableHeaderBottom" android:layout_width="match_parent" android:layout_height="1px"

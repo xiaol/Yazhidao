@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+        >
+    <LinearLayout android:id="@+id/mNewsDetailPraiseWrapper" android:layout_width="wrap_content" android:layout_height="wrap_content"
+                  android:orientation="horizontal" android:layout_toLeftOf="@+id/mNewsDetailShare">
+        <ImageView android:id="@+id/mNewsDetailPraiseImg" android:layout_width="wrap_content" android:layout_height="wrap_content"
+                   android:src="@drawable/news_list_table_cell_praised" android:layout_marginRight="5dp"/>
+        <TextView android:id="@+id/mNewsDetailPraiseTv"
+                  android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="8989人热赞"
+                  android:textColor="@color/common_theme_color" android:textSize="12sp" android:drawablePadding="5dp"
+                   android:layout_centerVertical="true" android:layout_gravity="bottom"/>
+
+    </LinearLayout>
+    <ImageView android:id="@+id/mNewsDetailShare" android:layout_width="wrap_content"
+               android:layout_height="wrap_content" android:src="@drawable/news_detail_share"
+               android:layout_alignParentRight="true" android:layout_marginLeft="25dp" android:layout_marginRight="15dp"/>
+</RelativeLayout>

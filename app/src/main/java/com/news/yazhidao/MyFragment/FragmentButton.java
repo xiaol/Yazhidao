@@ -13,6 +13,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import com.google.gson.reflect.TypeToken;
 import com.news.yazhidao.R;
@@ -25,6 +26,7 @@ import com.news.yazhidao.net.MyAppException;
 import com.news.yazhidao.net.NetworkRequest;
 import com.news.yazhidao.pages.NewsFeedAdapter;
 import com.news.yazhidao.utils.Logger;
+import com.news.yazhidao.utils.gifview.GifView;
 
 
 /**
@@ -63,6 +65,12 @@ public class FragmentButton extends Fragment {
     public void onAttach(Activity activity) {
         super.onAttach(activity);
         registerBReceiver();
+    }
+
+    @Override
+    public void onDetach() {
+        super.onDetach();
+        unregisterBReceiver();
     }
 
     @Override

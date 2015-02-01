@@ -7,7 +7,7 @@ import java.lang.reflect.Type;
 /**
  * Created by fengjigang on 15/1/7.
  */
-public class GJsonUtil {
+public class GsonUtil {
     private static Gson gson=new Gson();
     public static String serialized(Object obj){
         return gson.toJson(obj);

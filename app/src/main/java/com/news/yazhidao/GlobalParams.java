@@ -8,5 +8,4 @@ public class GlobalParams {
 	public static WindowManager manager;
 	public static LinearLayout view;
 	public static WindowManager.LayoutParams params;;
-	
 }

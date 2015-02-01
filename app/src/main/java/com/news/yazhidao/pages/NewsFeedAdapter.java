@@ -2,22 +2,16 @@ package com.news.yazhidao.pages;
 
 import android.content.Context;
 import android.content.Intent;
-import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.BaseAdapter;
-import android.widget.FrameLayout;
-import android.widget.ImageView;
-import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
-import android.widget.TextView;
-
+import android.widget.*;
 import com.news.yazhidao.R;
 import com.news.yazhidao.constant.CommonConstant;
 import com.news.yazhidao.entity.NewsFeed;
 import com.news.yazhidao.utils.ImageLoaderHelper;
 import com.news.yazhidao.utils.Logger;
+import com.news.yazhidao.utils.TextUtil;
 
 import java.util.ArrayList;
 import java.util.TreeSet;
@@ -31,6 +25,7 @@ public class NewsFeedAdapter extends BaseAdapter {
     private ArrayList<NewsFeed.Channel> mChannelsArr;
     private TreeSet<Integer> mCacheAddedView;
     private NewsFeed mNewsFeed;
+    private boolean isPraise=true;
 
     public NewsFeedAdapter(Context mContext, NewsFeed mNewsFeed) {
         this.mContext = mContext;
@@ -76,6 +71,7 @@ public class NewsFeedAdapter extends BaseAdapter {
         Logger.i(">>>", "getView " + position + " parent=" + parent);
         final ViewHolder holder;
         if (convertView == null) {
+            Logger.i(">>>","not reuse the convertView");
             convertView = LayoutInflater.from(mContext).inflate(R.layout.aty_news_show_list_table, null);
             holder = new ViewHolder();
             holder.mTableChannelName = (TextView) convertView.findViewById(R.id.mTableChannelName);
@@ -86,6 +82,7 @@ public class NewsFeedAdapter extends BaseAdapter {
             holder.mTableHeaderWrapper = (RelativeLayout) convertView.findViewById(R.id.mTableHeaderWrapper);
             convertView.setTag(holder);
         } else {
+            Logger.i(">>>","reused the convertView");
             holder = (ViewHolder) convertView.getTag();
         }
         final LinearLayout layout = (LinearLayout) convertView;
@@ -185,17 +182,31 @@ public class NewsFeedAdapter extends BaseAdapter {
         TextView mCellSourceSiteName = (TextView) childView.findViewById(R.id.mCellSourceSiteName);
         TextView mCellTitle = (TextView) childView.findViewById(R.id.mCellTitle);
         TextView mCellTemperature = (TextView) childView.findViewById(R.id.mCellTemperature);
+        View mCellPraiseWrapper = childView.findViewById(R.id.mCellPraiseWrapper);
+        final ImageView mCellPraiseImg = (ImageView) childView.findViewById(R.id.mCellPraiseImg);
+        final TextView mCellPraiseTv = (TextView) childView.findViewById(R.id.mCellPraiseTv);
+        mCellPraiseWrapper.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(isPraise){
+                    mCellPraiseImg.setImageResource(R.drawable.news_list_table_cell_unpraised);
+                    mCellPraiseTv.setText((TextUtil.parsePraiseNumber(mCellPraiseTv.getText().toString())-1)+"人热赞");
+                    mCellPraiseTv.setTextColor(mContext.getResources().getColor(R.color.black));
+                    isPraise=false;
+                }else{
+                    mCellPraiseImg.setImageResource(R.drawable.news_list_table_cell_praised);
+                    mCellPraiseTv.setText((TextUtil.parsePraiseNumber(mCellPraiseTv.getText().toString())+1)+"人热赞");
+                    mCellPraiseTv.setTextColor(mContext.getResources().getColor(R.color.common_theme_color));
+                    isPraise=true;
+                }
+            }
+        });
         ImageLoaderHelper.getImageLoader(mContext).displayImage(element.imgUrl, mCellImage, ImageLoaderHelper.getOption());
         mCellSourceSiteName.setText(element.sourceSiteName);
         mCellTitle.setText(element.title);
-        mCellTemperature.setText(convertTemp(mNewsFeed.response_body.getAllChannels.root_alias));
+        mCellTemperature.setText(TextUtil.convertTemp(mNewsFeed.response_body.getAllChannels.root_alias));
         childView.setOnClickListener(listener);
         return childView;
     }
-    private String convertTemp(String origin) {
-        if (!TextUtils.isEmpty(origin)) {
-            return origin.replace("度", "°C");
-        }
-        return "";
-    }
+
 }
