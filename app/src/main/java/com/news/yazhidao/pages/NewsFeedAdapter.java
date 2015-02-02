@@ -13,6 +13,7 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.news.yazhidao.GlobalParams;
 import com.news.yazhidao.R;
 import com.news.yazhidao.constant.CommonConstant;
 import com.news.yazhidao.entity.NewsFeed;
@@ -72,7 +73,7 @@ public class NewsFeedAdapter extends BaseAdapter {
     }
 
     @Override
-    public View getView(final int position, View convertView, ViewGroup parent) {
+    public View getView(final int position, View convertView, final ViewGroup parent) {
         Logger.i(">>>", "getView " + position + " parent=" + parent);
         final ViewHolder holder;
         if (convertView == null) {
@@ -142,10 +143,13 @@ public class NewsFeedAdapter extends BaseAdapter {
                             }
                         });
                         layout.addView(childView, layout.getChildCount() - 2);
+
                     }
                 }
+
                 Logger.i(TAG,"onclick pull down ");
                 holder.mTablePullDown.setVisibility(View.GONE);
+                parent.invalidate(0, 480, 720, GlobalParams.LISTVIEW_HEIGHT + 480 + 1050);
             }
         });
         return finalLayout;
