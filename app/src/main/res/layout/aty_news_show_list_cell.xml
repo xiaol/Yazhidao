@@ -1,51 +1,125 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android" android:orientation="vertical"
-              android:layout_width="match_parent"
-              android:layout_height="wrap_content" >
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
     <LinearLayout
-            android:orientation="horizontal"
-            android:layout_width="match_parent"
-            android:layout_height="100dp"
-            android:background="#33ffffff"
-            android:layout_margin="10dp"
-            >
-        <RelativeLayout android:layout_width="0dp" android:layout_height="match_parent" android:layout_weight="6">
-            <TextView android:id="@+id/mCellTitle" android:layout_width="wrap_content"
-                      android:layout_height="wrap_content" android:lines="2" android:ellipsize="end"
-                      android:text="@string/mCellTitle" android:textSize="18sp" android:textColor="@color/black"/>
-            <RelativeLayout android:layout_width="wrap_content" android:layout_height="wrap_content"
-                             android:layout_marginTop="15dp" android:layout_alignParentBottom="true">
-                <TextView android:id="@+id/mCellSourceSiteName" android:layout_width="wrap_content"
-                          android:layout_height="wrap_content" android:text="网易新闻" android:textSize="12sp"
-                          android:textColor="@color/news_list_cell_sourcesitename"/>
-                <LinearLayout android:id="@+id/mCellPraiseWrapper" android:layout_width="wrap_content" android:layout_height="wrap_content"
-                              android:orientation="horizontal" android:layout_toLeftOf="@+id/mNewsDetailShare" android:layout_alignParentRight="true">
-                    <ImageView android:id="@+id/mCellPraiseImg" android:layout_width="wrap_content" android:layout_height="wrap_content"
-                               android:src="@drawable/news_list_table_cell_praised" android:layout_marginRight="5dp"/>
-                    <TextView android:id="@+id/mCellPraiseTv"
-                              android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="989人热赞"
-                              android:textColor="@color/common_theme_color" android:textSize="12sp" android:drawablePadding="5dp"
-                              android:layout_centerVertical="true" android:layout_gravity="bottom"/>
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+        android:layout_margin="10dp"
+        android:background="#33ffffff"
+        android:orientation="horizontal">
+
+        <RelativeLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="6">
+
+            <TextView
+                android:id="@+id/mCellTitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:ellipsize="end"
+                android:lines="2"
+                android:text="@string/mCellTitle"
+                android:textColor="@color/black"
+                android:textSize="18sp" />
+
+            <RelativeLayout
+                android:layout_width="wrap_content"
+                android:layout_height="30dp"
+                android:layout_alignParentBottom="true"
+                android:layout_marginTop="15dp">
+
+                <TextView
+                    android:id="@+id/mCellSourceSiteName"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentBottom="true"
+                    android:text="网易新闻"
+                    android:textColor="@color/news_list_cell_sourcesitename"
+                    android:textSize="12sp" />
+
+                <LinearLayout
+                    android:id="@+id/mCellPraiseWrapper"
+                    android:layout_width="wrap_content"
+                    android:layout_height="30dp"
+                    android:layout_alignParentBottom="true"
+                    android:layout_alignParentRight="true"
+                    android:layout_toLeftOf="@+id/mNewsDetailShare"
+                    android:orientation="horizontal">
+
+                    <ImageView
+                        android:id="@+id/mCellPraiseImg"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginRight="5dp"
+                        android:src="@drawable/news_list_table_cell_unpraised"
+                        android:layout_gravity="bottom"
+                        />
+
+                    <TextView
+                        android:id="@+id/mCellPraiseTv"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:layout_gravity="bottom"
+                        android:drawablePadding="5dp"
+                        android:text="989人热赞"
+                        android:textColor="@color/black"
+                        android:textSize="12sp" />
 
                 </LinearLayout>
 
+                <TextView
+                    android:id="@+id/mCellPraisePlus"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignLeft="@+id/mCellPraiseWrapper"
+                    android:layout_alignParentBottom="true"
+                    android:layout_marginLeft="20dp"
+                    android:text="+1"
+                    android:textColor="@color/common_theme_color"
+                    android:textSize="14sp"
+                    android:visibility="gone" />
             </RelativeLayout>
         </RelativeLayout>
-        <RelativeLayout android:layout_width="0dp" android:layout_height="match_parent" android:layout_weight="4"
-                        android:layout_marginLeft="16dp">
-            <ImageView android:id="@+id/mCellImage" android:layout_width="wrap_content"
-                       android:layout_height="wrap_content"
-                       android:src="@drawable/default_load_image" android:scaleType="centerCrop"/>
-            <com.news.yazhidao.widget.StrokeTextView android:id="@+id/mCellTemperature" android:layout_width="wrap_content" android:layout_height="17dp"
-                       android:gravity="center" android:textColor="@color/white"
-                      android:text="36°C" android:textSize="12sp" android:layout_alignParentRight="true"
-                      android:layout_alignParentBottom="true" android:layout_marginRight="8dp"
-                      android:layout_marginBottom="8dp"/>
+
+        <RelativeLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="16dp"
+            android:layout_weight="4">
+
+            <ImageView
+                android:id="@+id/mCellImage"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:scaleType="centerCrop"
+                android:src="@drawable/default_load_image" />
+
+            <com.news.yazhidao.widget.StrokeTextView
+                android:id="@+id/mCellTemperature"
+                android:layout_width="wrap_content"
+                android:layout_height="17dp"
+                android:layout_alignParentBottom="true"
+                android:layout_alignParentRight="true"
+                android:layout_marginBottom="8dp"
+                android:layout_marginRight="8dp"
+                android:gravity="center"
+                android:text="36°C"
+                android:textColor="@color/white"
+                android:textSize="12sp" />
 
         </RelativeLayout>
     </LinearLayout>
-    <ImageView android:layout_width="match_parent" android:layout_height="1px"
-               android:src="@drawable/list_table_devider" android:layout_marginLeft="10dp"
-               android:layout_marginRight="10dp" />
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="1px"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:src="@drawable/list_table_devider" />
 
 </LinearLayout>

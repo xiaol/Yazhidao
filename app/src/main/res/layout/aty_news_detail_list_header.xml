@@ -1,26 +1,81 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout  xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="wrap_content"
-    android:layout_height="wrap_content" >
-    <RelativeLayout android:id="@+id/mNewsDetailHeaderWrapper" android:layout_width="wrap_content" android:layout_height="240dp">
-        <ImageView android:id="@+id/mNewsDetailHeaderImg"  android:layout_width="match_parent" android:layout_height="240dp" android:src="@drawable/default_load_image" android:scaleType="centerCrop"/>
-        <LinearLayout android:id="@+id/mNewsDetailHeaderTitleWrapper" android:layout_width="match_parent" android:layout_height="wrap_content"
-            android:orientation="vertical" android:layout_alignParentBottom="true" android:background="@drawable/news_list_table_main_title_bg">
-            <TextView android:id="@+id/mNewsDetailHeaderTitle"  android:layout_marginLeft="15dp" android:layout_width="wrap_content" android:layout_height="wrap_content"
-                android:text="@string/mCellTitle" android:textSize="24sp" android:textColor="@color/white" android:lines="2" android:ellipsize="end"
-                android:textStyle="bold"/>
-            <TextView android:id="@+id/mNewsDetailHeaderOriginAndTime" android:layout_marginLeft="15dp" android:layout_width="wrap_content" android:layout_height="wrap_content"
-                android:layout_marginTop="12dp" android:layout_marginBottom="10dp"
-                android:text="@string/news_detail_origin_and_time" android:textSize="12sp" android:textColor="@color/white"/>
-        </LinearLayout>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content">
 
+    <RelativeLayout
+        android:id="@+id/mNewsDetailHeaderWrapper"
+        android:layout_width="wrap_content"
+        android:layout_height="240dp">
+
+        <ImageView
+            android:id="@+id/mNewsDetailHeaderImg"
+            android:layout_width="match_parent"
+            android:layout_height="240dp"
+            android:scaleType="centerCrop"
+            android:src="@drawable/default_load_image" />
+
+        <LinearLayout
+            android:id="@+id/mNewsDetailHeaderTitleWrapper"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:background="@drawable/news_list_table_main_title_bg"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/mNewsDetailHeaderTitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="15dp"
+                android:ellipsize="end"
+                android:lines="2"
+                android:text="@string/mCellTitle"
+                android:textColor="@color/white"
+                android:textSize="24sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/mNewsDetailHeaderOriginAndTime"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="10dp"
+                android:layout_marginLeft="15dp"
+                android:layout_marginTop="12dp"
+                android:text="@string/news_detail_origin_and_time"
+                android:textColor="@color/white"
+                android:textSize="12sp" />
+        </LinearLayout>
     </RelativeLayout>
-    <LinearLayout android:id="@+id/mNewsDetailHeaderTitleNoImgWrapper"  android:layout_width="match_parent" android:layout_height="wrap_content"
-        android:orientation="vertical" android:layout_marginTop="5dp" >
-        <TextView android:id="@+id/mNewsDetailHeaderTitleNoImg"   android:layout_width="wrap_content" android:layout_height="wrap_content"
-            android:text="@string/mCellTitle" android:textSize="24sp" android:textColor="@color/black" android:lines="2" android:ellipsize="end"
-            android:textStyle="bold"/>
-        <TextView android:id="@+id/mNewsDetailHeaderOriginAndTimeNoImg"  android:layout_width="wrap_content" android:layout_height="wrap_content"
-            android:layout_marginTop="12dp" android:layout_marginBottom="10dp"
-            android:text="@string/news_detail_origin_and_time" android:textSize="12sp" android:textColor="@color/black"/>
+
+    <LinearLayout
+        android:id="@+id/mNewsDetailHeaderTitleNoImgWrapper"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        android:orientation="vertical"
+        android:layout_marginLeft="15dp"
+        >
+
+        <TextView
+            android:id="@+id/mNewsDetailHeaderTitleNoImg"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:ellipsize="end"
+            android:lines="2"
+            android:text="@string/mCellTitle"
+            android:textColor="@color/black"
+            android:textSize="24sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/mNewsDetailHeaderOriginAndTimeNoImg"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="10dp"
+            android:layout_marginTop="12dp"
+            android:text="@string/news_detail_origin_and_time"
+            android:textColor="@color/black"
+            android:textSize="12sp" />
     </LinearLayout>
 </RelativeLayout>

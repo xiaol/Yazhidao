@@ -7,6 +7,7 @@ import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.client.methods.HttpUriRequest;
+import org.apache.http.client.utils.URLEncodedUtils;
 import org.apache.http.conn.ClientConnectionManager;
 import org.apache.http.conn.ConnectTimeoutException;
 import org.apache.http.conn.params.ConnManagerParams;
@@ -16,6 +17,7 @@ import org.apache.http.conn.scheme.SchemeRegistry;
 import org.apache.http.conn.ssl.SSLSocketFactory;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.impl.conn.tsccm.ThreadSafeClientConnManager;
+import org.apache.http.message.BasicNameValuePair;
 import org.apache.http.params.BasicHttpParams;
 import org.apache.http.params.HttpConnectionParams;
 import org.apache.http.params.HttpParams;
@@ -23,6 +25,8 @@ import org.apache.http.params.HttpProtocolParams;
 
 import java.io.IOException;
 import java.util.HashMap;
+import java.util.LinkedList;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -69,7 +73,13 @@ public class HttpClientUtil {
     private static HttpResponse get(NetworkRequest request) throws MyAppException {
         try {
             HttpClient client = getHttpClient();
-            HttpGet get = new HttpGet(request.url);
+            HttpGet get;
+            if (request.getParams != null) {
+                get = new HttpGet(addParamsToUrl(request.url, request.getParams));
+            } else {
+                get = new HttpGet(request.url);
+
+            }
             addRequestHeaders(get, request.headers);
             return client.execute(get);
         } catch (ConnectTimeoutException e) {
@@ -121,5 +131,33 @@ public class HttpClientUtil {
             customerHttpClient = new DefaultHttpClient(conMgr, params);
         }
         return customerHttpClient;
+    }
+
+    /**
+     * 向get方式的url后面添加params
+     *
+     * @param url
+     * @param mapParams
+     * @return
+     */
+    public static String addParamsToUrl(String url, HashMap<String, Object> mapParams) {
+        if (!url.endsWith("?"))
+            url += "?";
+
+        List<BasicNameValuePair> params = new LinkedList<BasicNameValuePair>();
+        if (mapParams != null && mapParams.size() > 0) {
+            for (Map.Entry<String, Object> entry : mapParams.entrySet())
+                params.add(new BasicNameValuePair(entry.getKey(), entry.getValue().toString()));
+        }
+
+        String paramString = URLEncodedUtils.format(params, "utf-8");
+        url += paramString;
+//        try {
+//            String s = URLDecoder.decode(url, "utf-8");
+//            Logger.i(TAG,">>>>url  >>>"+s);
+//        } catch (UnsupportedEncodingException e) {
+//            e.printStackTrace();
+//        }
+        return url;
     }
 }

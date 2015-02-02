@@ -10,6 +10,7 @@ import java.util.HashMap;
 public class NetworkRequest {
 
     public IUpdateProgressListener updateProgressListener;
+    public HashMap<String, Object> getParams;
 
     public NetworkRequest(String url,RequestMethod method){
     this.url=url;

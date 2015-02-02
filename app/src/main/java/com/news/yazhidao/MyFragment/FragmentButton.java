@@ -100,7 +100,6 @@ public class FragmentButton extends Fragment {
             public void success(NewsFeed result) {
                 Log.i(">>>" + TAG, result.toString());
                 mNewsFeed = result;
-                Log.i(">>>" + TAG, mNewsFeed.response_head.result);
                 mNewsFeedAdapter = new NewsFeedAdapter(mContext, mNewsFeed);
                 mNewsShowList.setAdapter(mNewsFeedAdapter);
                 mNewsFeedAdapter.notifyDataSetChanged();

@@ -7,25 +7,11 @@ import java.util.ArrayList;
  * Created by fengjigang on 15/1/16.
  */
 public class NewsFeed {
-    public ResponseHead response_head;
-
-    public class ResponseHead {
-        public String msg;
-        public String result;
-    }
-
-    public ResponseBody response_body;
-
-    public class ResponseBody {
-        public GetAllChannels getAllChannels;
-    }
-
-    public class GetAllChannels {
         public ArrayList<Channel> channels;
+        public String rc;
         public String root_alias;
         public String root_id;
         public String root_name;
-    }
 
     public class Channel {
         public String channelAlias;

@@ -37,7 +37,6 @@ public class NewsShowActivity extends Activity {
             public void success(NewsFeed result) {
                 Log.i(">>>" + TAG, result.toString());
                 NewsShowActivity.this.mNewsFeed = result;
-                Log.i(">>>" + TAG, mNewsFeed.response_head.result);
                 mNewsFeedAdapter = new NewsFeedAdapter(NewsShowActivity.this, mNewsFeed);
                 mNewsShowList.setAdapter(mNewsFeedAdapter);
             }

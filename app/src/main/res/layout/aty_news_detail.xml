@@ -9,8 +9,7 @@
     <include layout="@layout/aty_common_header"/>
     <FrameLayout android:layout_width="match_parent" android:layout_height="match_parent">
         <ListView android:id="@+id/mNewsDetailListContent" android:layout_width="match_parent"
-                  android:layout_height="match_parent" android:layout_marginLeft="15dp"
-                  android:layout_marginRight="15dp"
+                  android:layout_height="match_parent"
                   android:divider="@null" android:scrollbars="none" android:headerDividersEnabled="true"
                   android:dividerHeight="20dp" android:clipToPadding="false"
                 >

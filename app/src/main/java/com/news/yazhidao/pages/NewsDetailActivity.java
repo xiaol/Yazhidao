@@ -1,6 +1,5 @@
 package com.news.yazhidao.pages;
 
-import android.app.Activity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
@@ -10,6 +9,7 @@ import android.widget.Toast;
 
 import com.google.gson.reflect.TypeToken;
 import com.news.yazhidao.R;
+import com.news.yazhidao.common.BaseActivity;
 import com.news.yazhidao.constant.CommonConstant;
 import com.news.yazhidao.constant.HttpConstant;
 import com.news.yazhidao.entity.NewsDetail;
@@ -18,6 +18,7 @@ import com.news.yazhidao.net.JsonCallback;
 import com.news.yazhidao.net.MyAppException;
 import com.news.yazhidao.net.NetworkRequest;
 import com.news.yazhidao.net.TextUtils;
+import com.news.yazhidao.utils.DeviceInfoUtil;
 import com.news.yazhidao.utils.ImageLoaderHelper;
 import com.news.yazhidao.utils.Logger;
 import com.news.yazhidao.utils.gifview.GifView;
@@ -25,7 +26,7 @@ import com.news.yazhidao.utils.gifview.GifView;
 /**
  * Created by fengjigang on 15/1/21.
  */
-public class NewsDetailActivity extends Activity implements View.OnClickListener {
+public class NewsDetailActivity extends BaseActivity implements View.OnClickListener {
     private static final String TAG = "NewsDetailActivity";
     private ListView mNewsDetailListContent;
     private NewsDetailAdapter mNewsDetailAdapter;
@@ -39,6 +40,7 @@ public class NewsDetailActivity extends Activity implements View.OnClickListener
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        Logger.e("uuid", DeviceInfoUtil.getUUID(this));
         mNewsEle = (NewsFeed.Element) getIntent().getSerializableExtra(CommonConstant.KEY_NEWS_DETAIL);
         setContentView(R.layout.aty_news_detail);
         mNewsCommonHeaderLeftBack=findViewById(R.id.mNewsCommonHeaderLeftBack);
@@ -63,13 +65,7 @@ public class NewsDetailActivity extends Activity implements View.OnClickListener
         request.setCallback(new JsonCallback<NewsDetail>() {
             @Override
             public void success(NewsDetail result) {
-                NewsDetail.FetchContentArr newsArr=null ;
-                if(result!=null){
-                    if(result.response_body!=null){
-                        newsArr=result.response_body.FetchContent;
-                    }
-                }
-                if (newsArr != null && newsArr.content != null && newsArr.content.size() > 0) {
+                if (result != null && result.content != null && result.content.size() > 0) {
                     mNewsDetailListContent.addHeaderView(generateListHeader());
                     mNewsDetailAdapter = new NewsDetailAdapter(NewsDetailActivity.this, result, mNewsEle.imgUrl,finalNewsId);
                     mNewsDetailListContent.setAdapter(mNewsDetailAdapter);

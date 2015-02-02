@@ -89,6 +89,7 @@
     <orderEntry type="library" exported="" name="support-v4-21.0.3" level="project" />
     <orderEntry type="library" exported="" name="universal-image-loader-1.9.3" level="project" />
     <orderEntry type="module" module-name="MaterialNavigationDrawerModule" exported="" />
+    <orderEntry type="module" module-name="umeng_social_sdk_library" exported="" />
   </component>
 </module>
 

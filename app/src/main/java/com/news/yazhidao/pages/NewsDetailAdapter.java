@@ -2,9 +2,16 @@ package com.news.yazhidao.pages;
 
 import android.content.Context;
 import android.content.Intent;
+import android.os.Handler;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.*;
+import android.view.animation.AnimationUtils;
+import android.widget.BaseAdapter;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.TextView;
+import android.widget.Toast;
+
 import com.news.yazhidao.R;
 import com.news.yazhidao.constant.CommonConstant;
 import com.news.yazhidao.entity.NewsDetail;
@@ -12,6 +19,8 @@ import com.news.yazhidao.entity.NewsFeed;
 import com.news.yazhidao.utils.ImageLoaderHelper;
 import com.news.yazhidao.utils.Logger;
 import com.news.yazhidao.utils.TextUtil;
+import com.news.yazhidao.utils.helper.UmengShareHelper;
+import com.news.yazhidao.widget.StrokeTextView;
 
 import java.util.ArrayList;
 import java.util.Map;
@@ -27,15 +36,16 @@ public class NewsDetailAdapter extends BaseAdapter {
     private ArrayList<NewsFeed.Element> mElementArr;
     private String mNewsId;
     private View mRelateView;
-    private boolean isPraise = true;
-
+    private boolean isPraise ;
+    private android.view.animation.Animation animation;
     public NewsDetailAdapter(Context mContext, NewsDetail newsDetail, String subjectUrl, String newsId) {
         this.mContext = mContext;
         this.mNewsDetail = newsDetail;
-        this.mSectionArr = newsDetail.response_body.FetchContent.content;
+        this.mSectionArr = newsDetail.content;
         this.mSubjectUrl = subjectUrl;
-        this.mElementArr = newsDetail.response_body.FetchContent.elementList;
+        this.mElementArr = newsDetail.elementList;
         this.mNewsId = newsId;
+        this.animation=AnimationUtils.loadAnimation(mContext, R.anim.news_praise_plus_one);
     }
 
     @Override
@@ -68,9 +78,10 @@ public class NewsDetailAdapter extends BaseAdapter {
         if (position == mSectionArr.size()) {
             View share = View.inflate(mContext, R.layout.aty_news_detail_item_share, null);
             final View praise = share.findViewById(R.id.mNewsDetailPraiseWrapper);
-            final ImageView mNewsDetailShare = (ImageView) share.findViewById(R.id.mNewsDetailShare);
+            final View mNewsDetailShare =  share.findViewById(R.id.mNewsDetailShare);
             final TextView mNewsDetailPraiseTv = (TextView) share.findViewById(R.id.mNewsDetailPraiseTv);
             final ImageView mNewsDetailPraiseImg = (ImageView) share.findViewById(R.id.mNewsDetailPraiseImg);
+            final TextView mNewsDetailPraisePlus=(TextView)share.findViewById(R.id.mNewsDetailPraisePlus);
             praise.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -80,18 +91,28 @@ public class NewsDetailAdapter extends BaseAdapter {
                         mNewsDetailPraiseTv.setText((TextUtil.parsePraiseNumber(mNewsDetailPraiseTv.getText().toString()) - 1) + "人热赞");
                         mNewsDetailPraiseTv.setTextColor(mContext.getResources().getColor(R.color.black));
                         isPraise = false;
+                        //TODO 向后台确认点赞
                     } else {
+                        mNewsDetailPraisePlus.setVisibility(View.VISIBLE);
+                        mNewsDetailPraisePlus.startAnimation(animation);
+                        new Handler().postDelayed(new Runnable(){
+                            public void run() {
+                                mNewsDetailPraisePlus.setVisibility(View.GONE);
+                            }
+                        }, 1000);
                         mNewsDetailPraiseImg.setImageResource(R.drawable.news_list_table_cell_praised);
                         mNewsDetailPraiseTv.setText((TextUtil.parsePraiseNumber(mNewsDetailPraiseTv.getText().toString()) + 1) + "人热赞");
                         mNewsDetailPraiseTv.setTextColor(mContext.getResources().getColor(R.color.common_theme_color));
                         isPraise = true;
+                        //TODO 向后台取消点赞
                     }
                 }
             });
             mNewsDetailShare.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Toast.makeText(mContext, "click share", Toast.LENGTH_SHORT).show();
+                    //TODO 新浪分享
+//                    UmengShareHelper.shareSina(mContext,mElementArr.get(position));
                 }
             });
             share.setOnClickListener(null);
@@ -138,19 +159,22 @@ public class NewsDetailAdapter extends BaseAdapter {
 
     private View generateRelateView() {
         LinearLayout relateViewWrapper = (LinearLayout) View.inflate(mContext, R.layout.aty_news_detail_item_relate, null);
+
         if (mElementArr != null && mElementArr.size() > 0) {
             for (int index = 0; index < mElementArr.size(); index++) {
                 View relateViewItem = View.inflate(mContext, R.layout.aty_news_show_list_cell, null);
                 TextView mCellTitle = (TextView) relateViewItem.findViewById(R.id.mCellTitle);
                 ImageView mCellImage = (ImageView) relateViewItem.findViewById(R.id.mCellImage);
                 View mCellPraise = relateViewItem.findViewById(R.id.mCellPraiseWrapper);
-                mCellPraise.setVisibility(View.GONE);
-                View mCellTemperature = relateViewItem.findViewById(R.id.mCellTemperature);
-                mCellTemperature.setVisibility(View.GONE);
-                View mCellSourceSiteName = relateViewItem.findViewById(R.id.mCellSourceSiteName);
-                mCellSourceSiteName.setVisibility(View.GONE);
+                StrokeTextView mCellTemperature = (StrokeTextView) relateViewItem.findViewById(R.id.mCellTemperature);
+                TextView mCellSourceSiteName = (TextView) relateViewItem.findViewById(R.id.mCellSourceSiteName);
+                final TextView mCellPraisePlus= (TextView) relateViewItem.findViewById(R.id.mCellPraisePlus);
+                final ImageView mCellPraiseImg= (ImageView) relateViewItem.findViewById(R.id.mCellPraiseImg);
+                final TextView mCellPraiseTv= (TextView) relateViewItem.findViewById(R.id.mCellPraiseTv);
 
                 mCellTitle.setText(mElementArr.get(index).title);
+                mCellTemperature.setText(convertClassToTemp(mElementArr.get(index).RootClass));
+                mCellSourceSiteName.setText(mElementArr.get(index).sourceSiteName);
                 ImageLoaderHelper.dispalyImage(mContext, mElementArr.get(index).imgUrl, mCellImage);
                 final int finalIndex = index;
                 relateViewItem.setOnClickListener(new View.OnClickListener() {
@@ -159,10 +183,55 @@ public class NewsDetailAdapter extends BaseAdapter {
                         startNewsDetailPage(mElementArr.get(finalIndex).RootName, mElementArr.get(finalIndex));
                     }
                 });
+                mCellPraise.setOnClickListener(new View.OnClickListener() {
+                    private boolean isRelatePraise ;
+                    @Override
+                    public void onClick(View view) {
+                        if(isRelatePraise){
+                            mCellPraiseImg.setImageResource(R.drawable.news_list_table_cell_unpraised);
+                            mCellPraiseTv.setText((TextUtil.parsePraiseNumber(mCellPraiseTv.getText().toString())-1)+"人热赞");
+                            mCellPraiseTv.setTextColor(mContext.getResources().getColor(R.color.black));
+                            isRelatePraise=false;
+                            //TODO 向后台取消点赞
+                        }else{
+                            mCellPraisePlus.setVisibility(View.VISIBLE);
+                            mCellPraisePlus.startAnimation(animation);
+                            new Handler().postDelayed(new Runnable(){
+                                public void run() {
+                                    mCellPraisePlus.setVisibility(View.GONE);
+                                }
+                            }, 1000);
+                            mCellPraiseImg.setImageResource(R.drawable.news_list_table_cell_praised);
+                            mCellPraiseTv.setText((TextUtil.parsePraiseNumber(mCellPraiseTv.getText().toString())+1)+"人热赞");
+                            mCellPraiseTv.setTextColor(mContext.getResources().getColor(R.color.common_theme_color));
+                            isRelatePraise=true;
+                            //TODO 向后台取消点赞
+                        }
+                    }
+                });
                 relateViewWrapper.addView(relateViewItem);
             }
         }
         return relateViewWrapper;
+    }
+
+    /**
+     * 把rootClass 转换成对应的温度
+     * @param rootClass
+     * @return
+     */
+    private String convertClassToTemp(String rootClass) {
+        String temp="40°C";
+        if ("0".equals(rootClass)) {
+            temp="-40°C";
+        } else if ("1".equals(rootClass)) {
+            temp="0°C";
+        } else if ("2".equals(rootClass)) {
+            temp="36°C";
+        } else if ("3".equals(rootClass)) {
+            temp="40°C";
+        }
+        return temp;
     }
 
     /**
