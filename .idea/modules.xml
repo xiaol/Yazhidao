@@ -5,6 +5,9 @@
       <module fileurl="file://$PROJECT_DIR$/MaterialNavigationDrawerModule/MaterialNavigationDrawerModule.iml" filepath="$PROJECT_DIR$/MaterialNavigationDrawerModule/MaterialNavigationDrawerModule.iml" />
       <module fileurl="file://$PROJECT_DIR$/Yazhidao.iml" filepath="$PROJECT_DIR$/Yazhidao.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
+      <module fileurl="file://$PROJECT_DIR$/news_yazhidao_gradle.iml" filepath="$PROJECT_DIR$/news_yazhidao_gradle.iml" />
+      <module fileurl="file://$PROJECT_DIR$/umeng_social_sdk_library/umeng_social_sdk_library.iml" filepath="$PROJECT_DIR$/umeng_social_sdk_library/umeng_social_sdk_library.iml" />
+      <module fileurl="file://$PROJECT_DIR$/umeng_social_sdk_library/umeng_social_sdk_library.iml" filepath="$PROJECT_DIR$/umeng_social_sdk_library/umeng_social_sdk_library.iml" />
     </modules>
   </component>
 </project>

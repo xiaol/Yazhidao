@@ -16,6 +16,6 @@
         android:layout_height="match_parent"
         android:background="@color/news_list_bg"
         android:dividerHeight="1dp"
-        android:scrollbars="none"></com.news.yazhidao.UI.MyListView>
+        android:scrollbars="none"/>
 
 </com.news.yazhidao.UI.MyRelativeLayout>

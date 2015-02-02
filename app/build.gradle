@@ -1,19 +1,26 @@
 apply plugin: 'com.android.application'
 
 android {
+    signingConfigs {
+        config {
+            keyAlias 'yazhidao'
+            keyPassword 'yazhidao'
+            storeFile file('/Users/fengjigang/work/YaZhiDao/yazhidao.keystore')
+            storePassword 'yazhidao'
+        }
+    }
     compileSdkVersion 21
-    buildToolsVersion '21.1.2'
+    buildToolsVersion "21.1.1"
 
     defaultConfig {
         applicationId "com.news.yazhidao"
-        minSdkVersion 10
+        minSdkVersion 11
         targetSdkVersion 21
         versionCode 1
         versionName "1.0"
     }
     buildTypes {
         release {
-
         }
     }
 }
@@ -24,4 +31,5 @@ dependencies {
     compile project(':MaterialNavigationDrawerModule')
     compile 'com.google.code.gson:gson:2.2.4'
     compile 'com.android.support:support-v4:21.0.3'
+    compile project(':umeng_social_sdk_library')
 }

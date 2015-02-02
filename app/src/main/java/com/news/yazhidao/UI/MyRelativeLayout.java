@@ -37,6 +37,7 @@ public class MyRelativeLayout extends RelativeLayout {
     private int width;
     private int height;
     private boolean flag = false;
+    private boolean listview_flag = false;
     private Scroller scroller;
     private Context context;
     private int mTouchSlop;
@@ -81,11 +82,13 @@ public class MyRelativeLayout extends RelativeLayout {
 
         iv_section = (ImageView) this.getChildAt(0);
         setImageBackground();
-        int view_height = iv_section.getHeight();
+        int view_height = SECTION_VIEW_HEIGHT;
         iv_section.layout(0, 0, width, view_height);
 
         listView = (MyListView) this.getChildAt(1);
-        GlobalParams.LISTVIEW_HEIGHT = listView.getMeasuredHeight();
+        if(listView.getMeasuredHeight() != 0 && GlobalParams.LISTVIEW_HEIGHT == 0) {
+            GlobalParams.LISTVIEW_HEIGHT = listView.getMeasuredHeight();
+        }
         int a = MyRelativeLayout.this.getMeasuredHeight();
 
         listView.layout(0, view_height, width, view_height + GlobalParams.LISTVIEW_HEIGHT);

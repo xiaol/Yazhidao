@@ -5,32 +5,36 @@
     <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
-
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
+    <uses-permission android:name="android.permission.GET_TASKS" />
 
     <application
         android:allowBackup="true"
         android:icon="@drawable/icon144"
         android:label="@string/app_name"
-        android:theme="@style/AppTheme">
-
-        <activity
-            android:name="com.news.yazhidao.MyFragment.CustomDrawerHeader"
-            android:theme="@style/CustomHeaderLight">
-
-        </activity>
+        android:theme="@style/AppTheme"
+        android:name=".application.YaZhiDaoApplication"
+        >
 
         <activity android:name=".MyActivity.Settings" />
         <activity
             android:name=".pages.NewsDetailActivity"
             android:screenOrientation="portrait"
             android:theme="@android:style/Theme.NoTitleBar"></activity>
-        <activity
-            android:name=".SignActivity"
-            android:screenOrientation="portrait" />
+
         <activity
             android:name=".MyActivity.SignActivity"
-            android:screenOrientation="portrait">
+            android:screenOrientation="portrait"/>
 
+
+        <!-- ###################添加UmengAppkey###################### -->
+        <meta-data
+            android:name="UMENG_APPKEY"
+            android:value="54cdc89dfd98c5430f000618" >
+        </meta-data>
+        <activity android:name="com.news.yazhidao.MyFragment.CustomDrawerHeader" android:theme="@style/CustomHeaderLight" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

@@ -2,10 +2,13 @@ package com.news.yazhidao.pages;
 
 import android.content.Context;
 import android.content.Intent;
-import android.text.TextUtils;
+import android.os.Handler;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.BaseAdapter;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
@@ -19,6 +22,7 @@ import com.news.yazhidao.constant.CommonConstant;
 import com.news.yazhidao.entity.NewsFeed;
 import com.news.yazhidao.utils.ImageLoaderHelper;
 import com.news.yazhidao.utils.Logger;
+import com.news.yazhidao.utils.TextUtil;
 
 import java.util.ArrayList;
 import java.util.TreeSet;
@@ -28,25 +32,33 @@ import java.util.TreeSet;
  */
 public class NewsFeedAdapter extends BaseAdapter {
     private static final String TAG = "NewsFeedAdapter";
+    private final Animation animation;
     private Context mContext;
     private ArrayList<NewsFeed.Channel> mChannelsArr;
     private TreeSet<Integer> mCacheAddedView;
     private NewsFeed mNewsFeed;
+    private WindowManager manager;
+    private int width;
+
 
     public NewsFeedAdapter(Context mContext, NewsFeed mNewsFeed) {
         this.mContext = mContext;
         this.mNewsFeed = mNewsFeed;
         this.mChannelsArr = new ArrayList<NewsFeed.Channel>();
         this.mCacheAddedView = new TreeSet<Integer>();
+        this.animation= AnimationUtils.loadAnimation(mContext, R.anim.news_praise_plus_one);
         handle(mNewsFeed);
+
+//        manager = (WindowManager) mContext.getSystemService(Context.WINDOW_SERVICE);
+//        width = GlobalParams.manager.getDefaultDisplay().getWidth();
     }
 
     private void handle(NewsFeed mNewsFeed) {
         ArrayList<NewsFeed.Channel> channels;
-        if(mNewsFeed.response_body==null){
+        if(mNewsFeed.channels==null){
             channels=new ArrayList<NewsFeed.Channel>();
         }else {
-            channels = mNewsFeed.response_body.getAllChannels.channels;
+            channels = mNewsFeed.channels;
         }
         if (channels != null) {
             for (NewsFeed.Channel element : channels) {
@@ -77,6 +89,7 @@ public class NewsFeedAdapter extends BaseAdapter {
         Logger.i(">>>", "getView " + position + " parent=" + parent);
         final ViewHolder holder;
         if (convertView == null) {
+            Logger.i(">>>","not reuse the convertView");
             convertView = LayoutInflater.from(mContext).inflate(R.layout.aty_news_show_list_table, null);
             holder = new ViewHolder();
             holder.mTableChannelName = (TextView) convertView.findViewById(R.id.mTableChannelName);
@@ -87,6 +100,7 @@ public class NewsFeedAdapter extends BaseAdapter {
             holder.mTableHeaderWrapper = (RelativeLayout) convertView.findViewById(R.id.mTableHeaderWrapper);
             convertView.setTag(holder);
         } else {
+            Logger.i(">>>","reused the convertView");
             holder = (ViewHolder) convertView.getTag();
         }
         final LinearLayout layout = (LinearLayout) convertView;
@@ -147,9 +161,9 @@ public class NewsFeedAdapter extends BaseAdapter {
                     }
                 }
 
-                Logger.i(TAG,"onclick pull down ");
+                Logger.i(TAG, "onclick pull down ");
                 holder.mTablePullDown.setVisibility(View.GONE);
-                parent.invalidate(0, 480, 720, GlobalParams.LISTVIEW_HEIGHT + 480 + 1050);
+                GlobalParams.LISTVIEW_HEIGHT += 1150;
             }
         });
         return finalLayout;
@@ -189,17 +203,40 @@ public class NewsFeedAdapter extends BaseAdapter {
         TextView mCellSourceSiteName = (TextView) childView.findViewById(R.id.mCellSourceSiteName);
         TextView mCellTitle = (TextView) childView.findViewById(R.id.mCellTitle);
         TextView mCellTemperature = (TextView) childView.findViewById(R.id.mCellTemperature);
+        View mCellPraiseWrapper = childView.findViewById(R.id.mCellPraiseWrapper);
+        final ImageView mCellPraiseImg = (ImageView) childView.findViewById(R.id.mCellPraiseImg);
+        final TextView mCellPraiseTv = (TextView) childView.findViewById(R.id.mCellPraiseTv);
+        final TextView mCellPraisePlus = (TextView) childView.findViewById(R.id.mCellPraisePlus);
+        mCellPraiseWrapper.setOnClickListener(new View.OnClickListener() {
+            boolean isPraise;
+            @Override
+            public void onClick(View v) {
+                if(isPraise){
+                    mCellPraiseImg.setImageResource(R.drawable.news_list_table_cell_unpraised);
+                    mCellPraiseTv.setText((TextUtil.parsePraiseNumber(mCellPraiseTv.getText().toString())-1)+"人热赞");
+                    mCellPraiseTv.setTextColor(mContext.getResources().getColor(R.color.black));
+                    isPraise=false;
+                }else{
+                    mCellPraisePlus.setVisibility(View.VISIBLE);
+                    mCellPraisePlus.startAnimation(animation);
+                    new Handler().postDelayed(new Runnable(){
+                        public void run() {
+                            mCellPraisePlus.setVisibility(View.GONE);
+                        }
+                    }, 1000);
+                    mCellPraiseImg.setImageResource(R.drawable.news_list_table_cell_praised);
+                    mCellPraiseTv.setText((TextUtil.parsePraiseNumber(mCellPraiseTv.getText().toString())+1)+"人热赞");
+                    mCellPraiseTv.setTextColor(mContext.getResources().getColor(R.color.common_theme_color));
+                    isPraise=true;
+                }
+            }
+        });
         ImageLoaderHelper.getImageLoader(mContext).displayImage(element.imgUrl, mCellImage, ImageLoaderHelper.getOption());
         mCellSourceSiteName.setText(element.sourceSiteName);
         mCellTitle.setText(element.title);
-        mCellTemperature.setText(convertTemp(mNewsFeed.response_body.getAllChannels.root_alias));
+        mCellTemperature.setText(TextUtil.convertTemp(mNewsFeed.root_alias));
         childView.setOnClickListener(listener);
         return childView;
     }
-    private String convertTemp(String origin) {
-        if (!TextUtils.isEmpty(origin)) {
-            return origin.replace("度", "°C");
-        }
-        return "";
-    }
+
 }

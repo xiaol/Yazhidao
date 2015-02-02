@@ -95,6 +95,12 @@ public class FragmentButton extends Fragment {
     }
 
     @Override
+    public void onDetach() {
+        super.onDetach();
+        unregisterBReceiver();
+    }
+
+    @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = View.inflate(this.getActivity(), R.layout.fragment_planet, null);
 
@@ -198,6 +204,7 @@ public class FragmentButton extends Fragment {
                                 GlobalParams.bar.setTitle("你未见的时代痛楚");
                             }
                             GlobalParams.currentPos = 0;
+                            GlobalParams.LISTVIEW_HEIGHT = 0;
 
                             //END_WINDOW = WINDOW_ONE;
 
@@ -210,6 +217,7 @@ public class FragmentButton extends Fragment {
                                 GlobalParams.bar.setTitle("你不知道的冷新闻");
                             }
                             GlobalParams.currentPos = 1;
+                            GlobalParams.LISTVIEW_HEIGHT = 0;
 
 
                         } else if (startX > width * SECTION_TWO / STANDARD_WIDTH && startX <= width * SECTION_THREE / STANDARD_WIDTH) {
@@ -221,6 +229,7 @@ public class FragmentButton extends Fragment {
                                 GlobalParams.bar.setTitle("同步你的关注热度");
                             }
                             GlobalParams.currentPos = 2;
+                            GlobalParams.LISTVIEW_HEIGHT = 0;
 
                         } else if (startX > width * SECTION_THREE / STANDARD_WIDTH && startX <= width) {
                             GlobalParams.params.x = (int) (POINT_FOUR_X * width / STANDARD_WIDTH);
@@ -231,6 +240,7 @@ public class FragmentButton extends Fragment {
                                 GlobalParams.bar.setTitle("触摸时下热点所在");
                             }
                             GlobalParams.currentPos = 3;
+                            GlobalParams.LISTVIEW_HEIGHT = 0;
 
                         }
 
@@ -301,7 +311,6 @@ public class FragmentButton extends Fragment {
             public void success(NewsFeed result) {
                 Log.i(">>>" + TAG, result.toString());
                 mNewsFeed = result;
-                Log.i(">>>" + TAG, mNewsFeed.response_head.result);
                 mNewsFeedAdapter = new NewsFeedAdapter(mContext, mNewsFeed);
                 mNewsShowList.setAdapter(mNewsFeedAdapter);
                 mNewsFeedAdapter.notifyDataSetChanged();
