@@ -1,32 +1,21 @@
-<com.news.yazhidao.UI.MyRelativeLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<com.news.yazhidao.UI.MyRelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/rl_content"
     android:layout_width="match_parent"
-    android:layout_height="match_parent" >
+    android:layout_height="match_parent">
 
     <ImageView
         android:id="@+id/iv_section"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@drawable/section1" />
-
-
+        android:layout_height="240dip"
+        android:background="@drawable/section4" />
 
     <com.news.yazhidao.UI.MyListView
         android:id="@+id/mNewsShowList"
+        android:layout_below="@+id/iv_section"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:background="@color/news_list_bg"
-        android:dividerHeight="15dp"
-        android:scrollbars="none" >
-    </com.news.yazhidao.UI.MyListView>
-
-    <ImageView
-        android:id="@+id/iv_sun"
-        android:layout_width="40dip"
-        android:layout_height="40dip"
-        android:layout_marginLeft="50dp"
-        android:layout_marginTop="200dp"
-        android:background="@drawable/sun" />
+        android:dividerHeight="1dp"
+        android:scrollbars="none"/>
 
 </com.news.yazhidao.UI.MyRelativeLayout>

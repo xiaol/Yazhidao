@@ -11,6 +11,7 @@ android {
     }
     compileSdkVersion 21
     buildToolsVersion "21.1.1"
+
     defaultConfig {
         applicationId "com.news.yazhidao"
         minSdkVersion 11
@@ -29,5 +30,6 @@ dependencies {
     compile 'com.android.support:appcompat-v7:21.0.3'
     compile project(':MaterialNavigationDrawerModule')
     compile 'com.google.code.gson:gson:2.2.4'
+    compile 'com.android.support:support-v4:21.0.3'
     compile project(':umeng_social_sdk_library')
 }
