@@ -63,11 +63,10 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
-            android:layout_centerHorizontal="true"
             android:background="@drawable/news_list_table_main_title_bg"
             android:ellipsize="end"
             android:lines="2"
-            android:layout_marginLeft="10dp"
+            android:paddingLeft="10dp"
             android:text="燕郊至北京动车今首发 早班侧最受欢迎早班侧最受欢迎"
             android:textColor="@color/white"
             android:textSize="24sp" />
@@ -80,7 +79,6 @@
         android:layout_marginBottom="10dp"
         android:layout_marginTop="10dp"
         android:src="@drawable/list_table_devider" />
-    <!--<include layout="@layout/aty_news_show_list_cell"/>-->
     <RelativeLayout
         android:id="@+id/mTablePullDown"
         android:layout_width="match_parent"

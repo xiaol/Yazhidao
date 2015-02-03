@@ -1,6 +1,8 @@
 package com.news.yazhidao.net;
 
 
+import com.news.yazhidao.utils.Logger;
+
 import org.apache.http.HttpResponse;
 import org.apache.http.HttpVersion;
 import org.apache.http.client.HttpClient;
@@ -24,6 +26,8 @@ import org.apache.http.params.HttpParams;
 import org.apache.http.params.HttpProtocolParams;
 
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
+import java.net.URLDecoder;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
@@ -33,6 +37,7 @@ import java.util.Map;
  * Created by fengjigang on 15/1/5.
  */
 public class HttpClientUtil {
+    private static final String TAG = "HttpClientUtil";
     private static HttpClient customerHttpClient;
 
     public static HttpResponse execute(NetworkRequest request) throws MyAppException {
@@ -154,7 +159,7 @@ public class HttpClientUtil {
         url += paramString;
 //        try {
 //            String s = URLDecoder.decode(url, "utf-8");
-//            Logger.i(TAG,">>>>url  >>>"+s);
+//            Logger.i(TAG, ">>>>url  >>>" + s);
 //        } catch (UnsupportedEncodingException e) {
 //            e.printStackTrace();
 //        }

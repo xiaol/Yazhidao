@@ -13,10 +13,10 @@ import android.os.Build;
 import android.os.Bundle;
 import android.provider.Settings;
 import android.telephony.TelephonyManager;
-import android.text.TextUtils;
+import android.util.DisplayMetrics;
+import android.view.WindowManager;
 
-import org.json.JSONException;
-import org.json.JSONObject;
+import com.news.yazhidao.application.YaZhiDaoApplication;
 
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
@@ -25,7 +25,6 @@ import java.net.InetAddress;
 import java.net.NetworkInterface;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
-import java.util.ArrayList;
 import java.util.Enumeration;
 
 /**
@@ -34,6 +33,20 @@ import java.util.Enumeration;
 public class DeviceInfoUtil {
     private static final String TAG = "DeviceStateUtil";
 
+    public static int getScreenWidth() {
+        return obtainDisMetri().widthPixels;
+    }
+
+    public static int getScreenHeight() {
+        return obtainDisMetri().heightPixels;
+    }
+
+    private static DisplayMetrics obtainDisMetri() {
+        WindowManager wm = (WindowManager) YaZhiDaoApplication.getAppContext().getSystemService(Context.WINDOW_SERVICE);
+        DisplayMetrics outMetrics = new DisplayMetrics();
+        wm.getDefaultDisplay().getMetrics(outMetrics);
+        return outMetrics;
+    }
     /**
      * 获取当前网络状态(wifi)的ip地址
      *

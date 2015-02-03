@@ -21,7 +21,7 @@ public class NewsFeed {
         public String lastUpdateTime;
     }
 
-    public class Element implements Serializable {
+    public static class Element implements Serializable {
         public String RootClass;
         public String RootName;
         public String channelName;

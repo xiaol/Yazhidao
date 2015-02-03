@@ -22,6 +22,15 @@
             android:name="UMENG_APPKEY"
             android:value="54cdc89dfd98c5430f000618" >
         </meta-data>
+        <!-- 分享内容编辑页 -->
+        <activity
+            android:name="com.umeng.socialize.view.ShareActivity"
+            android:configChanges="orientation|keyboard"
+            android:launchMode="singleTask"
+            android:noHistory="true"
+            android:theme="@style/Theme.UMDialog"
+            android:windowSoftInputMode="stateVisible|adjustResize" >
+        </activity>
         <activity android:name="com.news.yazhidao.MyFragment.CustomDrawerHeader" android:theme="@style/CustomHeaderLight" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

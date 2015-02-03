@@ -30,22 +30,20 @@ import java.util.Map;
  */
 public class NewsDetailAdapter extends BaseAdapter {
     private Context mContext;
-    private NewsDetail mNewsDetail;
     private ArrayList<ArrayList<Map<String, String>>> mSectionArr;
     private String mSubjectUrl;
     private ArrayList<NewsFeed.Element> mElementArr;
     private String mNewsId;
     private View mRelateView;
     private boolean isPraise ;
-    private android.view.animation.Animation animation;
+    private android.view.animation.Animation mAnimation;
     public NewsDetailAdapter(Context mContext, NewsDetail newsDetail, String subjectUrl, String newsId) {
         this.mContext = mContext;
-        this.mNewsDetail = newsDetail;
         this.mSectionArr = newsDetail.content;
         this.mSubjectUrl = subjectUrl;
         this.mElementArr = newsDetail.elementList;
         this.mNewsId = newsId;
-        this.animation=AnimationUtils.loadAnimation(mContext, R.anim.news_praise_plus_one);
+        this.mAnimation =AnimationUtils.loadAnimation(mContext, R.anim.news_praise_plus_one);
     }
 
     @Override
@@ -89,12 +87,11 @@ public class NewsDetailAdapter extends BaseAdapter {
                     if (isPraise) {
                         mNewsDetailPraiseImg.setImageResource(R.drawable.news_list_table_cell_unpraised);
                         mNewsDetailPraiseTv.setText((TextUtil.parsePraiseNumber(mNewsDetailPraiseTv.getText().toString()) - 1) + "人热赞");
-                        mNewsDetailPraiseTv.setTextColor(mContext.getResources().getColor(R.color.black));
                         isPraise = false;
                         //TODO 向后台确认点赞
                     } else {
                         mNewsDetailPraisePlus.setVisibility(View.VISIBLE);
-                        mNewsDetailPraisePlus.startAnimation(animation);
+                        mNewsDetailPraisePlus.startAnimation(mAnimation);
                         new Handler().postDelayed(new Runnable(){
                             public void run() {
                                 mNewsDetailPraisePlus.setVisibility(View.GONE);
@@ -102,7 +99,6 @@ public class NewsDetailAdapter extends BaseAdapter {
                         }, 1000);
                         mNewsDetailPraiseImg.setImageResource(R.drawable.news_list_table_cell_praised);
                         mNewsDetailPraiseTv.setText((TextUtil.parsePraiseNumber(mNewsDetailPraiseTv.getText().toString()) + 1) + "人热赞");
-                        mNewsDetailPraiseTv.setTextColor(mContext.getResources().getColor(R.color.common_theme_color));
                         isPraise = true;
                         //TODO 向后台取消点赞
                     }
@@ -112,7 +108,10 @@ public class NewsDetailAdapter extends BaseAdapter {
                 @Override
                 public void onClick(View v) {
                     //TODO 新浪分享
-//                    UmengShareHelper.shareSina(mContext,mElementArr.get(position));
+                    NewsFeed.Element news=new NewsFeed.Element();
+                    news.sourceUrl=mNewsId;
+                    news.imgUrl=mSubjectUrl;
+                    UmengShareHelper.shareSina(mContext,news);
                 }
             });
             share.setOnClickListener(null);
@@ -188,21 +187,21 @@ public class NewsDetailAdapter extends BaseAdapter {
                     @Override
                     public void onClick(View view) {
                         if(isRelatePraise){
-                            mCellPraiseImg.setImageResource(R.drawable.news_list_table_cell_unpraised);
-                            mCellPraiseTv.setText((TextUtil.parsePraiseNumber(mCellPraiseTv.getText().toString())-1)+"人热赞");
-                            mCellPraiseTv.setTextColor(mContext.getResources().getColor(R.color.black));
+                            mCellPraiseImg.setImageResource(R.drawable.news_list_table_cell_unpraised_in_home);
+                            mCellPraiseTv.setText((TextUtil.parsePraiseNumber(mCellPraiseTv.getText().toString()) - 1) + "人热赞");
+                            mCellPraiseTv.setTextColor(mContext.getResources().getColor(R.color.news_list_cell_sourcesitename));
                             isRelatePraise=false;
                             //TODO 向后台取消点赞
                         }else{
                             mCellPraisePlus.setVisibility(View.VISIBLE);
-                            mCellPraisePlus.startAnimation(animation);
-                            new Handler().postDelayed(new Runnable(){
+                            mCellPraisePlus.startAnimation(mAnimation);
+                            new Handler().postDelayed(new Runnable() {
                                 public void run() {
                                     mCellPraisePlus.setVisibility(View.GONE);
                                 }
                             }, 1000);
                             mCellPraiseImg.setImageResource(R.drawable.news_list_table_cell_praised);
-                            mCellPraiseTv.setText((TextUtil.parsePraiseNumber(mCellPraiseTv.getText().toString())+1)+"人热赞");
+                            mCellPraiseTv.setText((TextUtil.parsePraiseNumber(mCellPraiseTv.getText().toString()) + 1) + "人热赞");
                             mCellPraiseTv.setTextColor(mContext.getResources().getColor(R.color.common_theme_color));
                             isRelatePraise=true;
                             //TODO 向后台取消点赞

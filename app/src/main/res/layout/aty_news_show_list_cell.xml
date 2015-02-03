@@ -14,7 +14,7 @@
         <RelativeLayout
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:layout_weight="6">
+            android:layout_weight="9">
 
             <TextView
                 android:id="@+id/mCellTitle"
@@ -55,7 +55,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginRight="5dp"
-                        android:src="@drawable/news_list_table_cell_unpraised"
+                        android:src="@drawable/news_list_table_cell_unpraised_in_home"
                         android:layout_gravity="bottom"
                         />
 
@@ -67,7 +67,7 @@
                         android:layout_gravity="bottom"
                         android:drawablePadding="5dp"
                         android:text="989人热赞"
-                        android:textColor="@color/black"
+                        android:textColor="@color/news_list_cell_sourcesitename"
                         android:textSize="12sp" />
 
                 </LinearLayout>
@@ -90,7 +90,7 @@
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_marginLeft="16dp"
-            android:layout_weight="4">
+            android:layout_weight="5">
 
             <ImageView
                 android:id="@+id/mCellImage"
