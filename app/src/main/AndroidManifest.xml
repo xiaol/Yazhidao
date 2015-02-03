@@ -35,6 +35,14 @@
             android:value="54cdc89dfd98c5430f000618" >
         </meta-data>
         <activity android:name="com.news.yazhidao.MyFragment.CustomDrawerHeader" android:theme="@style/CustomHeaderLight" >
+            <!--<intent-filter>-->
+                <!--<action android:name="android.intent.action.MAIN" />-->
+
+                <!--<category android:name="android.intent.category.LAUNCHER" />-->
+            <!--</intent-filter>-->
+        </activity>
+
+        <activity android:name="com.news.yazhidao.MyFragment.KitkatStatusBar" android:theme="@style/KitkatStatusBar" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

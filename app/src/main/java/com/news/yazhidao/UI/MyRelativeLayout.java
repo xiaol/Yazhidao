@@ -25,9 +25,6 @@ public class MyRelativeLayout extends RelativeLayout {
     private static int POINT_THREE_Y = 150;
     private static int POINT_FOUR_X = 480;
     private static int POINT_FOUR_Y = 105;
-    private static int SECTION_ONE = 260;
-    private static int SECTION_TWO = 380;
-    private static int SECTION_THREE = 480;
     private static int SUN_WIDTH = 180;
     private static final String TAG = "SlideMenu";
     private int currentPos = 0;
@@ -79,21 +76,53 @@ public class MyRelativeLayout extends RelativeLayout {
         width = GlobalParams.manager.getDefaultDisplay().getWidth();
         height = GlobalParams.manager.getDefaultDisplay().getHeight();
 
+        setError();
 
         iv_section = (ImageView) this.getChildAt(0);
         setImageBackground();
-        int view_height = SECTION_VIEW_HEIGHT;
+        int view_height = SECTION_VIEW_HEIGHT * width / STANDARD_WIDTH;
         iv_section.layout(0, 0, width, view_height);
 
         listView = (MyListView) this.getChildAt(1);
-        if(listView.getMeasuredHeight() != 0 && GlobalParams.LISTVIEW_HEIGHT == 0) {
-            GlobalParams.LISTVIEW_HEIGHT = listView.getMeasuredHeight();
+        if(listView.getMeasuredHeight() != 0) {
+            GlobalParams.LISTVIEW_HEIGHT = listView.getMeasuredHeight() + GlobalParams.LISTVIEW_ERROR;
         }
         int a = MyRelativeLayout.this.getMeasuredHeight();
 
         listView.layout(0, view_height, width, view_height + GlobalParams.LISTVIEW_HEIGHT);
 
         //super.onLayout(true, l, t, r, b);
+    }
+
+    private void setError(){
+        switch (height){
+
+            case 1920:
+
+                error = 240;
+
+                break;
+
+            case 1800:
+                error = 330;
+                break;
+
+            case 1776:
+                error = 250;
+                break;
+
+            case 1280:
+                error = 150;
+                break;
+
+            case 800:
+                error = 130;
+                break;
+
+            case 854:
+                error = 130;
+                break;
+        }
     }
 
     private void setImageBackground() {
@@ -164,7 +193,7 @@ public class MyRelativeLayout extends RelativeLayout {
                     scrollTo(0, view_height);
                     currentScreen = MAIN_SCREEN;
 
-                    GlobalParams.SUN_FLAG = true;
+                    GlobalParams.SUN_FLAG = false;
                     GlobalParams.mainSection.setGlobalFlag(false);//太阳隐藏的时候
 
                 } else if (_y < menuCenter) {    // 鍒囨崲鍒拌彍鍗曠晫闈�
@@ -175,7 +204,7 @@ public class MyRelativeLayout extends RelativeLayout {
                         GlobalParams.view.setVisibility(View.VISIBLE);
                     }
 
-                    GlobalParams.SUN_FLAG = false;
+                    GlobalParams.SUN_FLAG = true;
                     GlobalParams.mainSection.setGlobalFlag(true);//太阳展示的时候
 
                 }

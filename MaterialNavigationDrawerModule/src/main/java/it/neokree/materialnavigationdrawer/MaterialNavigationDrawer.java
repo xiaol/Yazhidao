@@ -377,6 +377,7 @@ public abstract class MaterialNavigationDrawer<Fragment> extends ActionBarActivi
         TypedValue typedValue = new TypedValue();
         theme.resolveAttribute(R.attr.drawerType, typedValue, true);
         drawerHeaderType = typedValue.data;
+        //drawerHeaderType = 0;
         theme.resolveAttribute(R.attr.rippleBackport, typedValue, false);
         rippleSupport = typedValue.data != 0;
         theme.resolveAttribute(R.attr.uniqueToolbarColor, typedValue, false);
@@ -557,10 +558,14 @@ public abstract class MaterialNavigationDrawer<Fragment> extends ActionBarActivi
                     if (!isCurrentFragmentChild) { // if user seeing a master fragment
 
                         // if user wants the sliding arrow it compare
-                        if (slidingDrawerEffect)
+                        if (slidingDrawerEffect) {
                             super.onDrawerSlide(drawerView, slideOffset);
-                        else
+                            globalView.setVisibility(View.GONE);
+                        }
+                        else {
                             super.onDrawerSlide(drawerView, 0);
+
+                        }
                     } else {// if user seeing a child fragment always shows the back arrow
                         super.onDrawerSlide(drawerView, 1f);
                     }
@@ -568,7 +573,7 @@ public abstract class MaterialNavigationDrawer<Fragment> extends ActionBarActivi
                     if (drawerListener != null)
                         drawerListener.onDrawerSlide(drawerView, slideOffset);
 
-                    globalView.setVisibility(View.GONE);
+
 
                 }
 

@@ -15,7 +15,7 @@
             android:id="@+id/statusBar"
             android:layout_width="match_parent"
             android:layout_height="@dimen/statusMargin"
-            android:background="?attr/colorPrimary" />
+            android:background="@drawable/section1" />
 
         <android.support.v7.widget.Toolbar
             android:id="@+id/toolbar"

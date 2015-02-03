@@ -39,6 +39,7 @@ public class NewsFeedAdapter extends BaseAdapter {
     private NewsFeed mNewsFeed;
     private WindowManager manager;
     private int width;
+    private int height;
 
 
     public NewsFeedAdapter(Context mContext, NewsFeed mNewsFeed) {
@@ -49,8 +50,9 @@ public class NewsFeedAdapter extends BaseAdapter {
         this.animation= AnimationUtils.loadAnimation(mContext, R.anim.news_praise_plus_one);
         handle(mNewsFeed);
 
-//        manager = (WindowManager) mContext.getSystemService(Context.WINDOW_SERVICE);
-//        width = GlobalParams.manager.getDefaultDisplay().getWidth();
+        manager = (WindowManager) mContext.getSystemService(Context.WINDOW_SERVICE);
+        width = manager.getDefaultDisplay().getWidth();
+        height = manager.getDefaultDisplay().getHeight();
     }
 
     private void handle(NewsFeed mNewsFeed) {
@@ -163,7 +165,9 @@ public class NewsFeedAdapter extends BaseAdapter {
 
                 Logger.i(TAG, "onclick pull down ");
                 holder.mTablePullDown.setVisibility(View.GONE);
-                GlobalParams.LISTVIEW_HEIGHT += 1150;
+
+                setListViewHeight();
+
             }
         });
         return finalLayout;
@@ -178,6 +182,41 @@ public class NewsFeedAdapter extends BaseAdapter {
         public RelativeLayout mTablePullDown;
         public FrameLayout mTableSetting;
         public RelativeLayout mTableHeaderWrapper;
+    }
+
+    private void setListViewHeight(){
+
+        switch (height){
+
+            case 1920:
+
+                GlobalParams.LISTVIEW_ERROR += 1700;
+
+                break;
+
+            case 1800:
+                GlobalParams.LISTVIEW_ERROR += 1420;
+                break;
+
+            case 1776:
+                GlobalParams.LISTVIEW_ERROR += 1700;
+                break;
+
+            case 1280:
+                GlobalParams.LISTVIEW_ERROR += 1150;
+                break;
+
+            case 800:
+                GlobalParams.LISTVIEW_ERROR += 840;
+                break;
+
+            case 854:
+                GlobalParams.LISTVIEW_ERROR += 840;
+                break;
+        }
+
+
+
     }
 
     /**

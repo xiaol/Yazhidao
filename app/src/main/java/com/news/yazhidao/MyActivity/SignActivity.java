@@ -13,8 +13,14 @@ import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 
-import com.news.yazhidao.MyFragment.CustomDrawerHeader;
+import com.google.gson.reflect.TypeToken;
+import com.news.yazhidao.MyFragment.KitkatStatusBar;
 import com.news.yazhidao.R;
+import com.news.yazhidao.constant.HttpConstant;
+import com.news.yazhidao.entity.NewsFeed;
+import com.news.yazhidao.net.JsonCallback;
+import com.news.yazhidao.net.MyAppException;
+import com.news.yazhidao.net.NetworkRequest;
 
 /**
  * Created by Berkeley on 2/1/15.
@@ -40,7 +46,9 @@ public class SignActivity extends Activity {
         ll_config.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(SignActivity.this, CustomDrawerHeader.class);
+
+
+                Intent intent = new Intent(SignActivity.this, KitkatStatusBar.class);
                 startActivity(intent);
             }
         });
@@ -81,7 +89,7 @@ public class SignActivity extends Activity {
             ImageView imageView = null;
 
             if (convertView == null) {
-                v = View.inflate(SignActivity.this,R.layout.item_gridview,null);
+                v = View.inflate(SignActivity.this, R.layout.item_gridview, null);
                 imageView = (ImageView) v.findViewById(R.id.iv_channel);
                 imageView.setAdjustViewBounds(false);//设置边界对齐
             } else {
@@ -91,5 +99,31 @@ public class SignActivity extends Activity {
             imageView.setImageResource(imgs[position]);//为ImageView设置图片资源
             return v;
         }
+    }
+
+    private static void loadNewsData(String uuid,String sinaId, String[] tagStr) {
+
+        String url = HttpConstant.URL_USER_LOGIN + "uuid=" + uuid + "&sinaId=" + sinaId;
+
+        for(int i = 0; i < tagStr.length; i ++){
+            url = url + "&tag=" + tagStr[i];
+        }
+
+
+        NetworkRequest request = new NetworkRequest(url, NetworkRequest.RequestMethod.GET);
+        request.setCallback(new JsonCallback<NewsFeed>() {
+
+            @Override
+            public void success(NewsFeed result) {
+                System.out.println("success");
+
+            }
+
+            public void failed(MyAppException exception) {
+                System.out.println("failure");
+            }
+        }.setReturnType(new TypeToken<NewsFeed>() {
+        }.getType()));
+        request.execute();
     }
 }

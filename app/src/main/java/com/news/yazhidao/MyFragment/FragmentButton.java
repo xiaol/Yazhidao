@@ -92,6 +92,7 @@ public class FragmentButton extends Fragment {
     public void onAttach(Activity activity) {
         super.onAttach(activity);
         registerBReceiver();
+
     }
 
     @Override
@@ -109,12 +110,12 @@ public class FragmentButton extends Fragment {
         TextView iv = (TextView) GlobalParams.view.findViewById(R.id.iv_sun);
         iv.setBackgroundResource(R.drawable.sun);
 
-        ((CustomDrawerHeader)getActivity()).setGlobalView(GlobalParams.view);
-        GlobalParams.mainSection = (CustomDrawerHeader)getActivity();
-        ((CustomDrawerHeader)getActivity()).setGlobalFlag(true);
+        ((KitkatStatusBar) getActivity()).setGlobalView(GlobalParams.view);
+        GlobalParams.mainSection = (KitkatStatusBar) getActivity();
+        ((KitkatStatusBar) getActivity()).setGlobalFlag(true);
 
         rl_content = (MyRelativeLayout) view.findViewById(R.id.rl_content);
-        iv_section = (ImageView)view.findViewById(R.id.iv_section);
+        iv_section = (ImageView) view.findViewById(R.id.iv_section);
 
         mNewsShowList = (MyListView) view.findViewById(R.id.mNewsShowList);
         mNewsFeed = new NewsFeed();
@@ -126,14 +127,107 @@ public class FragmentButton extends Fragment {
         width = GlobalParams.manager.getDefaultDisplay().getWidth();
         height = GlobalParams.manager.getDefaultDisplay().getHeight();
 
-        //setSunView(view);
+        setSunview();
         showView();
 
-        loadNewsData(getActivity(), 0);
+        //loadNewsData(getActivity(), 3);
 
         return view;
 
     }
+
+    private void setSunview() {
+        switch (height) {
+
+            case 1920:
+
+                POINT_ONE_X = 70;
+                POINT_ONE_Y = 460;
+                POINT_TWO_X = 346;
+                POINT_TWO_Y = 390;
+                POINT_THREE_X = 445;
+                POINT_THREE_Y = 240;
+                POINT_FOUR_X = 740;
+                POINT_FOUR_Y = 180;
+                SUN_WIDTH = 180;
+
+                break;
+
+            case 1800:
+
+                POINT_ONE_X = 70;
+                POINT_ONE_Y = 440;
+                POINT_TWO_X = 350;
+                POINT_TWO_Y = 370;
+                POINT_THREE_X = 445;
+                POINT_THREE_Y = 220;
+                POINT_FOUR_X = 730;
+                POINT_FOUR_Y = 150;
+                SUN_WIDTH = 180;
+
+                break;
+
+
+            case 1776:
+
+                POINT_ONE_X = 70;
+                POINT_ONE_Y = 470;
+                POINT_TWO_X = 350;
+                POINT_TWO_Y = 395;
+                POINT_THREE_X = 445;
+                POINT_THREE_Y = 245;
+                POINT_FOUR_X = 730;
+                POINT_FOUR_Y = 170;
+                SUN_WIDTH = 180;
+
+                break;
+
+
+            case 1280:
+
+                POINT_ONE_X = 55;
+                POINT_ONE_Y = 300;
+                POINT_TWO_X = 220;
+                POINT_TWO_Y = 250;
+                POINT_THREE_X = 290;
+                POINT_THREE_Y = 150;
+                POINT_FOUR_X = 480;
+                POINT_FOUR_Y = 105;
+                SUN_WIDTH = 180;
+
+                break;
+
+            case 854:
+
+                POINT_ONE_X = 37;
+                POINT_ONE_Y = 210;
+                POINT_TWO_X = 155;
+                POINT_TWO_Y = 185;
+                POINT_THREE_X = 200;
+                POINT_THREE_Y = 110;
+                POINT_FOUR_X = 320;
+                POINT_FOUR_Y = 87;
+                SUN_WIDTH = 180;
+
+                break;
+
+            case 800:
+
+                POINT_ONE_X = 35;
+                POINT_ONE_Y = 210;
+                POINT_TWO_X = 150;
+                POINT_TWO_Y = 180;
+                POINT_THREE_X = 200;
+                POINT_THREE_Y = 110;
+                POINT_FOUR_X = 320;
+                POINT_FOUR_Y = 87;
+                SUN_WIDTH = 180;
+
+                break;
+
+        }
+    }
+
 
     private void showView() {
 
@@ -196,51 +290,45 @@ public class FragmentButton extends Fragment {
                         if (startX > 0 && startX <= width * SECTION_ONE / STANDARD_WIDTH) {
                             //view.scrollTo(50, 320);
 
-                            GlobalParams.params.x = (int) (POINT_ONE_X * width / STANDARD_WIDTH);
-                            GlobalParams.params.y = (int) (POINT_ONE_Y * width / STANDARD_WIDTH);
+                            GlobalParams.params.x = (int) (POINT_ONE_X);
+                            GlobalParams.params.y = (int) (POINT_ONE_Y);
 
                             //iv_section.setBackgroundResource(R.drawable.section1);
                             if (GlobalParams.bar != null) {
                                 GlobalParams.bar.setTitle("你未见的时代痛楚");
                             }
                             GlobalParams.currentPos = 0;
-                            GlobalParams.LISTVIEW_HEIGHT = 0;
-
-                            //END_WINDOW = WINDOW_ONE;
 
                         } else if (startX > width * SECTION_ONE / STANDARD_WIDTH && startX <= width * SECTION_TWO / STANDARD_WIDTH) {
-                            GlobalParams.params.x = (int) (POINT_TWO_X * width / STANDARD_WIDTH);
-                            GlobalParams.params.y = (int) (POINT_TWO_Y * width / STANDARD_WIDTH);
+                            GlobalParams.params.x = (int) (POINT_TWO_X);
+                            GlobalParams.params.y = (int) (POINT_TWO_Y);
 
                             //iv_section.setBackgroundResource(R.drawable.section2);
                             if (GlobalParams.bar != null) {
                                 GlobalParams.bar.setTitle("你不知道的冷新闻");
                             }
                             GlobalParams.currentPos = 1;
-                            GlobalParams.LISTVIEW_HEIGHT = 0;
 
 
                         } else if (startX > width * SECTION_TWO / STANDARD_WIDTH && startX <= width * SECTION_THREE / STANDARD_WIDTH) {
-                            GlobalParams.params.x = (int) (POINT_THREE_X * width / STANDARD_WIDTH);
-                            GlobalParams.params.y = (int) (POINT_THREE_Y * width / STANDARD_WIDTH);
+                            GlobalParams.params.x = (int) (POINT_THREE_X);
+                            GlobalParams.params.y = (int) (POINT_THREE_Y);
 
                             //iv_section.setBackgroundResource(R.drawable.section3);
                             if (GlobalParams.bar != null) {
                                 GlobalParams.bar.setTitle("同步你的关注热度");
                             }
                             GlobalParams.currentPos = 2;
-                            GlobalParams.LISTVIEW_HEIGHT = 0;
 
                         } else if (startX > width * SECTION_THREE / STANDARD_WIDTH && startX <= width) {
-                            GlobalParams.params.x = (int) (POINT_FOUR_X * width / STANDARD_WIDTH);
-                            GlobalParams.params.y = (int) (POINT_FOUR_Y * width / STANDARD_WIDTH);
+                            GlobalParams.params.x = (int) (POINT_FOUR_X);
+                            GlobalParams.params.y = (int) (POINT_FOUR_Y);
 
                             //iv_section.setBackgroundResource(R.drawable.section4);
                             if (GlobalParams.bar != null) {
                                 GlobalParams.bar.setTitle("触摸时下热点所在");
                             }
                             GlobalParams.currentPos = 3;
-                            GlobalParams.LISTVIEW_HEIGHT = 0;
 
                         }
 
@@ -267,10 +355,10 @@ public class FragmentButton extends Fragment {
         GlobalParams.params.gravity = Gravity.LEFT + Gravity.TOP;
 
         // 指定距离屏幕左边的距离 必须与 Gravity.LEFT同时使用
-        GlobalParams.params.x = (int) (POINT_ONE_X * width / STANDARD_WIDTH);
+        GlobalParams.params.x = (int) (POINT_FOUR_X);
         //GlobalParams.params.x = 75;
         // 指定距离屏幕上边的距离 必须与 Gravity.TOP同时使用
-        GlobalParams.params.y = POINT_ONE_Y * width / STANDARD_WIDTH;
+        GlobalParams.params.y = POINT_FOUR_Y;
 
         // 土司的宽高
         GlobalParams.params.height = (int) (SUN_WIDTH * width / STANDARD_WIDTH);
@@ -290,6 +378,10 @@ public class FragmentButton extends Fragment {
     }
 
     private void delayNotifyChangeNews() {
+
+        GlobalParams.LISTVIEW_HEIGHT = 0;
+        GlobalParams.LISTVIEW_ERROR = 0;
+
         Handler handler = new Handler();
         handler.postDelayed(new Runnable() {
             @Override
@@ -322,5 +414,15 @@ public class FragmentButton extends Fragment {
         }.setReturnType(new TypeToken<NewsFeed>() {
         }.getType()));
         request.execute();
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+
+        if (GlobalParams.SUN_FLAG == false) {
+            GlobalParams.view.setVisibility(View.GONE);
+        }
+
     }
 }

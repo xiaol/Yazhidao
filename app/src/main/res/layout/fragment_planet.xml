@@ -7,7 +7,7 @@
         android:id="@+id/iv_section"
         android:layout_width="match_parent"
         android:layout_height="240dip"
-        android:background="@drawable/section1" />
+        android:background="@drawable/section4" />
 
     <com.news.yazhidao.UI.MyListView
         android:id="@+id/mNewsShowList"
