@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <!-- From: file:/Users/Berkeley/AndroidStudioProjects/Yazhidao/umeng_social_sdk_library/build/intermediates/bundles/debug/res/values/values.xml -->
+    <!-- From: file:/Users/fengjigang/Developer/YaZhiDao/news_yazhidao_gradle/umeng_social_sdk_library/build/intermediates/bundles/debug/res/values/values.xml -->
     <eat-comment/>
     <color name="umeng_socialize_color_group">#2c3035</color>
     <color name="umeng_socialize_comments_bg">#F4F4F4</color>

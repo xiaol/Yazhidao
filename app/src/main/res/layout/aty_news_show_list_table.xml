@@ -79,6 +79,8 @@
         android:layout_marginBottom="10dp"
         android:layout_marginTop="10dp"
         android:src="@drawable/list_table_devider" />
+    <LinearLayout android:id="@+id/mTableCellWrapper" android:layout_width="match_parent" android:layout_height="match_parent" android:orientation="vertical">
+    </LinearLayout>
     <RelativeLayout
         android:id="@+id/mTablePullDown"
         android:layout_width="match_parent"

@@ -3,4 +3,4 @@
 	<item android:state_pressed="true" android:drawable="@drawable/shake_umeng_socialize_close_pressed" />
 	<item android:drawable="@drawable/shake_umeng_socialize_close" />
 </selector>
-<!-- From: file:/Users/Berkeley/AndroidStudioProjects/Yazhidao/umeng_social_sdk_library/src/main/res/drawable/shake_umeng_socialize_close_button_style.xml --><!-- From: file:/Users/Berkeley/AndroidStudioProjects/Yazhidao/umeng_social_sdk_library/build/intermediates/bundles/debug/res/drawable/shake_umeng_socialize_close_button_style.xml -->
+<!-- From: file:/Users/fengjigang/Developer/YaZhiDao/news_yazhidao_gradle/umeng_social_sdk_library/src/main/res/drawable/shake_umeng_socialize_close_button_style.xml --><!-- From: file:/Users/fengjigang/Developer/YaZhiDao/news_yazhidao_gradle/umeng_social_sdk_library/build/intermediates/bundles/debug/res/drawable/shake_umeng_socialize_close_button_style.xml -->

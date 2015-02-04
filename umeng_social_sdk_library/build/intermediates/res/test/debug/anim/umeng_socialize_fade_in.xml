@@ -7,4 +7,4 @@
         android:fromAlpha="0.0"
         android:toAlpha="1.0" />
 
-</set><!-- From: file:/Users/Berkeley/AndroidStudioProjects/Yazhidao/umeng_social_sdk_library/src/main/res/anim/umeng_socialize_fade_in.xml --><!-- From: file:/Users/Berkeley/AndroidStudioProjects/Yazhidao/umeng_social_sdk_library/build/intermediates/bundles/debug/res/anim/umeng_socialize_fade_in.xml -->
+</set><!-- From: file:/Users/fengjigang/Developer/YaZhiDao/news_yazhidao_gradle/umeng_social_sdk_library/src/main/res/anim/umeng_socialize_fade_in.xml --><!-- From: file:/Users/fengjigang/Developer/YaZhiDao/news_yazhidao_gradle/umeng_social_sdk_library/build/intermediates/bundles/debug/res/anim/umeng_socialize_fade_in.xml -->
