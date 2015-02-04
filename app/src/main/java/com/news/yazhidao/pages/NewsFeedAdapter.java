@@ -6,21 +6,12 @@ import android.os.Handler;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.WindowManager;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
-import android.widget.BaseAdapter;
-import android.widget.FrameLayout;
-import android.widget.ImageView;
-import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
-import android.widget.TextView;
-
-import com.news.yazhidao.GlobalParams;
+import android.widget.*;
 import com.news.yazhidao.R;
 import com.news.yazhidao.constant.CommonConstant;
 import com.news.yazhidao.entity.NewsFeed;
-import com.news.yazhidao.utils.DeviceInfoUtil;
 import com.news.yazhidao.utils.ImageLoaderHelper;
 import com.news.yazhidao.utils.Logger;
 import com.news.yazhidao.utils.TextUtil;
@@ -38,9 +29,6 @@ public class NewsFeedAdapter extends BaseAdapter {
     private ArrayList<NewsFeed.Channel> mChannelsArr;
     private TreeSet<Integer> mCacheAddedView;
     private NewsFeed mNewsFeed;
-    private WindowManager manager;
-    private int width;
-    private int height;
 
 
     public NewsFeedAdapter(Context mContext, NewsFeed mNewsFeed) {
@@ -50,10 +38,6 @@ public class NewsFeedAdapter extends BaseAdapter {
         this.mCacheAddedView = new TreeSet<Integer>();
         this.animation= AnimationUtils.loadAnimation(mContext, R.anim.news_praise_plus_one);
         handle(mNewsFeed);
-
-        manager = (WindowManager) mContext.getSystemService(Context.WINDOW_SERVICE);
-        width = manager.getDefaultDisplay().getWidth();
-        height = manager.getDefaultDisplay().getHeight();
     }
 
     private void handle(NewsFeed mNewsFeed) {
@@ -88,7 +72,7 @@ public class NewsFeedAdapter extends BaseAdapter {
     }
 
     @Override
-    public View getView(final int position, View convertView, final ViewGroup parent) {
+    public View getView(final int position, View convertView, ViewGroup parent) {
         Logger.i(">>>", "getView " + position + " parent=" + parent);
         final ViewHolder holder;
         if (convertView == null) {
@@ -161,15 +145,10 @@ public class NewsFeedAdapter extends BaseAdapter {
                             }
                         });
                         layout.addView(childView, layout.getChildCount() - 2);
-
                     }
                 }
-
-                Logger.i(TAG, "onclick pull down ");
+                Logger.i(TAG,"onclick pull down ");
                 holder.mTablePullDown.setVisibility(View.GONE);
-
-                setListViewHeight();
-
             }
         });
         return finalLayout;
@@ -186,48 +165,13 @@ public class NewsFeedAdapter extends BaseAdapter {
         public RelativeLayout mTableHeaderWrapper;
     }
 
-    private void setListViewHeight(){
-
-        switch (height){
-
-            case 1920:
-
-                GlobalParams.LISTVIEW_ERROR += 1700;
-
-                break;
-
-            case 1800:
-                GlobalParams.LISTVIEW_ERROR += 1420;
-                break;
-
-            case 1776:
-                GlobalParams.LISTVIEW_ERROR += 1700;
-                break;
-
-            case 1280:
-                GlobalParams.LISTVIEW_ERROR += 1150;
-                break;
-
-            case 800:
-                GlobalParams.LISTVIEW_ERROR += 840;
-                break;
-
-            case 854:
-                GlobalParams.LISTVIEW_ERROR += 840;
-                break;
-        }
-
-
-
-    }
-
     /**
      * 打开新闻详情页
      * @param channelName
      * @param element
      */
     private void startNewsDetailPage(String channelName, NewsFeed.Element element){
-        Intent newsDetail=new Intent(mContext,NewsDetailActivity.class);
+        Intent newsDetail=new Intent(mContext,NewsDetailAty.class);
         newsDetail.putExtra(CommonConstant.KEY_NEWS_DETAIL,element);
         newsDetail.putExtra(CommonConstant.KEY_NEWS_TITLE,channelName);
         mContext.startActivity(newsDetail);

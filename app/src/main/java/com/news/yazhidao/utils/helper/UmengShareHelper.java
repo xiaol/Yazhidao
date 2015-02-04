@@ -1,6 +1,7 @@
 package com.news.yazhidao.utils.helper;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.text.TextUtils;
@@ -14,9 +15,9 @@ import com.news.yazhidao.entity.User;
 import com.news.yazhidao.net.MyAppException;
 import com.news.yazhidao.net.NetworkRequest;
 import com.news.yazhidao.net.UserLoginCallBack;
+import com.news.yazhidao.pages.UserLoginAty;
 import com.news.yazhidao.utils.DeviceInfoUtil;
 import com.news.yazhidao.utils.Logger;
-import com.news.yazhidao.utils.TextUtil;
 import com.umeng.socialize.bean.RequestType;
 import com.umeng.socialize.bean.SHARE_MEDIA;
 import com.umeng.socialize.bean.SocializeEntity;
@@ -41,79 +42,81 @@ public class UmengShareHelper {
 
 
     public static void oAuthSina(final Context mContext, final NewsFeed.Element news) {
-            mController.getConfig().setSsoHandler(new SinaSsoHandler());
-            mController.doOauthVerify(mContext, SHARE_MEDIA.SINA, new SocializeListeners.UMAuthListener() {
-                @Override
-                public void onStart(SHARE_MEDIA platform) {
-                    Toast.makeText(mContext, "授权开始", Toast.LENGTH_SHORT).show();
-                }
+        mController.getConfig().setSsoHandler(new SinaSsoHandler());
+        mController.doOauthVerify(mContext, SHARE_MEDIA.SINA, new SocializeListeners.UMAuthListener() {
+            @Override
+            public void onStart(SHARE_MEDIA platform) {
+                Toast.makeText(mContext, "授权开始", Toast.LENGTH_SHORT).show();
+            }
 
-                @Override
-                public void onError(SocializeException e, SHARE_MEDIA platform) {
-                    Toast.makeText(mContext, "授权失败", Toast.LENGTH_SHORT).show();
-                }
+            @Override
+            public void onError(SocializeException e, SHARE_MEDIA platform) {
+                Toast.makeText(mContext, "授权失败", Toast.LENGTH_SHORT).show();
+            }
 
-                @Override
-                public void onComplete(Bundle value, SHARE_MEDIA platform) {
-                    mController.getPlatformInfo(mContext, platform, new SocializeListeners.UMDataListener() {
+            @Override
+            public void onComplete(Bundle value, SHARE_MEDIA platform) {
+                mController.getPlatformInfo(mContext, platform, new SocializeListeners.UMDataListener() {
 
-                        @Override
-                        public void onStart() {
+                    @Override
+                    public void onStart() {
 
-                        }
+                    }
 
-                        @Override
-                        public void onComplete(int i, Map<String, Object> value) {
-                            HashMap<String, Object> params = new HashMap<String, Object>();
-                            params.put("uuid", DeviceInfoUtil.getUUID(mContext));
-                            params.put("sinaId", String.valueOf(value.get("uid")));
-                            params.put("sinaToken", String.valueOf(value.get("access_token")));
-                            params.put("sinaProfileImageUrl", value.get("profile_image_url"));
-                            params.put("gender", value.get("gender"));
-                            params.put("screenName", value.get("screen_name"));
-                            Logger.i("sina auth", value.toString());
-                            NetworkRequest request = new NetworkRequest(HttpConstant.URL_USER_LOGIN, NetworkRequest.RequestMethod.GET);
-                            request.getParams = params;
-                            request.setCallback(new UserLoginCallBack<User>() {
+                    @Override
+                    public void onComplete(int i, Map<String, Object> value) {
+                        HashMap<String, Object> params = new HashMap<String, Object>();
+                        params.put("uuid", DeviceInfoUtil.getUUID(mContext));
+                        params.put("sinaId", String.valueOf(value.get("uid")));
+                        params.put("sinaToken", String.valueOf(value.get("access_token")));
+                        params.put("sinaProfileImageUrl", value.get("profile_image_url"));
+                        params.put("gender", value.get("gender"));
+                        params.put("screenName", value.get("screen_name"));
+                        Logger.i("sina auth", value.toString());
+                        NetworkRequest request = new NetworkRequest(HttpConstant.URL_USER_LOGIN, NetworkRequest.RequestMethod.GET);
+                        request.getParams = params;
+                        request.setCallback(new UserLoginCallBack<User>() {
 
-                                @Override
-                                public void success(User user) {
+                            @Override
+                            public void success(User user) {
 
-                                    Logger.i(TAG, "login success "+user);
-                                    if(user!=null){
-                                        Logger.i(TAG, "login success "+user.getSinaToken());
-                                    }
-                                    if(news!=null){
-                                        shareToPlatform(mContext, news, SHARE_MEDIA.SINA);
-                                    }
-                                    //TODO 保存用户信息并修改用户登陆的头像信息等
-                                    UserDataManager.saveUser(user);
+                                Logger.i(TAG, "login success " + user);
+                                if (user != null) {
+                                    Logger.i(TAG, "login success " + user.getSinaToken());
                                 }
+                                if (news != null) {
+                                    shareToPlatform(mContext, news, SHARE_MEDIA.SINA);
+                                } else {
+                                    mContext.sendBroadcast(new Intent(UserLoginAty.ACTION_USER_LOGIN));
 
-                                @Override
-                                public void failed(MyAppException exception) {
-                                    Logger.e(TAG, "login failed " + exception.getMessage());
                                 }
-                            }.setReturnType(new TypeToken<User>() {
-                            }.getType()));
-                            request.execute();
-                            Toast.makeText(mContext, value.toString(), Toast.LENGTH_LONG).show();
-                        }
-                    });
-                }
+                                //TODO 保存用户信息并修改用户登陆的头像信息等
+                                UserDataManager.saveUser(user);
+                            }
 
-                @Override
-                public void onCancel(SHARE_MEDIA platform) {
-                    Toast.makeText(mContext, "授权取消", Toast.LENGTH_SHORT).show();
-                }
-            });
+                            @Override
+                            public void failed(MyAppException exception) {
+                                Logger.e(TAG, "login failed " + exception.getMessage());
+                            }
+                        }.setReturnType(new TypeToken<User>() {
+                        }.getType()));
+                        request.execute();
+                    }
+                });
+            }
 
-            mHandler.postDelayed(new Runnable() { //防止网络异常
-                @Override
-                public void run() {
-                }
-            }, 10000);
-        }
+            @Override
+            public void onCancel(SHARE_MEDIA platform) {
+                Toast.makeText(mContext, "授权取消", Toast.LENGTH_SHORT).show();
+            }
+        });
+
+        mHandler.postDelayed(new Runnable() { //防止网络异常
+            @Override
+            public void run() {
+            }
+        }, 10000);
+    }
 
 
     /**
@@ -142,10 +145,10 @@ public class UmengShareHelper {
     /**
      * 分享到新浪微博  授权成功才可成功分享
      */
-    public static void shareSina(final Context mContext, NewsFeed.Element news) {
+    public static void shareSina(Context mContext, NewsFeed.Element news) {
         if (!isAuthenticated(mContext, SHARE_MEDIA.SINA)) {
             Toast.makeText(mContext, "新浪还未授权", Toast.LENGTH_SHORT).show();
-            oAuthSina(mContext,news);
+            oAuthSina(mContext, news);
         } else {
             shareToPlatform(mContext, news, SHARE_MEDIA.SINA);
         }
@@ -153,8 +156,8 @@ public class UmengShareHelper {
 
     private static void shareToPlatform(final Context mContext, NewsFeed.Element news, SHARE_MEDIA SM) {
         mController.setShareContent(news.sourceUrl);
-        if(!TextUtils.isEmpty(news.imgUrl)){
-            mController.setShareImage(new UMImage(mContext,news.imgUrl));
+        if (!TextUtils.isEmpty(news.imgUrl)) {
+            mController.setShareImage(new UMImage(mContext, news.imgUrl));
         }
         mController.postShare(mContext, SM, new SocializeListeners.SnsPostListener() {
             @Override
