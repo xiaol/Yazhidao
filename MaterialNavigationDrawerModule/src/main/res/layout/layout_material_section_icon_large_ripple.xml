@@ -18,7 +18,8 @@
         android:alpha="0.54"
         android:layout_marginLeft="16dp"
         android:layout_marginStart="16dp"
-        android:layout_centerVertical="true" />
+        android:layout_centerInParent="true"
+        />
 
     <TextView
         android:layout_width="match_parent"

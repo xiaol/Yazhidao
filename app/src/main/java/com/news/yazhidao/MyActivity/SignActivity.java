@@ -13,13 +13,9 @@ import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 
-import com.google.gson.reflect.TypeToken;
 import com.news.yazhidao.MyFragment.KitkatStatusBar;
 import com.news.yazhidao.R;
 import com.news.yazhidao.constant.HttpConstant;
-import com.news.yazhidao.entity.NewsFeed;
-import com.news.yazhidao.net.JsonCallback;
-import com.news.yazhidao.net.MyAppException;
 import com.news.yazhidao.net.NetworkRequest;
 
 /**
@@ -46,15 +42,14 @@ public class SignActivity extends Activity {
         ll_config.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
-
+                //loadNewsData("123","456",new String[]{"涨姿势"});
                 Intent intent = new Intent(SignActivity.this, KitkatStatusBar.class);
                 startActivity(intent);
+
             }
         });
 
     }
-
 
     //自定义适配器
     class MyAdapter extends BaseAdapter {
@@ -109,21 +104,9 @@ public class SignActivity extends Activity {
             url = url + "&tag=" + tagStr[i];
         }
 
-
+        url = url + "?isNormal=0";
         NetworkRequest request = new NetworkRequest(url, NetworkRequest.RequestMethod.GET);
-        request.setCallback(new JsonCallback<NewsFeed>() {
-
-            @Override
-            public void success(NewsFeed result) {
-                System.out.println("success");
-
-            }
-
-            public void failed(MyAppException exception) {
-                System.out.println("failure");
-            }
-        }.setReturnType(new TypeToken<NewsFeed>() {
-        }.getType()));
+        //request.setCallback();
         request.execute();
     }
 }

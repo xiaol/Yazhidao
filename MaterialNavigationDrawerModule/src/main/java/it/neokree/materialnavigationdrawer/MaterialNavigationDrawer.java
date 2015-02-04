@@ -727,8 +727,8 @@ public abstract class MaterialNavigationDrawer<Fragment> extends ActionBarActivi
             }
 
         }
-        //title = section.getTitle();
-        title = "你未见的时代痛楚";
+        title = section.getTitle();
+        //title = "你未见的时代痛楚";
 //        section.setTitle(title);
         currentSection = section;
         section.select();

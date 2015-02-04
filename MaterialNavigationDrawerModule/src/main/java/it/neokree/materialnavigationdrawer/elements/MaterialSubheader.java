@@ -42,10 +42,11 @@ public class MaterialSubheader {
         // inflate the text
         text = new TextView(ctx);
         Utils.setAlpha(text,0.54f);
-        text.setTextSize(TypedValue.COMPLEX_UNIT_SP,14);
+        text.setTextSize(TypedValue.COMPLEX_UNIT_SP,25);
         text.setGravity(Gravity.START);
         LinearLayout.LayoutParams paramsText = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
-        paramsText.setMargins((int) (16 * density),0, (int) (16 * density) , (int) (4 * density));
+        paramsText.setMargins((int) (50 * density),0, (int) (50 * density) , (int) (4 * density));
+
 
         layout.addView(text,paramsText);
         this.view = layout;
@@ -65,7 +66,7 @@ public class MaterialSubheader {
         }
 
         // set attributes to the view
-        text.setTextColor(Color.BLACK);
+        text.setTextColor(Color.RED);
 
     }
 

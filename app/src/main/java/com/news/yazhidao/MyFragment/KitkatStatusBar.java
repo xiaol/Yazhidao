@@ -17,7 +17,7 @@ public class KitkatStatusBar extends MaterialNavigationDrawer {
     @Override
     public void init(Bundle savedInstanceState) {
         // add accounts
-        MaterialAccount account = new MaterialAccount(this.getResources(),"Kristina","kristina@gmail.com", R.drawable.profile, R.drawable.bj);
+        MaterialAccount account = new MaterialAccount(this.getResources(),"Kristina","", R.drawable.profile, R.drawable.bj);
         this.addAccount(account);
 
         //create sections

@@ -15,8 +15,7 @@
         android:icon="@drawable/icon144"
         android:label="@string/app_name"
         android:theme="@style/AppTheme"
-        android:name=".application.YaZhiDaoApplication"
-        >
+        android:name=".application.YaZhiDaoApplication">
 
         <activity android:name=".MyActivity.Settings" />
         <activity
@@ -26,28 +25,35 @@
 
         <activity
             android:name=".MyActivity.SignActivity"
-            android:screenOrientation="portrait"/>
+            android:screenOrientation="portrait">
 
-
-        <!-- ###################添加UmengAppkey###################### -->
-        <meta-data
-            android:name="UMENG_APPKEY"
-            android:value="54cdc89dfd98c5430f000618" >
-        </meta-data>
-        <activity android:name="com.news.yazhidao.MyFragment.CustomDrawerHeader" android:theme="@style/CustomHeaderLight" >
-            <!--<intent-filter>-->
-                <!--<action android:name="android.intent.action.MAIN" />-->
-
-                <!--<category android:name="android.intent.category.LAUNCHER" />-->
-            <!--</intent-filter>-->
-        </activity>
-
-        <activity android:name="com.news.yazhidao.MyFragment.KitkatStatusBar" android:theme="@style/KitkatStatusBar" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+        </activity>
+
+
+        <!-- ###################添加UmengAppkey###################### -->
+        <meta-data
+            android:name="UMENG_APPKEY"
+            android:value="54cdc89dfd98c5430f000618"></meta-data>
+
+        <activity
+            android:name="com.news.yazhidao.MyFragment.CustomDrawerHeader"
+            android:theme="@style/CustomHeaderLight">
+            <!--<intent-filter>-->
+            <!--<action android:name="android.intent.action.MAIN" />-->
+
+            <!--<category android:name="android.intent.category.LAUNCHER" />-->
+            <!--</intent-filter>-->
+        </activity>
+
+        <activity
+            android:name="com.news.yazhidao.MyFragment.KitkatStatusBar"
+            android:theme="@style/KitkatStatusBar">
+
         </activity>
 
     </application>
