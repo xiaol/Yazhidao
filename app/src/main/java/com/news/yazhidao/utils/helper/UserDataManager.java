@@ -16,7 +16,7 @@ public class UserDataManager{
 	public static synchronized void saveUser(User user){
 		String userJsonString = user.toJsonString();
 		logout();
-		SettingHelper.save(UserInfoConstant.SETTING_FILE, UserInfoConstant.KEY_USER_ID, user.getUUID());
+		SettingHelper.save(UserInfoConstant.SETTING_FILE, UserInfoConstant.KEY_USER_ID, user.getUuid());
 		SettingHelper.save(UserInfoConstant.SETTING_FILE, UserInfoConstant.KEY_USER_INFO, userJsonString);
 	}
 	
