@@ -18,7 +18,7 @@
         android:layout_width="15dip"
         android:layout_height="15dip"
         android:layout_marginTop="10dip"
-        android:layout_marginLeft="28dip"
+        android:layout_marginLeft="32dip"
         android:background="@drawable/rightmark"
         />
 </FrameLayout>

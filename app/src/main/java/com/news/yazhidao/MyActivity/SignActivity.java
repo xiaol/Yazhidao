@@ -39,6 +39,10 @@ public class SignActivity extends Activity {
     private GridView gv_channels;
     private DonateGridViewAdapter adapter;
     private LinearLayout ll_config;
+    private User user;
+    private String uuid;
+    private String sinaId;
+    private String sinaToken;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,6 +50,13 @@ public class SignActivity extends Activity {
         setContentView(R.layout.fra_book);
 
         initImagelist();
+
+        user = UserDataManager.readUser();
+        if (user != null) {
+            uuid = user.getUuid();
+            sinaId = user.getSinaId();
+            sinaToken = user.getSinaToken();
+        }
 
         gv_channels = (GridView) findViewById(R.id.gv_channels);
 
@@ -80,7 +91,7 @@ public class SignActivity extends Activity {
                     }
                 }
 
-                loadNewsData("123", "456", names);
+                setSubscribe(uuid, sinaId,sinaToken, names);
                 Intent intent = new Intent(SignActivity.this, KitkatStatusBar.class);
                 startActivity(intent);
 
@@ -162,7 +173,7 @@ public class SignActivity extends Activity {
 
     }
 
-    private static void loadNewsData(String uuid, String sinaId, List<String> tagStr) {
+    private static void setSubscribe(String uuid, String sinaId,String sinaToken, List<String> tagStr) {
 
         String url = HttpConstant.URL_USER_LOGIN + "uuid=" + uuid + "&sinaId=" + sinaId;
 
@@ -170,21 +181,21 @@ public class SignActivity extends Activity {
             url = url + "&tag=" + tagStr.get(i);
         }
 
-        url = url + "?isNormal=0";
+        url = url + "&isNormal=0";
         NetworkRequest request = new NetworkRequest(url, NetworkRequest.RequestMethod.GET);
         request.setCallback(new UserLoginCallBack<User>() {
-            @Override
-            public void success(User result) {
-                if(result != null) {
-                    UserDataManager.saveUser(result);
-                }
-            }
+                    @Override
+                    public void success(User result) {
+                        if (result != null) {
+                            UserDataManager.saveUser(result);
+                        }
+                    }
 
-            @Override
-            public void failed(MyAppException exception) {
-                System.out.println("failure");
-            }
-        }.setReturnType(new TypeToken<User>(){
+                    @Override
+                    public void failed(MyAppException exception) {
+                        System.out.println("failure");
+                    }
+                }.setReturnType(new TypeToken<User>() {
 
                 }.getType())
         );
