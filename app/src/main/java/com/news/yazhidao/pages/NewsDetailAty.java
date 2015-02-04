@@ -18,7 +18,6 @@ import com.news.yazhidao.net.JsonCallback;
 import com.news.yazhidao.net.MyAppException;
 import com.news.yazhidao.net.NetworkRequest;
 import com.news.yazhidao.net.TextUtils;
-import com.news.yazhidao.utils.DeviceInfoUtil;
 import com.news.yazhidao.utils.ImageLoaderHelper;
 import com.news.yazhidao.utils.Logger;
 import com.news.yazhidao.utils.gifview.GifView;
@@ -26,7 +25,7 @@ import com.news.yazhidao.utils.gifview.GifView;
 /**
  * Created by fengjigang on 15/1/21.
  */
-public class NewsDetailActivity extends BaseActivity implements View.OnClickListener {
+public class NewsDetailAty extends BaseActivity implements View.OnClickListener {
     private static final String TAG = "NewsDetailActivity";
     private ListView mNewsDetailListContent;
     private NewsDetailAdapter mNewsDetailAdapter;
@@ -66,13 +65,13 @@ public class NewsDetailActivity extends BaseActivity implements View.OnClickList
             public void success(NewsDetail result) {
                 if (result != null && result.content != null && result.content.size() > 0) {
                     mNewsDetailListContent.addHeaderView(generateListHeader());
-                    mNewsDetailAdapter = new NewsDetailAdapter(NewsDetailActivity.this, result, mNewsEle.imgUrl,finalNewsId);
+                    mNewsDetailAdapter = new NewsDetailAdapter(NewsDetailAty.this, result, mNewsEle.imgUrl,finalNewsId);
                     mNewsDetailListContent.setAdapter(mNewsDetailAdapter);
                     mNewsDetailLoadingWrapper.setVisibility(View.GONE);
                     mNewsDetailCilckRefresh.setVisibility(View.GONE);
                 } else {
-                    Toast.makeText(NewsDetailActivity.this, "此条新闻暂时无法查看", Toast.LENGTH_SHORT).show();
-                    NewsDetailActivity.this.finish();
+                    Toast.makeText(NewsDetailAty.this, "此条新闻暂时无法查看", Toast.LENGTH_SHORT).show();
+                    NewsDetailAty.this.finish();
                 }
             }
 
@@ -81,7 +80,7 @@ public class NewsDetailActivity extends BaseActivity implements View.OnClickList
                 Logger.i(TAG, ">>> failed result " + exception.getMessage());
                 MyAppException.ExceptionStatus status = exception.getExceptionStatus();
                 if (status == MyAppException.ExceptionStatus.ServerException || status == MyAppException.ExceptionStatus.TimeOutException) {
-                    Toast.makeText(NewsDetailActivity.this, "网络不给力", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(NewsDetailAty.this, "网络不给力", Toast.LENGTH_SHORT).show();
                 }
                 mNewsDetailLoadingWrapper.setVisibility(View.GONE);
                 mNewsDetailCilckRefresh.setVisibility(View.VISIBLE);
@@ -106,12 +105,12 @@ public class NewsDetailActivity extends BaseActivity implements View.OnClickList
         }else{
             mNewsDetailHeaderWrapper.setVisibility(View.VISIBLE);
             mNewsDetailHeaderTitleNoImgWrapper.setVisibility(View.GONE);
-            ImageLoaderHelper.dispalyImage(NewsDetailActivity.this, mNewsEle.imgUrl, mNewsDetailHeaderImg);
+            ImageLoaderHelper.dispalyImage(NewsDetailAty.this, mNewsEle.imgUrl, mNewsDetailHeaderImg);
 
         }
         mNewsDetailHeaderTitleNoImg.setText(mNewsEle.title);
         mNewsDetailHeaderTitle.setText(mNewsEle.title);
-        String originAndTime = String.format(NewsDetailActivity.this.getResources().getString(R.string.news_detail_origin_and_time), mNewsEle.sourceSiteName, mNewsEle.updateTime);
+        String originAndTime = String.format(NewsDetailAty.this.getResources().getString(R.string.news_detail_origin_and_time), mNewsEle.sourceSiteName, mNewsEle.updateTime);
         mNewsDetailHeaderOriginAndTime.setText(originAndTime);
         mNewsDetailHeaderOriginAndTimeNoImg.setText(originAndTime);
         listHeader.setEnabled(false);

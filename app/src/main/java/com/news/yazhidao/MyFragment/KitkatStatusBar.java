@@ -17,13 +17,14 @@ public class KitkatStatusBar extends MaterialNavigationDrawer {
     @Override
     public void init(Bundle savedInstanceState) {
         // add accounts
-        MaterialAccount account = new MaterialAccount(this.getResources(),"Kristina","kristina@gmail.com", R.drawable.profile, R.drawable.bj);
+        MaterialAccount account = new MaterialAccount(this.getResources(),"Kristina","", R.drawable.profile, R.drawable.bj);
         this.addAccount(account);
 
         //create sections
         GlobalParams.bar = this.getSupportActionBar();
 
         GlobalParams.section = newSection("主页", R.drawable.my36,new FragmentButton()).setSectionColor(Color.parseColor("#FF7F66"));
+
         this.addSection(GlobalParams.section);
         this.addSection(newSection("设置", R.drawable.shez,new SettingButton()).setSectionColor(Color.parseColor("#FF7F66")));
         this.addSection(newSection("关于", R.drawable.guanyu,new AboutButton()).setSectionColor(Color.parseColor("#FF7F66")));

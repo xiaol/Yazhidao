@@ -5,7 +5,6 @@ import com.news.yazhidao.utils.GsonUtil;
 
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.UUID;
 
 /**
  * Created by fengjigang on 15/2/2.
@@ -45,11 +44,11 @@ public class User implements Serializable{
 
     private String sinaProfileImageUrl;
 
-    public String getUUID() {
+    public String getUuid() {
         return uuid;
     }
 
-    public void setUUID(String uuid) {
+    public void setUuid(String uuid) {
         this.uuid = uuid;
     }
 

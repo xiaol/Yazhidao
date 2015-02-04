@@ -1,14 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@null"
     >
 
     <ImageView
-        android:id="@+id/iv_channel"
-        android:layout_width="100dip"
-        android:layout_height="100dip"
-        android:layout_marginLeft="25dip"
+        android:id="@+id/iv_image"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:layout_marginLeft="25dp"
         />
 
-</LinearLayout>
+
+    <ImageView
+        android:id="@+id/iv_rightmark"
+        android:layout_width="15dip"
+        android:layout_height="15dip"
+        android:layout_marginTop="10dip"
+        android:layout_marginLeft="28dip"
+        android:background="@drawable/rightmark"
+        />
+</FrameLayout>

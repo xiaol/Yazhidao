@@ -240,7 +240,7 @@ public class NewsDetailAdapter extends BaseAdapter {
      * @param element
      */
     private void startNewsDetailPage(String channelName, NewsFeed.Element element) {
-        Intent newsDetail = new Intent(mContext, NewsDetailActivity.class);
+        Intent newsDetail = new Intent(mContext, NewsDetailAty.class);
         newsDetail.putExtra(CommonConstant.KEY_NEWS_DETAIL, element);
         newsDetail.putExtra(CommonConstant.KEY_NEWS_TITLE, channelName);
         mContext.startActivity(newsDetail);

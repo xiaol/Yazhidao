@@ -9,5 +9,7 @@
     <color name="common_theme_color">#ff7f66</color>
     <color name="news_detail_item_relate_bg">#e1e1e1</color>
     <color name="news_detail_item_relate_divider">#919191</color>
+    <color name="news_detail_relate_read">#EBEAF1</color>
     <color name="border_text">#000000</color>
+
 </resources>

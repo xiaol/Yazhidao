@@ -11,39 +11,22 @@
     <uses-permission android:name="android.permission.GET_TASKS" />
 
     <application
+        android:name=".application.YaZhiDaoApplication"
         android:allowBackup="true"
         android:icon="@drawable/icon144"
         android:label="@string/app_name"
-        android:theme="@style/AppTheme"
-        android:name=".application.YaZhiDaoApplication"
-        >
+        android:theme="@style/AppTheme">
 
         <activity android:name=".MyActivity.Settings" />
         <activity
-            android:name=".pages.NewsDetailActivity"
+            android:name=".pages.NewsDetailAty"
             android:screenOrientation="portrait"
             android:theme="@android:style/Theme.NoTitleBar"></activity>
 
         <activity
             android:name=".MyActivity.SignActivity"
-            android:screenOrientation="portrait"/>
+            android:screenOrientation="portrait">
 
-
-        <!-- ###################添加UmengAppkey###################### -->
-        <meta-data
-            android:name="UMENG_APPKEY"
-            android:value="54cdc89dfd98c5430f000618" >
-        </meta-data>
-        <!-- 分享内容编辑页 -->
-        <activity
-            android:name="com.umeng.socialize.view.ShareActivity"
-            android:configChanges="orientation|keyboard"
-            android:launchMode="singleTask"
-            android:noHistory="true"
-            android:theme="@style/Theme.UMDialog"
-            android:windowSoftInputMode="stateVisible|adjustResize" >
-        </activity>
-        <activity android:name="com.news.yazhidao.MyFragment.CustomDrawerHeader" android:theme="@style/CustomHeaderLight" >
             <!--<intent-filter>-->
                 <!--<action android:name="android.intent.action.MAIN" />-->
 
@@ -51,14 +34,42 @@
             <!--</intent-filter>-->
         </activity>
 
-        <activity android:name="com.news.yazhidao.MyFragment.KitkatStatusBar" android:theme="@style/KitkatStatusBar" >
+
+        <!-- ###################添加UmengAppkey###################### -->
+        <meta-data
+            android:name="UMENG_APPKEY"
+            android:value="54cdc89dfd98c5430f000618"></meta-data>
+
+        <!-- 分享内容编辑页 -->
+        <activity
+            android:name="com.umeng.socialize.view.ShareActivity"
+            android:configChanges="orientation|keyboard"
+            android:launchMode="singleTask"
+            android:noHistory="true"
+            android:theme="@style/Theme.UMDialog"
+            android:windowSoftInputMode="stateVisible|adjustResize"></activity>
+        <activity
+            android:name="com.news.yazhidao.MyFragment.CustomDrawerHeader"
+            android:theme="@style/CustomHeaderLight">
+            <!--<intent-filter>-->
+            <!--<action android:name="android.intent.action.MAIN" />-->
+
+            <!--<category android:name="android.intent.category.LAUNCHER" />-->
+            <!--</intent-filter>-->
+        </activity>
+
+        <activity
+            android:name="com.news.yazhidao.MyFragment.KitkatStatusBar"
+            android:theme="@style/KitkatStatusBar">
+
+        </activity>
+        <activity android:name=".pages.UserLoginAty" android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
     </application>
 
 </manifest>
