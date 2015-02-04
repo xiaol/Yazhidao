@@ -4,17 +4,27 @@ import com.google.gson.reflect.TypeToken;
 import com.news.yazhidao.utils.GsonUtil;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 
 /**
  * Created by fengjigang on 15/2/2.
  */
 public class User implements Serializable{
-    private String UUID;
+    private String uuid;
     private String sinaId;
     private String sinaToken;
     private String gender;
     private String createTime;
     private String screenName;
+    private ArrayList<String> subscribedTags;
+
+    public ArrayList<String> getSubscribedTags() {
+        return subscribedTags;
+    }
+
+    public void setSubscribedTags(ArrayList<String> subscribedTags) {
+        this.subscribedTags = subscribedTags;
+    }
 
     public String getCreateTime() {
         return createTime;
@@ -35,11 +45,11 @@ public class User implements Serializable{
     private String sinaProfileImageUrl;
 
     public String getUUID() {
-        return UUID;
+        return uuid;
     }
 
-    public void setUUID(String UUID) {
-        this.UUID = UUID;
+    public void setUUID(String uuid) {
+        this.uuid = uuid;
     }
 
     public String getSinaId() {
@@ -75,6 +85,11 @@ public class User implements Serializable{
     }
     public String toJsonString(){
         return GsonUtil.serialized(this);
+    }
+
+    @Override
+    public String toString() {
+        return "uuid="+uuid+",sinaId="+sinaId+",sinaToken="+sinaToken+",screenName="+screenName;
     }
 
     public static User parseUser(String userStr) {

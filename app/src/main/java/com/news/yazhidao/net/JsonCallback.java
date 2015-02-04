@@ -29,6 +29,4 @@ public abstract class JsonCallback<T> extends AbstractCallBack<T>{
         this.mReturnType=type;
         return this;
     }
-
-
 }

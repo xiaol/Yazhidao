@@ -20,6 +20,7 @@ import com.news.yazhidao.GlobalParams;
 import com.news.yazhidao.R;
 import com.news.yazhidao.constant.CommonConstant;
 import com.news.yazhidao.entity.NewsFeed;
+import com.news.yazhidao.utils.DeviceInfoUtil;
 import com.news.yazhidao.utils.ImageLoaderHelper;
 import com.news.yazhidao.utils.Logger;
 import com.news.yazhidao.utils.TextUtil;
@@ -96,6 +97,7 @@ public class NewsFeedAdapter extends BaseAdapter {
             holder = new ViewHolder();
             holder.mTableChannelName = (TextView) convertView.findViewById(R.id.mTableChannelName);
             holder.mTableHeaderImg = (ImageView) convertView.findViewById(R.id.mTableHeaderImg);
+//            holder.mTableHeaderImg.setLayoutParams(new RelativeLayout.LayoutParams((int) (DeviceInfoUtil.getScreenWidth()*0.88), (int) (DeviceInfoUtil.getScreenWidth()*0.88*0.55)));
             holder.mTableHeaderTitle = (TextView) convertView.findViewById(R.id.mTableHeaderTitle);
             holder.mTablePullDown = (RelativeLayout) convertView.findViewById(R.id.mTablePullDown);
             holder.mTableSetting = (FrameLayout) convertView.findViewById(R.id.mTableSetting);
@@ -239,6 +241,7 @@ public class NewsFeedAdapter extends BaseAdapter {
     private View generateNewsCell(NewsFeed.Element element,View.OnClickListener listener){
         View childView = LayoutInflater.from(mContext).inflate(R.layout.aty_news_show_list_cell, null);
         ImageView mCellImage = (ImageView) childView.findViewById(R.id.mCellImage);
+//        mCellImage.setLayoutParams(new RelativeLayout.LayoutParams(230,130));
         TextView mCellSourceSiteName = (TextView) childView.findViewById(R.id.mCellSourceSiteName);
         TextView mCellTitle = (TextView) childView.findViewById(R.id.mCellTitle);
         TextView mCellTemperature = (TextView) childView.findViewById(R.id.mCellTemperature);
@@ -251,9 +254,9 @@ public class NewsFeedAdapter extends BaseAdapter {
             @Override
             public void onClick(View v) {
                 if(isPraise){
-                    mCellPraiseImg.setImageResource(R.drawable.news_list_table_cell_unpraised);
+                    mCellPraiseImg.setImageResource(R.drawable.news_list_table_cell_unpraised_in_home);
                     mCellPraiseTv.setText((TextUtil.parsePraiseNumber(mCellPraiseTv.getText().toString())-1)+"人热赞");
-                    mCellPraiseTv.setTextColor(mContext.getResources().getColor(R.color.black));
+                    mCellPraiseTv.setTextColor(mContext.getResources().getColor(R.color.news_list_cell_sourcesitename));
                     isPraise=false;
                 }else{
                     mCellPraisePlus.setVisibility(View.VISIBLE);

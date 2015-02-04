@@ -40,7 +40,6 @@ public class NewsDetailActivity extends BaseActivity implements View.OnClickList
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        Logger.e("uuid", DeviceInfoUtil.getUUID(this));
         mNewsEle = (NewsFeed.Element) getIntent().getSerializableExtra(CommonConstant.KEY_NEWS_DETAIL);
         setContentView(R.layout.aty_news_detail);
         mNewsCommonHeaderLeftBack=findViewById(R.id.mNewsCommonHeaderLeftBack);

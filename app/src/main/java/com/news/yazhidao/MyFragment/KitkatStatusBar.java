@@ -24,6 +24,7 @@ public class KitkatStatusBar extends MaterialNavigationDrawer {
         GlobalParams.bar = this.getSupportActionBar();
 
         GlobalParams.section = newSection("主页", R.drawable.my36,new FragmentButton()).setSectionColor(Color.parseColor("#FF7F66"));
+
         this.addSection(GlobalParams.section);
         this.addSection(newSection("设置", R.drawable.shez,new SettingButton()).setSectionColor(Color.parseColor("#FF7F66")));
         this.addSection(newSection("关于", R.drawable.guanyu,new AboutButton()).setSectionColor(Color.parseColor("#FF7F66")));
