@@ -120,4 +120,4 @@
             android:layout_toRightOf="@id/umeng_socialize_action_pv_im" />
     </RelativeLayout>
 
-</RelativeLayout><!-- From: file:/Users/Berkeley/AndroidStudioProjects/Yazhidao/umeng_social_sdk_library/src/main/res/layout/umeng_socialize_actionbar.xml -->
+</RelativeLayout><!-- From: file:/Users/fengjigang/Developer/YaZhiDao/news_yazhidao_gradle/umeng_social_sdk_library/src/main/res/layout/umeng_socialize_actionbar.xml -->
