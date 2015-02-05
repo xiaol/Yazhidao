@@ -6,9 +6,17 @@ import android.os.Handler;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
-import android.widget.*;
+import android.widget.BaseAdapter;
+import android.widget.FrameLayout;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
+import android.widget.TextView;
+
+import com.news.yazhidao.GlobalParams;
 import com.news.yazhidao.R;
 import com.news.yazhidao.constant.CommonConstant;
 import com.news.yazhidao.entity.NewsFeed;
@@ -29,6 +37,9 @@ public class NewsFeedAdapter extends BaseAdapter {
     private ArrayList<NewsFeed.Channel> mChannelsArr;
     private TreeSet<Integer> mCacheAddedView;
     private NewsFeed mNewsFeed;
+    private int width;
+    private int height;
+    private WindowManager manager;
 
 
     public NewsFeedAdapter(Context mContext, NewsFeed mNewsFeed) {
@@ -38,6 +49,10 @@ public class NewsFeedAdapter extends BaseAdapter {
         this.mCacheAddedView = new TreeSet<Integer>();
         this.animation= AnimationUtils.loadAnimation(mContext, R.anim.news_praise_plus_one);
         handle(mNewsFeed);
+
+        manager = (WindowManager) mContext.getSystemService(Context.WINDOW_SERVICE);
+        width = manager.getDefaultDisplay().getWidth();
+        height = manager.getDefaultDisplay().getHeight();
     }
 
     private void handle(NewsFeed mNewsFeed) {
@@ -149,9 +164,46 @@ public class NewsFeedAdapter extends BaseAdapter {
                 }
                 Logger.i(TAG,"onclick pull down ");
                 holder.mTablePullDown.setVisibility(View.GONE);
+
+                setListViewHeight();
+
             }
         });
         return finalLayout;
+    }
+
+    private void setListViewHeight() {
+
+        switch (height) {
+
+            case 1920:
+
+                GlobalParams.LISTVIEW_ERROR += 1700;
+
+                break;
+
+            case 1800:
+                GlobalParams.LISTVIEW_ERROR += 1420;
+                break;
+
+            case 1776:
+                GlobalParams.LISTVIEW_ERROR += 1700;
+                break;
+
+            case 1280:
+                GlobalParams.LISTVIEW_ERROR += 1150;
+                break;
+
+            case 800:
+                GlobalParams.LISTVIEW_ERROR += 840;
+                break;
+
+            case 854:
+                GlobalParams.LISTVIEW_ERROR += 840;
+                break;
+        }
+
+
     }
 
 

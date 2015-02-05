@@ -149,5 +149,7 @@
         <item name="colorAccent">#FFFFFF</item>
     </style>
 
-
+    <style name="AnimationActivity" parent="@android:style/Animation.Activity">
+        <item name="android:activityCloseExitAnimation">@anim/animation_in</item>
+    </style>
 </resources>

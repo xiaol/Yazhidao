@@ -1,19 +1,42 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="match_parent" android:gravity="center">
-<Button
-    android:id="@+id/mUserLoginBtn"
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:text="登陆"
-    android:textSize="32sp"
-    />
-    <Button
-        android:id="@+id/mUserLoginSkip"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="跳过"
-        android:textSize="32sp"
-        />
-</LinearLayout>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <ImageView
+        android:id="@+id/iv_back"
+        android:layout_width="match_parent"
+        android:layout_height="450dp"
+        android:background="@drawable/guide_background"/>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_below="@+id/iv_back"
+        android:layout_height="match_parent"
+        >
+
+        <Button
+            android:id="@+id/mUserLoginBtn"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:layout_margin="15dip"
+            android:layout_centerHorizontal="true"
+            android:background="@drawable/login"/>
+
+        <Button
+            android:id="@+id/mUserLoginSkip"
+            android:layout_below="@id/mUserLoginBtn"
+            android:layout_marginLeft="15dp"
+            android:layout_marginRight="15dp"
+            android:layout_marginBottom="15dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:background="@drawable/seesee"
+            />
+
+        </RelativeLayout>
+
+
+</RelativeLayout>
