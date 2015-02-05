@@ -47,7 +47,7 @@
     <RelativeLayout
         android:id="@+id/mTableHeaderWrapper"
         android:layout_width="match_parent"
-        android:layout_height="178dp"
+        android:layout_height="match_parent"
         android:layout_marginLeft="10dp"
         android:layout_marginRight="10dp">
 
@@ -63,9 +63,10 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
+            android:gravity="center_vertical"
             android:background="@drawable/news_list_table_main_title_bg"
             android:ellipsize="end"
-            android:lines="2"
+            android:lines="1"
             android:paddingLeft="10dp"
             android:text="燕郊至北京动车今首发 早班侧最受欢迎早班侧最受欢迎"
             android:textColor="@color/white"
@@ -76,7 +77,6 @@
         android:id="@+id/mTableHeaderBottom"
         android:layout_width="match_parent"
         android:layout_height="1px"
-        android:layout_marginBottom="10dp"
         android:layout_marginTop="10dp"
         android:src="@drawable/list_table_devider" />
     <LinearLayout android:id="@+id/mTableCellWrapper" android:layout_width="match_parent" android:layout_height="match_parent" android:orientation="vertical">

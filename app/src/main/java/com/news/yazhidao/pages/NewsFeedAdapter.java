@@ -13,6 +13,7 @@ import com.news.yazhidao.R;
 import com.news.yazhidao.constant.CommonConstant;
 import com.news.yazhidao.entity.NewsFeed;
 import com.news.yazhidao.net.request.UserPraiseNewsRequest;
+import com.news.yazhidao.utils.DeviceInfoUtil;
 import com.news.yazhidao.utils.ImageLoaderHelper;
 import com.news.yazhidao.utils.Logger;
 import com.news.yazhidao.utils.TextUtil;
@@ -83,7 +84,7 @@ public class NewsFeedAdapter extends BaseAdapter {
             holder = new ViewHolder();
             holder.mTableChannelName = (TextView) convertView.findViewById(R.id.mTableChannelName);
             holder.mTableHeaderImg = (ImageView) convertView.findViewById(R.id.mTableHeaderImg);
-//            holder.mTableHeaderImg.setLayoutParams(new RelativeLayout.LayoutParams((int) (DeviceInfoUtil.getScreenWidth()*0.88), (int) (DeviceInfoUtil.getScreenWidth()*0.88*0.55)));
+            holder.mTableHeaderImg.setLayoutParams(new RelativeLayout.LayoutParams((int) (DeviceInfoUtil.getScreenWidth()*0.96), (int) (DeviceInfoUtil.getScreenWidth()*0.95*0.555)));
             holder.mTableHeaderTitle = (TextView) convertView.findViewById(R.id.mTableHeaderTitle);
             holder.mTablePullDown = (RelativeLayout) convertView.findViewById(R.id.mTablePullDown);
             holder.mTableSetting = (FrameLayout) convertView.findViewById(R.id.mTableSetting);
@@ -186,8 +187,8 @@ public class NewsFeedAdapter extends BaseAdapter {
      */
     private View generateNewsCell(final NewsFeed.Element element,View.OnClickListener listener){
         View childView = LayoutInflater.from(mContext).inflate(R.layout.aty_news_show_list_cell, null);
+        childView.setLayoutParams(new AbsListView.LayoutParams(DeviceInfoUtil.getScreenWidth(), (int) (DeviceInfoUtil.getScreenHeight()*0.16)));
         ImageView mCellImage = (ImageView) childView.findViewById(R.id.mCellImage);
-//        mCellImage.setLayoutParams(new RelativeLayout.LayoutParams(230,130));
         TextView mCellSourceSiteName = (TextView) childView.findViewById(R.id.mCellSourceSiteName);
         TextView mCellTitle = (TextView) childView.findViewById(R.id.mCellTitle);
         TextView mCellTemperature = (TextView) childView.findViewById(R.id.mCellTemperature);

@@ -20,9 +20,7 @@
         <LinearLayout android:id="@+id/mNewsDetailLoadingWrapper" android:layout_width="match_parent"
                       android:layout_height="match_parent" android:orientation="vertical"
                       android:layout_gravity="center" android:gravity="center" >
-            <com.news.yazhidao.utils.gifview.GifView android:id="@+id/mNewsDetailLoading"
-                                                     android:layout_width="wrap_content"
-                                                     android:layout_height="wrap_content" android:enabled="false"/>
+            <ImageView android:id="@+id/mNewsLoadingImg" android:layout_width="80dp" android:layout_height="80dp"  android:background="@drawable/news_progress_animation_list"  />
             <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="玩命加载中..."
                       android:textColor="@color/black" />
         </LinearLayout>
