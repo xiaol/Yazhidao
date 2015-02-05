@@ -20,7 +20,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
-            android:background="@drawable/news_list_table_main_title_bg"
+            android:background="@drawable/news_list_table_detail_title_bg"
             android:orientation="vertical">
 
             <TextView

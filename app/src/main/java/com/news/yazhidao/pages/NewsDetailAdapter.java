@@ -3,6 +3,7 @@ package com.news.yazhidao.pages;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Handler;
+import android.text.TextUtils;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.AnimationUtils;
@@ -14,16 +15,25 @@ import android.widget.Toast;
 
 import com.news.yazhidao.R;
 import com.news.yazhidao.constant.CommonConstant;
+import com.news.yazhidao.constant.HttpConstant;
 import com.news.yazhidao.entity.NewsDetail;
 import com.news.yazhidao.entity.NewsFeed;
+import com.news.yazhidao.net.MyAppException;
+import com.news.yazhidao.net.NetworkRequest;
+import com.news.yazhidao.net.StringCallback;
+import com.news.yazhidao.net.request.UserPraiseNewsRequest;
+import com.news.yazhidao.utils.DeviceInfoUtil;
 import com.news.yazhidao.utils.ImageLoaderHelper;
 import com.news.yazhidao.utils.Logger;
 import com.news.yazhidao.utils.TextUtil;
+import com.news.yazhidao.utils.ToastUtil;
 import com.news.yazhidao.utils.helper.UmengShareHelper;
 import com.news.yazhidao.widget.StrokeTextView;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
 
 /**
  * Created by fengjigang on 15/1/21.
@@ -89,6 +99,17 @@ public class NewsDetailAdapter extends BaseAdapter {
                         mNewsDetailPraiseTv.setText((TextUtil.parsePraiseNumber(mNewsDetailPraiseTv.getText().toString()) - 1) + "人热赞");
                         isPraise = false;
                         //TODO 向后台确认点赞
+                        UserPraiseNewsRequest.praiseNews(mNewsId,false,new UserPraiseNewsRequest.PraiseNewsCallback() {
+                            @Override
+                            public void success() {
+                                ToastUtil.toastShort("取消点赞成功");
+                            }
+
+                            @Override
+                            public void failed() {
+                                ToastUtil.toastShort("取消点赞失败");
+                            }
+                        });
                     } else {
                         mNewsDetailPraisePlus.setVisibility(View.VISIBLE);
                         mNewsDetailPraisePlus.startAnimation(mAnimation);
@@ -101,6 +122,17 @@ public class NewsDetailAdapter extends BaseAdapter {
                         mNewsDetailPraiseTv.setText((TextUtil.parsePraiseNumber(mNewsDetailPraiseTv.getText().toString()) + 1) + "人热赞");
                         isPraise = true;
                         //TODO 向后台取消点赞
+                        UserPraiseNewsRequest.praiseNews(mNewsId,true,new UserPraiseNewsRequest.PraiseNewsCallback() {
+                            @Override
+                            public void success() {
+                                ToastUtil.toastShort("点赞成功");
+                            }
+
+                            @Override
+                            public void failed() {
+                                ToastUtil.toastShort("点赞失败");
+                            }
+                        });
                     }
                 }
             });
@@ -192,6 +224,17 @@ public class NewsDetailAdapter extends BaseAdapter {
                             mCellPraiseTv.setTextColor(mContext.getResources().getColor(R.color.news_list_cell_sourcesitename));
                             isRelatePraise=false;
                             //TODO 向后台取消点赞
+                            UserPraiseNewsRequest.praiseNews(mNewsId,false,new UserPraiseNewsRequest.PraiseNewsCallback() {
+                                @Override
+                                public void success() {
+                                    ToastUtil.toastShort("取消点赞成功");
+                                }
+
+                                @Override
+                                public void failed() {
+                                    ToastUtil.toastShort("取消点赞失败");
+                                }
+                            });
                         }else{
                             mCellPraisePlus.setVisibility(View.VISIBLE);
                             mCellPraisePlus.startAnimation(mAnimation);
@@ -205,6 +248,17 @@ public class NewsDetailAdapter extends BaseAdapter {
                             mCellPraiseTv.setTextColor(mContext.getResources().getColor(R.color.common_theme_color));
                             isRelatePraise=true;
                             //TODO 向后台取消点赞
+                            UserPraiseNewsRequest.praiseNews(mNewsId,true,new UserPraiseNewsRequest.PraiseNewsCallback() {
+                                @Override
+                                public void success() {
+                                    ToastUtil.toastShort("点赞成功");
+                                }
+
+                                @Override
+                                public void failed() {
+                                    ToastUtil.toastShort("点赞失败");
+                                }
+                            });
                         }
                     }
                 });
@@ -245,5 +299,4 @@ public class NewsDetailAdapter extends BaseAdapter {
         newsDetail.putExtra(CommonConstant.KEY_NEWS_TITLE, channelName);
         mContext.startActivity(newsDetail);
     }
-
 }

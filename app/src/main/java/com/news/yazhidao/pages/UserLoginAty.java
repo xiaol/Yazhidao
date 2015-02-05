@@ -76,6 +76,7 @@ public class UserLoginAty extends BaseActivity implements View.OnClickListener {
                 UmengShareHelper.oAuthSina(this,null);
             }
         }else{
+            UserLoginAty.this.finish();
             startActivity(new Intent(this, KitkatStatusBar.class));
         }
     }

@@ -12,9 +12,11 @@ import android.widget.*;
 import com.news.yazhidao.R;
 import com.news.yazhidao.constant.CommonConstant;
 import com.news.yazhidao.entity.NewsFeed;
+import com.news.yazhidao.net.request.UserPraiseNewsRequest;
 import com.news.yazhidao.utils.ImageLoaderHelper;
 import com.news.yazhidao.utils.Logger;
 import com.news.yazhidao.utils.TextUtil;
+import com.news.yazhidao.utils.ToastUtil;
 
 import java.util.ArrayList;
 import java.util.TreeSet;
@@ -182,7 +184,7 @@ public class NewsFeedAdapter extends BaseAdapter {
      * @param listener
      * @return
      */
-    private View generateNewsCell(NewsFeed.Element element,View.OnClickListener listener){
+    private View generateNewsCell(final NewsFeed.Element element,View.OnClickListener listener){
         View childView = LayoutInflater.from(mContext).inflate(R.layout.aty_news_show_list_cell, null);
         ImageView mCellImage = (ImageView) childView.findViewById(R.id.mCellImage);
 //        mCellImage.setLayoutParams(new RelativeLayout.LayoutParams(230,130));
@@ -202,6 +204,17 @@ public class NewsFeedAdapter extends BaseAdapter {
                     mCellPraiseTv.setText((TextUtil.parsePraiseNumber(mCellPraiseTv.getText().toString())-1)+"人热赞");
                     mCellPraiseTv.setTextColor(mContext.getResources().getColor(R.color.news_list_cell_sourcesitename));
                     isPraise=false;
+                    UserPraiseNewsRequest.praiseNews(element.sourceUrl, false, new UserPraiseNewsRequest.PraiseNewsCallback() {
+                        @Override
+                        public void success() {
+                            ToastUtil.toastShort("取消点赞成功");
+                        }
+
+                        @Override
+                        public void failed() {
+                            ToastUtil.toastShort("取消点赞失败");
+                        }
+                    });
                 }else{
                     mCellPraisePlus.setVisibility(View.VISIBLE);
                     mCellPraisePlus.startAnimation(animation);
@@ -214,6 +227,17 @@ public class NewsFeedAdapter extends BaseAdapter {
                     mCellPraiseTv.setText((TextUtil.parsePraiseNumber(mCellPraiseTv.getText().toString())+1)+"人热赞");
                     mCellPraiseTv.setTextColor(mContext.getResources().getColor(R.color.common_theme_color));
                     isPraise=true;
+                    UserPraiseNewsRequest.praiseNews(element.sourceUrl,true,new UserPraiseNewsRequest.PraiseNewsCallback() {
+                        @Override
+                        public void success() {
+                            ToastUtil.toastShort("点赞成功");
+                        }
+
+                        @Override
+                        public void failed() {
+                            ToastUtil.toastShort("点赞失败");
+                        }
+                    });
                 }
             }
         });

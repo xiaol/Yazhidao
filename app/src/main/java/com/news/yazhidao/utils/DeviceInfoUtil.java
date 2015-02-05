@@ -222,12 +222,11 @@ public class DeviceInfoUtil {
     /**
      * 获取当前的设备号
      *
-     * @param appContext
      * @return
      */
-    public static String getUUID(Context appContext) {
-        TelephonyManager telephonyManager = (TelephonyManager) appContext.getSystemService(Context.TELEPHONY_SERVICE);
-        String uuid = Build.PRODUCT+telephonyManager.getDeviceId()+getMacAddress(appContext)+getDeviceSerial()+Settings.Secure.getString(appContext.getContentResolver(), Settings.Secure.ANDROID_ID);
+    public static String getUUID() {
+        TelephonyManager telephonyManager = (TelephonyManager) YaZhiDaoApplication.getAppContext().getSystemService(Context.TELEPHONY_SERVICE);
+        String uuid = Build.PRODUCT+telephonyManager.getDeviceId()+getMacAddress(YaZhiDaoApplication.getAppContext())+getDeviceSerial()+Settings.Secure.getString(YaZhiDaoApplication.getAppContext().getContentResolver(), Settings.Secure.ANDROID_ID);
         return generateMD5(uuid);
     }
 
