@@ -493,7 +493,6 @@ public abstract class MaterialNavigationDrawer<Fragment> extends ActionBarActivi
         // INIT ACTION BAR
         this.setSupportActionBar(toolbar);
         actionBar = getSupportActionBar();
-
         // DEVELOPER CALL TO INIT
         init(savedInstanceState);
 

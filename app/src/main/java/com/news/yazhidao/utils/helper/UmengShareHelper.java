@@ -66,7 +66,7 @@ public class UmengShareHelper {
                     @Override
                     public void onComplete(int i, Map<String, Object> value) {
                         HashMap<String, Object> params = new HashMap<String, Object>();
-                        params.put("uuid", DeviceInfoUtil.getUUID(mContext));
+                        params.put("uuid", DeviceInfoUtil.getUUID());
                         params.put("sinaId", String.valueOf(value.get("uid")));
                         params.put("sinaToken", String.valueOf(value.get("access_token")));
                         params.put("sinaProfileImageUrl", value.get("profile_image_url"));
