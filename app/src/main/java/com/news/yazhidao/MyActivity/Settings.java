@@ -6,7 +6,7 @@ import android.support.v7.app.ActionBarActivity;
 import com.news.yazhidao.R;
 
 /**
- * Created by neokree on 24/11/14.
+ * Created by berkley on 24/11/14.
  */
 public class Settings extends ActionBarActivity {
 

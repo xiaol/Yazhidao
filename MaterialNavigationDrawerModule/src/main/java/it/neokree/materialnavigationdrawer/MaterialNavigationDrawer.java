@@ -207,13 +207,6 @@ public abstract class MaterialNavigationDrawer<Fragment> extends ActionBarActivi
                 sections.removeAllViews();
                 bottomSections.removeAllViews();
 
-//                if (accountPosition == 0 && flag == true) {
-//                    globalView.setVisibility(View.VISIBLE);
-//                } else {
-//
-//                    globalView.setVisibility(View.GONE);
-//                }
-
                 if (!accountSwitcher) {
                     // si cambia l'icona del pulsante
                     userButtonSwitcher.setImageResource(R.drawable.ic_arrow_drop_up_white_24dp);

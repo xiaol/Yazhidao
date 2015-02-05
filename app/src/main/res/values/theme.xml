@@ -15,4 +15,10 @@
         <item name="multipaneSupport">false</item>
     </style>
 
+
+    <style name="ThemeActivity">
+        <item name="android:windowAnimationStyle">@style/AnimationActivity</item>
+        <item name="android:windowNoTitle">true</item>
+    </style>
+
 </resources>

@@ -37,7 +37,7 @@ import com.news.yazhidao.utils.Logger;
 
 
 /**
- * Created by neokree on 31/12/14.
+ * Created by berkley on 31/12/14.
  */
 public class FragmentButton extends Fragment {
     private static int STANDARD_WIDTH = 720;

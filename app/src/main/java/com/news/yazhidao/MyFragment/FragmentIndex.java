@@ -11,7 +11,7 @@ import android.widget.TextView;
 
 
 /**
- * Created by neokree on 24/11/14.
+ * Created by berkley on 24/11/14.
  */
 public class FragmentIndex extends Fragment {
 

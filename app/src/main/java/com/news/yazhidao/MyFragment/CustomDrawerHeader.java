@@ -11,7 +11,7 @@ import com.news.yazhidao.R;
 import it.neokree.materialnavigationdrawer.MaterialNavigationDrawer;
 
 /**
- * Created by neokree on 18/01/15.
+ * Created by berkley on 18/01/15.
  */
 public class CustomDrawerHeader extends MaterialNavigationDrawer {
 

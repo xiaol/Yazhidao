@@ -43,6 +43,8 @@ public class SignActivity extends Activity {
     private String uuid;
     private String sinaId;
     private String sinaToken;
+    private String screenName;
+    private String sinaProfileImageUrl;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,6 +58,8 @@ public class SignActivity extends Activity {
             uuid = user.getUuid();
             sinaId = user.getSinaId();
             sinaToken = user.getSinaToken();
+            screenName = user.getScreenName();
+            sinaProfileImageUrl = user.getSinaProfileImageUrl();
         }
 
         gv_channels = (GridView) findViewById(R.id.gv_channels);
@@ -91,7 +95,7 @@ public class SignActivity extends Activity {
                     }
                 }
 
-                setSubscribe(uuid, sinaId,sinaToken, names);
+                setSubscribe(uuid, sinaId,sinaToken,screenName,sinaProfileImageUrl,names);
                 Intent intent = new Intent(SignActivity.this, KitkatStatusBar.class);
                 startActivity(intent);
 
@@ -102,8 +106,8 @@ public class SignActivity extends Activity {
 
     private void initImagelist() {
 
-        int[] ids = new int[]{R.drawable.zhangzishi, R.drawable.aozaoxing, R.drawable.dongshenghuo, R.drawable.kaiyanjie, R.drawable.wanchufan, R.drawable.youqiangdiao};
-        String[] names = new String[]{"涨姿势", "凹造型", "懂生活", "开眼界", "玩出范", "有腔调"};
+        int[] ids = new int[]{R.drawable.zhangzishi, R.drawable.dongshenghuo, R.drawable.aozaoxing, R.drawable.youqiangdiao, R.drawable.kaiyanjie, R.drawable.wanchufan};
+        String[] names = new String[]{"涨姿势", "懂生活", "凹造型", "有腔调", "开眼界", "玩出范"};
 
         for (int i = 0; i < 6; i++) {
             Image image = new Image();
@@ -173,9 +177,9 @@ public class SignActivity extends Activity {
 
     }
 
-    private static void setSubscribe(String uuid, String sinaId,String sinaToken, List<String> tagStr) {
+    private static void setSubscribe(String uuid, String sinaId,String sinaToken,String screenName ,String sinaProfileImageUrl, List<String> tagStr) {
 
-        String url = HttpConstant.URL_USER_LOGIN + "uuid=" + uuid + "&sinaId=" + sinaId;
+        String url = HttpConstant.URL_USER_LOGIN + "uuid=" + uuid + "&sinaId=" + sinaId + "&sinaToken=" + sinaToken + "&screenName=" + screenName + "&sinaProfileImageUrl=" + sinaProfileImageUrl;
 
         for (int i = 0; i < tagStr.size(); i++) {
             url = url + "&tag=" + tagStr.get(i);

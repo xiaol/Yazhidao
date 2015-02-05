@@ -28,9 +28,9 @@
             android:screenOrientation="portrait">
 
             <!--<intent-filter>-->
-                <!--<action android:name="android.intent.action.MAIN" />-->
+            <!--<action android:name="android.intent.action.MAIN" />-->
 
-                <!--<category android:name="android.intent.category.LAUNCHER" />-->
+            <!--<category android:name="android.intent.category.LAUNCHER" />-->
             <!--</intent-filter>-->
         </activity>
 
@@ -63,7 +63,26 @@
             android:theme="@style/KitkatStatusBar">
 
         </activity>
-        <activity android:name=".pages.UserLoginAty" android:screenOrientation="portrait">
+        <activity
+            android:name=".pages.UserLoginAty"
+            android:screenOrientation="portrait">
+
+        </activity>
+
+        <activity
+            android:name=".MyActivity.GuidingPage1"
+            android:screenOrientation="portrait">
+
+
+        </activity>
+        <activity
+            android:name=".MyActivity.GuidingPage2"
+            android:screenOrientation="portrait" />
+
+        <activity android:name=".MyActivity.SplashActivity"
+            android:theme="@style/ThemeActivity"
+            >
+
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
