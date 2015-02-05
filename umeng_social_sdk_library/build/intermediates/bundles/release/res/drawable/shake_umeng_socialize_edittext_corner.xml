@@ -9,4 +9,4 @@
             <corners android:bottomLeftRadius="5dp" android:bottomRightRadius="5dp" />
         </shape></item>
 
-</selector><!-- From: file:/Users/fengjigang/Developer/YaZhiDao/news_yazhidao_gradle/umeng_social_sdk_library/src/main/res/drawable/shake_umeng_socialize_edittext_corner.xml -->
+</selector><!-- From: file:/Users/Berkeley/AndroidStudioProjects/Yazhidao/umeng_social_sdk_library/src/main/res/drawable/shake_umeng_socialize_edittext_corner.xml -->

@@ -5,4 +5,4 @@
     <item android:state_pressed="true" android:drawable="@android:drawable/list_selector_background" />
     <item android:state_selected="true" android:drawable="@android:drawable/list_selector_background" />
     <item android:drawable="@android:color/black" />
-</selector>      <!-- From: file:/Users/fengjigang/Developer/YaZhiDao/news_yazhidao_gradle/umeng_social_sdk_library/src/main/res/drawable/umeng_socialize_commnet_header_bg.xml -->
+</selector>      <!-- From: file:/Users/Berkeley/AndroidStudioProjects/Yazhidao/umeng_social_sdk_library/src/main/res/drawable/umeng_socialize_commnet_header_bg.xml -->
