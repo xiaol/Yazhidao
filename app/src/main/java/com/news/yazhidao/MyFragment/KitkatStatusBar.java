@@ -1,7 +1,5 @@
 package com.news.yazhidao.MyFragment;
 
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.os.Bundle;
 
@@ -36,7 +34,7 @@ public class KitkatStatusBar extends MaterialNavigationDrawer {
             profile = user.getSinaProfileImageUrl();
         }
 
-        Bitmap image = BitmapFactory.decodeStream(loadInputstream(profile));
+        //Bitmap image = BitmapFactory.decodeStream(loadInputstream(profile));
 
         // add accounts
         MaterialAccount account = new MaterialAccount(this.getResources(), username, "", R.drawable.profile, R.drawable.bj);

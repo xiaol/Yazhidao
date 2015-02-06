@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.os.Handler;
 import android.widget.LinearLayout;
 
 import com.news.yazhidao.R;
@@ -16,6 +17,16 @@ public class SplashActivity extends Activity {
 
     private Intent intent;
     private LinearLayout ll_splash;
+    private Handler handler = new Handler() {
+        public void handleMessage(android.os.Message msg) {
+            switch (msg.what) {
+                case 0:
+
+                    loadMainUI();
+                    break;
+            }
+        };
+    };
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -24,19 +35,17 @@ public class SplashActivity extends Activity {
         setContentView(R.layout.activity_splash);
         ll_splash = (LinearLayout) findViewById(R.id.ll_splash);
 
-        SharedPreferences sp = getSharedPreferences("guide", 0);
-        Boolean flag = sp.getBoolean("isguide", false);
-
-        new Thread(new Runnable() {
+        handler.postDelayed(new  Runnable() {
             @Override
             public void run() {
-                try {
-                    Thread.sleep(5000);
-                } catch (Exception e) {
-                    System.out.println("aaaaa");
-                }
+                loadMainUI();
             }
-        });
+        }, 3000);
+    }
+
+    protected void loadMainUI() {
+        SharedPreferences sp = getSharedPreferences("guide", 0);
+        Boolean flag = sp.getBoolean("isguide", false);
 
         if (flag) {
             intent = new Intent(SplashActivity.this, UserLoginAty.class);
@@ -49,7 +58,5 @@ public class SplashActivity extends Activity {
             finish();
             overridePendingTransition(R.anim.animation_alpha_in, R.anim.animation_alpha_out);
         }
-
-
     }
 }

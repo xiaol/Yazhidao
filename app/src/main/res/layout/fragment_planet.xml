@@ -9,6 +9,7 @@
         android:layout_height="240dip"
         android:background="@drawable/section4" />
 
+
     <com.news.yazhidao.UI.MyListView
         android:id="@+id/mNewsShowList"
         android:layout_below="@+id/iv_section"
@@ -16,6 +17,7 @@
         android:layout_height="match_parent"
         android:background="@color/news_list_bg"
         android:dividerHeight="20dp"
-        android:scrollbars="none"/>
+        android:scrollbars="none" />
+
 
 </com.news.yazhidao.UI.MyRelativeLayout>
