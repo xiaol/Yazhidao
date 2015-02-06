@@ -2,9 +2,9 @@
 
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="50dp"
+    android:layout_height="40dp"
     android:paddingRight="5dp"
-    android:paddingBottom="20dp"
+    android:paddingBottom="10dp"
     android:gravity="center_vertical"
     android:orientation="vertical">
 
@@ -24,6 +24,7 @@
         android:id="@+id/mNewsDetailPraiseWrapper"
         android:layout_width="wrap_content"
         android:layout_height="30dp"
+        android:layout_alignParentBottom="true"
         android:layout_toLeftOf="@+id/mNewsDetailShare"
         android:orientation="horizontal">
 
@@ -41,7 +42,6 @@
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
             android:layout_gravity="bottom"
-            android:drawablePadding="5dp"
             android:text="8989人热赞"
             android:textColor="@color/common_theme_color"
             android:textSize="12sp" />

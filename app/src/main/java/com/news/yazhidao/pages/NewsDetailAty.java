@@ -1,5 +1,6 @@
 package com.news.yazhidao.pages;
 
+import android.graphics.drawable.AnimationDrawable;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
@@ -21,6 +22,7 @@ import com.news.yazhidao.net.TextUtils;
 import com.news.yazhidao.utils.ImageLoaderHelper;
 import com.news.yazhidao.utils.Logger;
 import com.news.yazhidao.utils.gifview.GifView;
+import com.nostra13.universalimageloader.core.ImageLoader;
 
 /**
  * Created by fengjigang on 15/1/21.
@@ -33,8 +35,9 @@ public class NewsDetailAty extends BaseActivity implements View.OnClickListener 
     private View mNewsCommonHeaderLeftBack;
     private TextView mNewsCommonHeaderTitle;
     private View mNewsDetailLoadingWrapper;
-    private GifView mNewsDetailLoading;
+    private ImageView mNewsLoadingImg;
     private View mNewsDetailCilckRefresh;
+    private AnimationDrawable mAniNewsLoading;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,8 +49,10 @@ public class NewsDetailAty extends BaseActivity implements View.OnClickListener 
         mNewsCommonHeaderTitle=(TextView)findViewById(R.id.mNewsCommonHeaderTitle);
         mNewsCommonHeaderTitle.setText(getIntent().getStringExtra(CommonConstant.KEY_NEWS_TITLE));
         mNewsDetailListContent = (ListView) findViewById(R.id.mNewsDetailListContent);
-        mNewsDetailLoading=(GifView)findViewById(R.id.mNewsDetailLoading);
-        mNewsDetailLoading.setGifImage(R.drawable.loading);
+        mNewsLoadingImg=(ImageView)findViewById(R.id.mNewsLoadingImg);
+        mNewsLoadingImg.setImageResource(R.drawable.news_progress_animation_list);
+        mAniNewsLoading = (AnimationDrawable) mNewsLoadingImg.getDrawable();
+        mAniNewsLoading.start();
         mNewsDetailLoadingWrapper=findViewById(R.id.mNewsDetailLoadingWrapper);
         mNewsDetailCilckRefresh = findViewById(R.id.mNewsDetailCilckRefresh);
         mNewsDetailCilckRefresh.setOnClickListener(this);
@@ -68,6 +73,7 @@ public class NewsDetailAty extends BaseActivity implements View.OnClickListener 
                     mNewsDetailAdapter = new NewsDetailAdapter(NewsDetailAty.this, result, mNewsEle.imgUrl,finalNewsId);
                     mNewsDetailListContent.setAdapter(mNewsDetailAdapter);
                     mNewsDetailLoadingWrapper.setVisibility(View.GONE);
+                    mAniNewsLoading.stop();
                     mNewsDetailCilckRefresh.setVisibility(View.GONE);
                 } else {
                     Toast.makeText(NewsDetailAty.this, "此条新闻暂时无法查看", Toast.LENGTH_SHORT).show();
@@ -82,6 +88,7 @@ public class NewsDetailAty extends BaseActivity implements View.OnClickListener 
                 if (status == MyAppException.ExceptionStatus.ServerException || status == MyAppException.ExceptionStatus.TimeOutException) {
                     Toast.makeText(NewsDetailAty.this, "网络不给力", Toast.LENGTH_SHORT).show();
                 }
+                mAniNewsLoading.stop();
                 mNewsDetailLoadingWrapper.setVisibility(View.GONE);
                 mNewsDetailCilckRefresh.setVisibility(View.VISIBLE);
             }

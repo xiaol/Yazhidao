@@ -7,6 +7,7 @@ import android.text.TextUtils;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.AnimationUtils;
+import android.widget.AbsListView;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -93,7 +94,6 @@ public class NewsDetailAdapter extends BaseAdapter {
             praise.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Toast.makeText(mContext, "click praise " + mNewsId, Toast.LENGTH_SHORT).show();
                     if (isPraise) {
                         mNewsDetailPraiseImg.setImageResource(R.drawable.news_list_table_cell_unpraised);
                         mNewsDetailPraiseTv.setText((TextUtil.parsePraiseNumber(mNewsDetailPraiseTv.getText().toString()) - 1) + "人热赞");
@@ -194,6 +194,7 @@ public class NewsDetailAdapter extends BaseAdapter {
         if (mElementArr != null && mElementArr.size() > 0) {
             for (int index = 0; index < mElementArr.size(); index++) {
                 View relateViewItem = View.inflate(mContext, R.layout.aty_news_show_list_cell, null);
+                relateViewItem.setLayoutParams(new AbsListView.LayoutParams(DeviceInfoUtil.getScreenWidth(), (int) (DeviceInfoUtil.getScreenHeight()*0.16)));
                 TextView mCellTitle = (TextView) relateViewItem.findViewById(R.id.mCellTitle);
                 ImageView mCellImage = (ImageView) relateViewItem.findViewById(R.id.mCellImage);
                 View mCellPraise = relateViewItem.findViewById(R.id.mCellPraiseWrapper);

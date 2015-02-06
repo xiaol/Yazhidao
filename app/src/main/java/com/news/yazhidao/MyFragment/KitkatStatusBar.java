@@ -74,7 +74,7 @@ public class KitkatStatusBar extends MaterialNavigationDrawer {
                             stream = (InputStream) conn.getInputStream();
 
                         } catch (Exception e) {
-                            System.out.println(e.getMessage().toString());
+//                            System.out.println(e.getMessage());
                         }
 
                     }
