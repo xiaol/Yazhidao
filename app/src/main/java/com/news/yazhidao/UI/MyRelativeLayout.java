@@ -12,6 +12,7 @@ import android.widget.Scroller;
 
 import com.news.yazhidao.GlobalParams;
 import com.news.yazhidao.R;
+import com.news.yazhidao.utils.DensityUtil;
 
 public class MyRelativeLayout extends RelativeLayout {
 
@@ -40,7 +41,9 @@ public class MyRelativeLayout extends RelativeLayout {
     private int mTouchSlop;
     private MyListView listView;
     private ImageView iv_section;
+    private boolean sun_flag;
     private ImageView iv_sun;
+    private int margin;
     private final int ANIMATION_SCREEN = 1;    // 鍔ㄧ敾鐣岄潰
     private final int MAIN_SCREEN = 2;    // 涓荤晫闈�
     private int currentScreen = MAIN_SCREEN;        // 褰撳墠鐨勫睆骞曟樉绀虹晫闈�, 榛樿涓轰富鐣岄潰
@@ -76,6 +79,8 @@ public class MyRelativeLayout extends RelativeLayout {
         width = GlobalParams.manager.getDefaultDisplay().getWidth();
         height = GlobalParams.manager.getDefaultDisplay().getHeight();
 
+        margin = DensityUtil.dip2px(context, 10);
+
         setError();
 
         iv_section = (ImageView) this.getChildAt(0);
@@ -84,23 +89,20 @@ public class MyRelativeLayout extends RelativeLayout {
         iv_section.layout(0, 0, width, view_height);
 
         listView = (MyListView) this.getChildAt(1);
-        if(listView.getMeasuredHeight() != 0) {
+
+        if (listView.getMeasuredHeight() != 0) {
             GlobalParams.LISTVIEW_HEIGHT = listView.getMeasuredHeight() + GlobalParams.LISTVIEW_ERROR;
         }
-        int a = MyRelativeLayout.this.getMeasuredHeight();
 
-        listView.layout(0, view_height, width, view_height + GlobalParams.LISTVIEW_HEIGHT);
+        listView.layout(0 + margin, view_height + margin, width - margin, view_height + GlobalParams.LISTVIEW_HEIGHT - margin);
 
-        //super.onLayout(true, l, t, r, b);
     }
 
-    private void setError(){
-        switch (height){
+    private void setError() {
+        switch (height) {
 
             case 1920:
-
                 error = 240;
-
                 break;
 
             case 1800:
@@ -112,7 +114,7 @@ public class MyRelativeLayout extends RelativeLayout {
                 break;
 
             case 1280:
-                error = 150;
+                error = 150 + margin;
                 break;
 
             case 800:
@@ -155,15 +157,20 @@ public class MyRelativeLayout extends RelativeLayout {
             case MotionEvent.ACTION_MOVE:
 
                 int currentY = (int) event.getY();
+                int delta = 0;
+                if (GlobalParams.SUN_FLAG) {
+                    delta = mMostRecentY - currentY;
+                } else {
+                    delta = (int) ((mMostRecentY - currentY) * 2);
+                }
 
-                int delta = mMostRecentY - currentY;
-
-                int scrollY = getScrollY() + delta;
+                int scrollY = (getScrollY() + delta);
 
                 int bottom = GlobalParams.LISTVIEW_HEIGHT + SECTION_VIEW_HEIGHT * width / STANDARD_WIDTH - height;
 
                 if (scrollY < 0) {        // 褰撳墠瓒呭嚭浜嗕笂杈圭晫
                     scrollTo(0, 0);    // 婊氬姩鍒拌彍鍗曠殑涓婅竟鐣�
+
                 } else if (scrollY > bottom + error) {        // 瓒呭嚭浜嗕笅杈圭晫
                     scrollTo(0, bottom + error);        // 婊氬姩鍒颁富鐣岄潰鐨勪笅杈圭晫
                 } else {        // 姝ｅ父绉诲姩
@@ -187,16 +194,30 @@ public class MyRelativeLayout extends RelativeLayout {
                 int menuCenter = view_height / 2;
 
                 // 鑾峰緱褰撳墠灞忓箷x杞寸殑鍋忕Щ閲�
-                int _y = getScrollY();    // x杞村綋鍓嶇殑鍋忕Щ閲�
+                int _y = getScrollY();
 
-                if (_y > menuCenter && _y < view_height) {        // 鍒囨崲鍒颁富鐣岄潰
-                    scrollTo(0, view_height);
-                    currentScreen = MAIN_SCREEN;
 
-                    GlobalParams.SUN_FLAG = false;
-                    GlobalParams.mainSection.setGlobalFlag(false);//太阳隐藏的时候
+                if (_y < view_height && _y > 0) {
+                    if (GlobalParams.SUN_FLAG) {
+                        scrollTo(0, view_height);
+                        currentScreen = MAIN_SCREEN;
 
-                } else if (_y < menuCenter) {    // 鍒囨崲鍒拌彍鍗曠晫闈�
+                        GlobalParams.SUN_FLAG = false;
+                        GlobalParams.mainSection.setGlobalFlag(false);//太阳隐藏的时候
+                    } else {
+                        scrollTo(0, 0);
+                        currentScreen = ANIMATION_SCREEN;
+
+                        if (GlobalParams.view.getVisibility() == View.GONE) {
+                            GlobalParams.view.setVisibility(View.VISIBLE);
+                        }
+
+                        GlobalParams.SUN_FLAG = true;
+                        GlobalParams.mainSection.setGlobalFlag(true);//太阳展示的时候
+                    }
+
+                }else if(_y == 0){
+
                     scrollTo(0, 0);
                     currentScreen = ANIMATION_SCREEN;
 
@@ -208,6 +229,18 @@ public class MyRelativeLayout extends RelativeLayout {
                     GlobalParams.mainSection.setGlobalFlag(true);//太阳展示的时候
 
                 }
+//                else if (_y < menuCenter) {    // 鍒囨崲鍒拌彍鍗曠晫闈�
+//                    scrollTo(0, 0);
+//                    currentScreen = ANIMATION_SCREEN;
+//
+//                    if (GlobalParams.view.getVisibility() == View.GONE) {
+//                        GlobalParams.view.setVisibility(View.VISIBLE);
+//                    }
+//
+//                    GlobalParams.SUN_FLAG = true;
+//                    GlobalParams.mainSection.setGlobalFlag(true);//太阳展示的时候
+//
+//                }
 
                 break;
             //case MotionEvent.
@@ -249,15 +282,13 @@ public class MyRelativeLayout extends RelativeLayout {
         // 鏇存柊褰撳墠灞忓箷鐨剎杞寸殑鍋忕Щ閲�
 
         if (scroller.computeScrollOffset()) {        // 杩斿洖true浠ｈ〃姝ｅ湪妯℃嫙鏁版嵁涓�, false 宸茬粡鍋滄妯℃嫙鏁版嵁
+
             scrollTo(0, getScrollY());        // 鏇存柊浜唜杞寸殑鍋忕Щ閲�
 
             invalidate();
         }
     }
 
-    /**
-     * 鏍规嵁currentScreen鍙橀噺鍒囨崲灞忓箷
-     */
     private void switchScreen() {
 
         int view_height = SECTION_VIEW_HEIGHT * width / STANDARD_WIDTH;
@@ -271,10 +302,8 @@ public class MyRelativeLayout extends RelativeLayout {
             dy = view_height - startY;
         }
 
-        // 寮�濮嬫ā鎷熸暟鎹�
         scroller.startScroll(0, startY, 0, dy, Math.abs(dy) * 5);
 
-        // 鍒锋柊鐣岄潰
         invalidate();  // invalidate -> drawChild -> child.draw -> computeScroll
     }
 

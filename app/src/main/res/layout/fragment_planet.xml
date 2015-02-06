@@ -15,7 +15,8 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@color/news_list_bg"
-        android:dividerHeight="20dp"
-        android:scrollbars="none"/>
+        android:dividerHeight="10dp"
+        android:divider="@color/news_list_bg"
+        />
 
 </com.news.yazhidao.UI.MyRelativeLayout>

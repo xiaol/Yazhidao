@@ -5,6 +5,8 @@ import android.content.Intent;
 import android.os.Bundle;
 
 import com.news.yazhidao.utils.helper.UmengShareHelper;
+import com.tendcloud.tenddata.TCAgent;
+import com.umeng.analytics.MobclickAgent;
 import com.umeng.socialize.sso.UMSsoHandler;
 
 /**
@@ -19,11 +21,15 @@ public class BaseActivity extends Activity {
     @Override
     protected void onResume() {
         super.onResume();
+        TCAgent.onResume(this);
+        MobclickAgent.onResume(this);
     }
 
     @Override
     protected void onPause() {
         super.onPause();
+        TCAgent.onPause(this);
+        MobclickAgent.onResume(this);
     }
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {

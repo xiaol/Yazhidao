@@ -34,12 +34,20 @@
             <!--</intent-filter>-->
         </activity>
 
-
+        <!--###################添加TalkingDataAppkey######################-->
+        <meta-data
+            android:name="TD_APP_ID"
+            android:value="4146782EF8F9D2F41EC2A65A798F7D26" />
+        <meta-data
+            android:name="TD_CHANNEL_ID"
+            android:value="developer" />
         <!-- ###################添加UmengAppkey###################### -->
         <meta-data
             android:name="UMENG_APPKEY"
             android:value="54cdc89dfd98c5430f000618"></meta-data>
-
+        <meta-data
+            android:name="UMENG_CHANNEL"
+            android:value="developer" />
         <!-- 分享内容编辑页 -->
         <activity
             android:name="com.umeng.socialize.view.ShareActivity"
@@ -48,6 +56,47 @@
             android:noHistory="true"
             android:theme="@style/Theme.UMDialog"
             android:windowSoftInputMode="stateVisible|adjustResize"></activity>
+        <!--腾讯SSO授权的Activity注册-->
+        <activity
+            android:name="com.tencent.tauth.AuthActivity"
+            android:launchMode="singleTask"
+            android:noHistory="true">
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+
+                <data android:scheme="tencent100424468" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name="com.tencent.connect.common.AssistActivity"
+            android:screenOrientation="portrait"
+            android:theme="@android:style/Theme.Translucent.NoTitleBar" />
+
+        <!-- 微信回调activity -->
+        <!--<activity-->
+        <!--android:name="com.newplayer.jianshi.wxapi.WXEntryActivity"-->
+        <!--android:configChanges="keyboardHidden|orientation|screenSize"-->
+        <!--android:exported="true"-->
+        <!--android:screenOrientation="portrait"-->
+        <!--android:theme="@android:style/Theme.Translucent.NoTitleBar" />-->
+        <!-- 人人SSO授权所需的OAuthActivity -->
+        <activity
+            android:name="com.renn.rennsdk.oauth.OAuthActivity"
+            android:configChanges="orientation|navigation|keyboardHidden" />
+
+        <!-- ###################友盟自动更新相关开始###################### -->
+        <service
+            android:name="com.umeng.update.net.DownloadingService"
+            android:process=":DownloadingService"></service>
+
+        <activity
+            android:name="com.umeng.update.UpdateDialogActivity"
+            android:theme="@android:style/Theme.Translucent.NoTitleBar"></activity>
+
+
         <activity
             android:name="com.news.yazhidao.MyFragment.CustomDrawerHeader"
             android:theme="@style/CustomHeaderLight">
@@ -79,9 +128,9 @@
             android:name=".MyActivity.GuidingPage2"
             android:screenOrientation="portrait" />
 
-        <activity android:name=".MyActivity.SplashActivity"
-            android:theme="@style/ThemeActivity"
-            >
+        <activity
+            android:name=".MyActivity.SplashActivity"
+            android:theme="@style/ThemeActivity">
 
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
