@@ -219,7 +219,7 @@ public class FragmentButton extends Fragment {
                 POINT_TWO_Y = 180;
                 POINT_THREE_X = 200;
                 POINT_THREE_Y = 110;
-                POINT_FOUR_X = 320;
+                POINT_FOUR_X = 330;
                 POINT_FOUR_Y = 87;
                 SUN_WIDTH = 180;
 

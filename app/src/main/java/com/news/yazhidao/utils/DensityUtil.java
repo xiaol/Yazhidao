@@ -2,10 +2,10 @@ package com.news.yazhidao.utils;
 
 import android.content.Context;
 
-//dip���dp ��Ļ���� �� ��Ļ��ߵ�һ������ֵ
 public class DensityUtil {
+
     /** 
-     * ����ֻ�ķֱ��ʴ� dip �ĵ�λ ת��Ϊ px(����) 
+     * dip to px
      */  
     public static int dip2px(Context context, float dpValue) {  
         final float scale = context.getResources().getDisplayMetrics().density;  
@@ -13,7 +13,7 @@ public class DensityUtil {
     }  
   
     /** 
-     * ����ֻ�ķֱ��ʴ� px(����) �ĵ�λ ת��Ϊ dp 
+     * px to dip
      */  
     public static int px2dip(Context context, float pxValue) {  
         final float scale = context.getResources().getDisplayMetrics().density;  
