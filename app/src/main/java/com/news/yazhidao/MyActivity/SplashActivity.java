@@ -40,7 +40,7 @@ public class SplashActivity extends Activity {
             public void run() {
                 loadMainUI();
             }
-        }, 3000);
+        }, 2000);
     }
 
     protected void loadMainUI() {

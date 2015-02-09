@@ -6,7 +6,6 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
 
 import com.news.yazhidao.GlobalParams;
 import com.news.yazhidao.R;
@@ -20,9 +19,10 @@ public class FeedbackButton extends Fragment {
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 
         View view = View.inflate(this.getActivity(), R.layout.feedbackpage, null);
-
-        TextView iv = (TextView) GlobalParams.view.findViewById(R.id.iv_sun);
-        iv.setVisibility(View.GONE);
+        if(!GlobalParams.DELETE_FLAG) {
+            GlobalParams.manager.removeView(GlobalParams.view);
+            GlobalParams.DELETE_FLAG = true;
+        }
 
         return view;
 

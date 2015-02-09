@@ -16,6 +16,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.news.yazhidao.GlobalParams;
 import com.news.yazhidao.R;
@@ -57,6 +58,8 @@ public class NewsFeedAdapter extends BaseAdapter {
         manager = (WindowManager) mContext.getSystemService(Context.WINDOW_SERVICE);
         width = manager.getDefaultDisplay().getWidth();
         height = manager.getDefaultDisplay().getHeight();
+
+        Toast.makeText(mContext,"当前屏幕的高度是" + height + ",当前屏幕的宽度是：" + width,Toast.LENGTH_LONG).show();
     }
 
     private void handle(NewsFeed mNewsFeed) {
@@ -182,28 +185,28 @@ public class NewsFeedAdapter extends BaseAdapter {
 
             case 1920:
 
-                GlobalParams.LISTVIEW_ERROR += 1700;
+                GlobalParams.LISTVIEW_ERROR += 1450;
 
                 break;
 
             case 1800:
-                GlobalParams.LISTVIEW_ERROR += 1420;
+                GlobalParams.LISTVIEW_ERROR += 1200;
                 break;
 
             case 1776:
-                GlobalParams.LISTVIEW_ERROR += 1700;
+                GlobalParams.LISTVIEW_ERROR += 1450;
                 break;
 
             case 1280:
-                GlobalParams.LISTVIEW_ERROR += 1150;
+                GlobalParams.LISTVIEW_ERROR += 950;
                 break;
 
             case 800:
-                GlobalParams.LISTVIEW_ERROR += 840;
+                GlobalParams.LISTVIEW_ERROR += 570;
                 break;
 
             case 854:
-                GlobalParams.LISTVIEW_ERROR += 840;
+                GlobalParams.LISTVIEW_ERROR += 570;
                 break;
         }
 

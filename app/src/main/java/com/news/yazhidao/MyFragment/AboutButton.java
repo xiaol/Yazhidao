@@ -6,7 +6,6 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
 
 import com.news.yazhidao.GlobalParams;
 import com.news.yazhidao.R;
@@ -21,8 +20,10 @@ public class AboutButton extends Fragment {
 
         View view = View.inflate(this.getActivity(), R.layout.aboutpage, null);
 
-        TextView iv = (TextView) GlobalParams.view.findViewById(R.id.iv_sun);
-        iv.setVisibility(View.GONE);
+        if(!GlobalParams.DELETE_FLAG) {
+            GlobalParams.manager.removeView(GlobalParams.view);
+            GlobalParams.DELETE_FLAG = true;
+        }
 
         return view;
 

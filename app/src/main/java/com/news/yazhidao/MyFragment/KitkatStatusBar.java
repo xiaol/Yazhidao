@@ -47,9 +47,9 @@ public class KitkatStatusBar extends MaterialNavigationDrawer {
 
         this.addSection(GlobalParams.section);
         this.addSection(newSection("设置", R.drawable.shez, new SettingButton()).setSectionColor(Color.parseColor("#FF7F66")));
-        this.addSection(newSection("关于", R.drawable.guanyu, new AboutButton()).setSectionColor(Color.parseColor("#FF7F66")));
-        this.addSection(newSection("反馈", R.drawable.fangui, new FeedbackButton()).setSectionColor(Color.parseColor("#FF7F66")));
-        this.addSection(newSection("我的36°", R.drawable.my36, new FeedbackButton()).setSectionColor(Color.parseColor("#FF7F66")));
+        this.addSection(newSection("关于YA知道", R.drawable.guanyu, new AboutButton()).setSectionColor(Color.parseColor("#FF7F66")));
+        this.addSection(newSection("意见反馈", R.drawable.fangui, new FeedbackButton()).setSectionColor(Color.parseColor("#FF7F66")));
+        //this.addSection(newSection("我的36°", R.drawable.my36, new FeedbackButton()).setSectionColor(Color.parseColor("#FF7F66")));
 
         // create bottom section
         //this.addBottomSection(newSection("Bottom Section",R.drawable.ic_settings_black_24dp,new Intent(this,Settings.class)));

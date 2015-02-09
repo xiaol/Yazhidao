@@ -94,7 +94,7 @@ public class MyRelativeLayout extends RelativeLayout {
             GlobalParams.LISTVIEW_HEIGHT = listView.getMeasuredHeight() + GlobalParams.LISTVIEW_ERROR;
         }
 
-        listView.layout(0 + margin, view_height + margin, width - margin, view_height + GlobalParams.LISTVIEW_HEIGHT - margin);
+        listView.layout(0, view_height, width, view_height + GlobalParams.LISTVIEW_HEIGHT);
 
     }
 

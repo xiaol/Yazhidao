@@ -57,6 +57,7 @@ public class FragmentButton extends Fragment {
     private int width;
     private int height;
     private int currentPos = 0;
+    private boolean flag = false;
 
     private static final String TAG = "FragmentButton";
     private ImageView iv_sun;
@@ -107,6 +108,8 @@ public class FragmentButton extends Fragment {
 
         GlobalParams.view = (LinearLayout) View.inflate(getActivity(), R.layout.view_sun, null);
 
+
+
         TextView iv = (TextView) GlobalParams.view.findViewById(R.id.iv_sun);
         iv.setBackgroundResource(R.drawable.sun);
 
@@ -129,8 +132,6 @@ public class FragmentButton extends Fragment {
 
         setSunview();
         showView();
-
-        //loadNewsData(getActivity(), 3);
 
         return view;
 
@@ -230,6 +231,8 @@ public class FragmentButton extends Fragment {
 
 
     private void showView() {
+
+        flag = true;
 
         GlobalParams.manager = (WindowManager) getActivity().getSystemService(Context.WINDOW_SERVICE);
 
@@ -373,6 +376,7 @@ public class FragmentButton extends Fragment {
         GlobalParams.params.type = WindowManager.LayoutParams.TYPE_PRIORITY_PHONE;//
         // 改用电话优先级的窗体类型，这种类型可以相应触摸事件。
         GlobalParams.manager.addView(GlobalParams.view, GlobalParams.params);
+        GlobalParams.DELETE_FLAG = false;
 
         delayNotifyChangeNews();
     }
