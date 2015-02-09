@@ -9,7 +9,6 @@ import android.view.View;
 import android.widget.Button;
 
 import com.news.yazhidao.MyActivity.SignActivity;
-import com.news.yazhidao.MyFragment.CustomDrawerHeader;
 import com.news.yazhidao.MyFragment.KitkatStatusBar;
 import com.news.yazhidao.R;
 import com.news.yazhidao.common.BaseActivity;
@@ -43,6 +42,13 @@ public class UserLoginAty extends BaseActivity implements View.OnClickListener {
         mUserLoginBtn.setOnClickListener(this);
         mUserLoginSkip=(Button)findViewById(R.id.mUserLoginSkip);
         mUserLoginSkip.setOnClickListener(this);
+
+//        boolean isLogin = UmengShareHelper.isAuthenticated(this, SHARE_MEDIA.SINA);
+//        if(isLogin){
+//            UserLoginAty.this.finish();
+//            startActivity(new Intent(UserLoginAty.this, SignActivity.class));
+//        }
+
     }
 
     @Override

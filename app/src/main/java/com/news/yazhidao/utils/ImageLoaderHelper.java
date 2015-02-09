@@ -16,6 +16,7 @@ import com.nostra13.universalimageloader.core.assist.ImageScaleType;
 import com.nostra13.universalimageloader.core.assist.QueueProcessingType;
 import com.nostra13.universalimageloader.core.display.FadeInBitmapDisplayer;
 import com.nostra13.universalimageloader.core.download.BaseImageDownloader;
+import com.nostra13.universalimageloader.core.listener.SimpleImageLoadingListener;
 
 import java.io.File;
 
@@ -32,6 +33,10 @@ public class ImageLoaderHelper {
     }
     public static void dispalyImage(Context context,String url,ImageView imageView){
         getImageLoader(context).displayImage(url,imageView,getOption());
+    }
+
+    public static void dispalyImage(Context context,String url,ImageView imageView,SimpleImageLoadingListener listener){
+        getImageLoader(context).displayImage(url,imageView,getOption(),listener);
     }
     private static ImageLoaderConfiguration generateConfig(Context context) {
         ImageLoaderConfiguration config = new ImageLoaderConfiguration

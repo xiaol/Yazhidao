@@ -108,8 +108,6 @@ public class FragmentButton extends Fragment {
 
         GlobalParams.view = (LinearLayout) View.inflate(getActivity(), R.layout.view_sun, null);
 
-
-
         TextView iv = (TextView) GlobalParams.view.findViewById(R.id.iv_sun);
         iv.setBackgroundResource(R.drawable.sun);
 

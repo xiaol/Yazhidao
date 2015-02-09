@@ -89,8 +89,8 @@ public abstract class MaterialNavigationDrawer<Fragment> extends ActionBarActivi
     private ImageView statusBar;
     protected Toolbar toolbar;
     private RelativeLayout content;
-    private RelativeLayout drawer;
-    private ImageView userphoto;
+    protected RelativeLayout drawer;
+    protected ImageView userphoto;
     private ImageView userSecondPhoto;
     private ImageView userThirdPhoto;
     private ImageView usercover;
@@ -115,7 +115,7 @@ public abstract class MaterialNavigationDrawer<Fragment> extends ActionBarActivi
 
     // current pointers
     private MaterialSection currentSection;
-    private MaterialAccount currentAccount;
+    protected MaterialAccount currentAccount;
 
     private String title;
     private float density;
@@ -139,23 +139,7 @@ public abstract class MaterialNavigationDrawer<Fragment> extends ActionBarActivi
     private Resources resources;
     private TypefaceManager fontManager;
 
-    private View.OnClickListener currentAccountListener = new View.OnClickListener() {
-
-        @Override
-        public void onClick(View v) {
-
-            if (!drawerTouchLocked) {
-                // enter into account properties
-                if (accountListener != null) {
-                    accountListener.onAccountOpening(currentAccount);
-                }
-
-                // close drawer
-                if (!deviceSupportMultiPane())
-                    layout.closeDrawer(drawer);
-            }
-        }
-    };
+    protected View.OnClickListener currentAccountListener;
     private View.OnClickListener secondAccountListener = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
@@ -353,7 +337,7 @@ public abstract class MaterialNavigationDrawer<Fragment> extends ActionBarActivi
             }
         }
     };
-    private MaterialAccountListener accountListener;
+    protected MaterialAccountListener accountListener;
     protected DrawerLayout.DrawerListener drawerListener;
 
 
@@ -1596,6 +1580,10 @@ public abstract class MaterialNavigationDrawer<Fragment> extends ActionBarActivi
     // abstract methods
 
     public abstract void init(Bundle savedInstanceState);
+
+    public void setProfileListener(View.OnClickListener listener){
+        this.currentAccountListener = listener;
+    };
 
     public void onHomeAsUpSelected() {
 

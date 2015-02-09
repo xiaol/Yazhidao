@@ -19,6 +19,7 @@ public class GlobalParams {
     public static android.support.v7.app.ActionBar bar;
     public static boolean SUN_FLAG = true;
     public static boolean DELETE_FLAG = false;
+    public static boolean ONE_FLAG = false;
     public static KitkatStatusBar mainSection = null;
     public static int currentPos = 3;
 }
