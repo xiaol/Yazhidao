@@ -96,9 +96,9 @@
 
     <ImageView
         android:layout_width="match_parent"
-        android:layout_height="2dp"
+        android:layout_height="2px"
         android:layout_alignParentBottom="true"
         android:scaleType="fitXY"
-        android:src="@drawable/news_list_table_footer" />
+        android:src="@drawable/news_list_table_shadow" />
 
 </LinearLayout>
