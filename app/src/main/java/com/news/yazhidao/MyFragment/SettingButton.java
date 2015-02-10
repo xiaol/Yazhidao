@@ -6,7 +6,7 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
+import android.widget.ImageView;
 
 import com.news.yazhidao.GlobalParams;
 import com.news.yazhidao.R;
@@ -16,12 +16,48 @@ import com.news.yazhidao.R;
  */
 public class SettingButton extends Fragment {
 
+    private ImageView iv_push;
+    private boolean pushflag = false;
+    private ImageView iv_wifi;
+    private boolean wififag = true;
+
     @Override
     public View onCreateView(LayoutInflater inflater,@Nullable ViewGroup container,@Nullable Bundle savedInstanceState) {
         View view = View.inflate(this.getActivity(), R.layout.settingpage, null);
 
-        TextView iv = (TextView) GlobalParams.view.findViewById(R.id.iv_sun);
-        iv.setVisibility(View.GONE);
+        if(!GlobalParams.DELETE_FLAG) {
+            GlobalParams.manager.removeView(GlobalParams.view);
+            GlobalParams.DELETE_FLAG = true;
+        }
+
+        iv_push = (ImageView) view.findViewById(R.id.iv_push);
+        iv_push.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(pushflag) {
+                    iv_push.setImageResource(R.drawable.switch_close);
+                    pushflag = false;
+                }else{
+                    iv_push.setImageResource(R.drawable.switch_open);
+                    pushflag = true;
+                }
+            }
+        });
+
+
+        iv_wifi = (ImageView) view.findViewById(R.id.iv_wifi);
+        iv_wifi.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(wififag) {
+                    iv_push.setImageResource(R.drawable.switch_close);
+                    pushflag = false;
+                }else{
+                    iv_push.setImageResource(R.drawable.switch_open);
+                    pushflag = true;
+                }
+            }
+        });
 
         return view;
 

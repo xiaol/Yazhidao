@@ -94,7 +94,7 @@ public class MyRelativeLayout extends RelativeLayout {
             GlobalParams.LISTVIEW_HEIGHT = listView.getMeasuredHeight() + GlobalParams.LISTVIEW_ERROR;
         }
 
-        listView.layout(0 + margin, view_height + margin, width - margin, view_height + GlobalParams.LISTVIEW_HEIGHT - margin);
+        listView.layout(0, view_height, width, view_height + GlobalParams.LISTVIEW_HEIGHT);
 
     }
 
@@ -171,8 +171,15 @@ public class MyRelativeLayout extends RelativeLayout {
                 if (scrollY < 0) {        // 褰撳墠瓒呭嚭浜嗕笂杈圭晫
                     scrollTo(0, 0);    // 婊氬姩鍒拌彍鍗曠殑涓婅竟鐣�
 
-                } else if (scrollY > bottom + error) {        // 瓒呭嚭浜嗕笅杈圭晫
-                    scrollTo(0, bottom + error);        // 婊氬姩鍒颁富鐣岄潰鐨勪笅杈圭晫
+                } else if (scrollY > bottom + error) {
+                    if(GlobalParams.ONE_FLAG){
+
+                        if(delta < 0){
+                            scrollBy(0, delta);
+                        }
+                    }else {
+                        scrollTo(0, bottom + error);
+                    }
                 } else {        // 姝ｅ父绉诲姩
                     scrollBy(0, delta);
                 }
@@ -193,7 +200,6 @@ public class MyRelativeLayout extends RelativeLayout {
                 // 鑿滃崟鐨勪腑蹇冪偣
                 int menuCenter = view_height / 2;
 
-                // 鑾峰緱褰撳墠灞忓箷x杞寸殑鍋忕Щ閲�
                 int _y = getScrollY();
 
 
@@ -204,7 +210,7 @@ public class MyRelativeLayout extends RelativeLayout {
 
                         GlobalParams.SUN_FLAG = false;
                         GlobalParams.mainSection.setGlobalFlag(false);//太阳隐藏的时候
-                    } else {
+                    } else{
                         scrollTo(0, 0);
                         currentScreen = ANIMATION_SCREEN;
 
@@ -229,18 +235,6 @@ public class MyRelativeLayout extends RelativeLayout {
                     GlobalParams.mainSection.setGlobalFlag(true);//太阳展示的时候
 
                 }
-//                else if (_y < menuCenter) {    // 鍒囨崲鍒拌彍鍗曠晫闈�
-//                    scrollTo(0, 0);
-//                    currentScreen = ANIMATION_SCREEN;
-//
-//                    if (GlobalParams.view.getVisibility() == View.GONE) {
-//                        GlobalParams.view.setVisibility(View.VISIBLE);
-//                    }
-//
-//                    GlobalParams.SUN_FLAG = true;
-//                    GlobalParams.mainSection.setGlobalFlag(true);//太阳展示的时候
-//
-//                }
 
                 break;
             //case MotionEvent.

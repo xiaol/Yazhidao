@@ -74,7 +74,7 @@ public class UmengShareHelper {
 
                     @Override
                     public void onStart() {
-
+                        System.out.println("aaaaa");
                     }
 
                     @Override
