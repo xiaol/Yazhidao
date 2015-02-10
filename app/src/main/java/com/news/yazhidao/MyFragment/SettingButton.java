@@ -25,7 +25,7 @@ public class SettingButton extends Fragment {
     public View onCreateView(LayoutInflater inflater,@Nullable ViewGroup container,@Nullable Bundle savedInstanceState) {
         View view = View.inflate(this.getActivity(), R.layout.settingpage, null);
 
-        if(!GlobalParams.DELETE_FLAG) {
+        if(!GlobalParams.DELETE_FLAG && GlobalParams.view != null) {
             GlobalParams.manager.removeView(GlobalParams.view);
             GlobalParams.DELETE_FLAG = true;
         }
@@ -35,10 +35,10 @@ public class SettingButton extends Fragment {
             @Override
             public void onClick(View v) {
                 if(pushflag) {
-                    iv_push.setImageResource(R.drawable.switch_close);
+                    iv_push.setBackgroundResource(R.drawable.switch_close);
                     pushflag = false;
                 }else{
-                    iv_push.setImageResource(R.drawable.switch_open);
+                    iv_push.setBackgroundResource(R.drawable.switch_open);
                     pushflag = true;
                 }
             }
@@ -50,11 +50,11 @@ public class SettingButton extends Fragment {
             @Override
             public void onClick(View v) {
                 if(wififag) {
-                    iv_push.setImageResource(R.drawable.switch_close);
-                    pushflag = false;
+                    iv_wifi.setBackgroundResource(R.drawable.switch_close);
+                    wififag = false;
                 }else{
-                    iv_push.setImageResource(R.drawable.switch_open);
-                    pushflag = true;
+                    iv_wifi.setBackgroundResource(R.drawable.switch_open);
+                    wififag = true;
                 }
             }
         });

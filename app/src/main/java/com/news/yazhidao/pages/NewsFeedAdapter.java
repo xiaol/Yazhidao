@@ -210,7 +210,7 @@ public class NewsFeedAdapter extends BaseAdapter {
                 break;
 
             case 1184: //moto g
-                GlobalParams.LISTVIEW_ERROR += 940;
+                GlobalParams.LISTVIEW_ERROR += 890;
                 break;
 
             case 800:

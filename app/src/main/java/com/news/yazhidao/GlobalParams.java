@@ -9,7 +9,9 @@ import com.news.yazhidao.MyFragment.KitkatStatusBar;
 import it.neokree.materialnavigationdrawer.elements.MaterialSection;
 
 public class GlobalParams {
-	
+
+    public static String PROXY_IP = "";
+    public static int PROXY_PORT;
 	public static WindowManager manager;
 	public static LinearLayout view = null;
 	public static WindowManager.LayoutParams params;

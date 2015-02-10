@@ -6,6 +6,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.graphics.PixelFormat;
+import android.graphics.drawable.AnimationDrawable;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.Nullable;
@@ -20,6 +21,7 @@ import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.gson.reflect.TypeToken;
 import com.news.yazhidao.GlobalParams;
@@ -34,12 +36,13 @@ import com.news.yazhidao.net.MyAppException;
 import com.news.yazhidao.net.NetworkRequest;
 import com.news.yazhidao.pages.NewsFeedAdapter;
 import com.news.yazhidao.utils.Logger;
+import com.news.yazhidao.utils.NetUtil;
 
 
 /**
  * Created by berkley on 31/12/14.
  */
-public class FragmentButton extends Fragment {
+public class FragmentButton extends Fragment implements View.OnClickListener {
     private static int STANDARD_WIDTH = 720;
     private static int POINT_ONE_X = 55;
     private static int POINT_ONE_Y = 300;
@@ -59,6 +62,8 @@ public class FragmentButton extends Fragment {
     private int currentPos = 0;
     private boolean flag = false;
 
+    private View view;
+
     private static final String TAG = "FragmentButton";
     private ImageView iv_sun;
     private ImageView iv_section;
@@ -68,6 +73,39 @@ public class FragmentButton extends Fragment {
     public static NewsFeed mNewsFeed;
     public static final String ARG_PLANET_NUMBER = "planet_number";
     private ChangeNewsModulBroRec mChangeNewsModulBroRec = new ChangeNewsModulBroRec();
+
+    private View mNewsDetailLoadingWrapper;
+    private ImageView mNewsLoadingImg;
+    private View mNewsDetailCilckRefresh;
+    private AnimationDrawable mAniNewsLoading;
+
+    @Override
+    public void onClick(View v) {
+
+        switch (v.getId()) {
+            case R.id.mNewsDetailCilckRefresh:
+
+                if (NetUtil.checkNetWork(getActivity())) {
+
+                    //有网络的时候
+                    mNewsDetailCilckRefresh.setVisibility(View.GONE);
+                    rl_content.setVisibility(View.GONE);
+                    mNewsDetailLoadingWrapper.setVisibility(View.VISIBLE);
+
+                    loadNewsData(getActivity(), GlobalParams.currentPos);
+
+                } else {
+                    //没有网络的时候
+                    mNewsDetailCilckRefresh.setVisibility(View.VISIBLE);
+                    rl_content.setVisibility(View.GONE);
+                    mNewsDetailLoadingWrapper.setVisibility(View.GONE);
+
+                    Toast.makeText(getActivity(), "网络异常，请检查您的网络....", Toast.LENGTH_LONG).show();
+                }
+
+        }
+
+    }
 
     public class ChangeNewsModulBroRec extends BroadcastReceiver {
 
@@ -104,35 +142,57 @@ public class FragmentButton extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = View.inflate(this.getActivity(), R.layout.fragment_planet, null);
-
-        GlobalParams.view = (LinearLayout) View.inflate(getActivity(), R.layout.view_sun, null);
-
-        TextView iv = (TextView) GlobalParams.view.findViewById(R.id.iv_sun);
-        iv.setBackgroundResource(R.drawable.sun);
-
-        ((KitkatStatusBar) getActivity()).setGlobalView(GlobalParams.view);
-        GlobalParams.mainSection = (KitkatStatusBar) getActivity();
-        ((KitkatStatusBar) getActivity()).setGlobalFlag(true);
-
-        rl_content = (MyRelativeLayout) view.findViewById(R.id.rl_content);
-        iv_section = (ImageView) view.findViewById(R.id.iv_section);
-
-        mNewsShowList = (MyListView) view.findViewById(R.id.mNewsShowList);
-        mNewsFeed = new NewsFeed();
-        mNewsFeedAdapter = new NewsFeedAdapter(this.getActivity(), mNewsFeed);
-        mNewsShowList.setAdapter(mNewsFeedAdapter);
 
         GlobalParams.manager = (WindowManager) getActivity().getSystemService(Context.WINDOW_SERVICE);
 
         width = GlobalParams.manager.getDefaultDisplay().getWidth();
         height = GlobalParams.manager.getDefaultDisplay().getHeight();
 
-        setSunview();
-        showView();
+        //设置当前页面
+        view = View.inflate(this.getActivity(), R.layout.fragment_planet, null);
+
+        rl_content = (MyRelativeLayout) view.findViewById(R.id.rl_content);
+        iv_section = (ImageView) view.findViewById(R.id.iv_section);
+        mNewsShowList = (MyListView) view.findViewById(R.id.mNewsShowList);
+
+        mNewsLoadingImg = (ImageView) view.findViewById(R.id.mNewsLoadingImg);
+        mNewsLoadingImg.setImageResource(R.drawable.news_progress_animation_list);
+        mAniNewsLoading = (AnimationDrawable) mNewsLoadingImg.getDrawable();
+        mAniNewsLoading.start();
+        mNewsDetailLoadingWrapper = view.findViewById(R.id.mNewsDetailLoadingWrapper);
+        mNewsDetailCilckRefresh = view.findViewById(R.id.mNewsDetailCilckRefresh);
+        mNewsDetailCilckRefresh.setOnClickListener(this);
+
+        if (NetUtil.checkNetWork(getActivity())) {
+
+            //有网络的时候
+            mNewsDetailCilckRefresh.setVisibility(View.GONE);
+            rl_content.setVisibility(View.GONE);
+            mNewsDetailLoadingWrapper.setVisibility(View.VISIBLE);
+
+            loadNewsData(getActivity(), GlobalParams.currentPos);
+
+        } else {
+            //没有网络的时候
+            mNewsDetailCilckRefresh.setVisibility(View.VISIBLE);
+            rl_content.setVisibility(View.GONE);
+            mNewsDetailLoadingWrapper.setVisibility(View.GONE);
+
+            Toast.makeText(getActivity(), "网络异常，请检查您的网络....", Toast.LENGTH_LONG).show();
+        }
+
+
+        //mNewsDetailCilckRefresh.setTag(mNewsEle.sourceUrl);
+
 
         return view;
 
+    }
+
+    private void initView() {
+
+        setSunview();
+        showView();
     }
 
     private void setSunview() {
@@ -184,14 +244,14 @@ public class FragmentButton extends Fragment {
 
             case 1280:
 
-                POINT_ONE_X = 55;
-                POINT_ONE_Y = 300;
-                POINT_TWO_X = 220;
-                POINT_TWO_Y = 250;
+                POINT_ONE_X = 52;
+                POINT_ONE_Y = 305;
+                POINT_TWO_X = 230;
+                POINT_TWO_Y = 300;
                 POINT_THREE_X = 290;
-                POINT_THREE_Y = 150;
-                POINT_FOUR_X = 480;
-                POINT_FOUR_Y = 105;
+                POINT_THREE_Y = 160;
+                POINT_FOUR_X = 490;
+                POINT_FOUR_Y = 125;
                 SUN_WIDTH = 180;
 
                 break;
@@ -230,12 +290,20 @@ public class FragmentButton extends Fragment {
 
     private void showView() {
 
+        //设置全局参数
+        GlobalParams.view = (LinearLayout) View.inflate(getActivity(), R.layout.view_sun, null);
+
+        TextView iv = (TextView) GlobalParams.view.findViewById(R.id.iv_sun);
+        iv.setBackgroundResource(R.drawable.sun);
+
+        ((KitkatStatusBar) getActivity()).setGlobalView(GlobalParams.view);
+        GlobalParams.mainSection = (KitkatStatusBar) getActivity();
+        ((KitkatStatusBar) getActivity()).setGlobalFlag(true);
+
+
+
         flag = true;
-
-        GlobalParams.manager = (WindowManager) getActivity().getSystemService(Context.WINDOW_SERVICE);
-
-        width = GlobalParams.manager.getDefaultDisplay().getWidth();
-        height = GlobalParams.manager.getDefaultDisplay().getHeight();
+        iv_section.setBackgroundResource(R.drawable.section4);
 
         // 给view对象组成触摸的监听器
         GlobalParams.view.setOnTouchListener(new View.OnTouchListener() {
@@ -335,12 +403,20 @@ public class FragmentButton extends Fragment {
 
                         GlobalParams.manager.updateViewLayout(GlobalParams.view, GlobalParams.params);
 
-//					animation = new RotateAnimation(fromDegree, toDegree, Animation.RELATIVE_TO_SELF, 0.5f, Animation.RELATIVE_TO_SELF, 0.5f);
-//
-//					animation.setDuration(500);// 设置动画持续时间
-//					animation.setFillAfter(true);// 动画执行完后是否停留在执行完的状态
-//					earthView.startAnimation(animation);
-                        delayNotifyChangeNews();
+                        if (NetUtil.checkNetWork(getActivity())) {
+
+                            //有网络的时候
+                            loadNewsData(getActivity(), GlobalParams.currentPos);
+
+                        } else {
+                            //没有网络的时候
+                            mNewsDetailCilckRefresh.setVisibility(View.VISIBLE);
+                            rl_content.setVisibility(View.GONE);
+                            mNewsDetailLoadingWrapper.setVisibility(View.GONE);
+
+                            Toast.makeText(getActivity(), "网络异常，请检查您的网络....", Toast.LENGTH_LONG).show();
+                            GlobalParams.view.setVisibility(View.GONE);
+                        }
 
                         break;
                 }
@@ -374,9 +450,9 @@ public class FragmentButton extends Fragment {
         GlobalParams.params.type = WindowManager.LayoutParams.TYPE_PRIORITY_PHONE;//
         // 改用电话优先级的窗体类型，这种类型可以相应触摸事件。
         GlobalParams.manager.addView(GlobalParams.view, GlobalParams.params);
+
         GlobalParams.DELETE_FLAG = false;
 
-        delayNotifyChangeNews();
     }
 
     private void delayNotifyChangeNews() {
@@ -397,17 +473,43 @@ public class FragmentButton extends Fragment {
     }
 
 
-    private static void loadNewsData(final Context mContext, int newsModulePos) {
+    private void loadNewsData(final Context mContext, int newsModulePos) {
+
+        GlobalParams.LISTVIEW_HEIGHT = 0;
+        GlobalParams.LISTVIEW_ERROR = 0;
+
         NetworkRequest request = new NetworkRequest(HttpConstant.URL_FETCH_NEWS_FOR_MODULE + newsModulePos, NetworkRequest.RequestMethod.GET);
         request.setCallback(new JsonCallback<NewsFeed>() {
 
             @Override
             public void success(NewsFeed result) {
                 Log.i(">>>" + TAG, result.toString());
-                mNewsFeed = result;
-                mNewsFeedAdapter = new NewsFeedAdapter(mContext, mNewsFeed);
-                mNewsShowList.setAdapter(mNewsFeedAdapter);
-                mNewsFeedAdapter.notifyDataSetChanged();
+
+                if (result != null) {
+                    mNewsFeed = new NewsFeed();
+                    mNewsFeedAdapter = new NewsFeedAdapter(mContext, mNewsFeed);
+                    mNewsShowList.setAdapter(mNewsFeedAdapter);
+
+                    mNewsFeed = result;
+                    mNewsFeedAdapter = new NewsFeedAdapter(mContext, mNewsFeed);
+                    mNewsShowList.setAdapter(mNewsFeedAdapter);
+                    mNewsFeedAdapter.notifyDataSetChanged();
+                    mNewsDetailLoadingWrapper.setVisibility(View.GONE);
+                    mAniNewsLoading.stop();
+                    mNewsDetailCilckRefresh.setVisibility(View.GONE);
+                    rl_content.setVisibility(View.VISIBLE);
+                    if (GlobalParams.view == null) {
+                        initView();
+                    } else if (GlobalParams.view.getVisibility() == View.GONE) {
+                        GlobalParams.view.setVisibility(View.VISIBLE);
+                    }else if (GlobalParams.view.getVisibility() == View.VISIBLE) {
+                        GlobalParams.view.setVisibility(View.VISIBLE);
+                    }
+                } else {
+                    Toast.makeText(mContext, "网络异常，请查看网络...", Toast.LENGTH_SHORT).show();
+                }
+
+
             }
 
             public void failed(MyAppException exception) {
@@ -416,6 +518,17 @@ public class FragmentButton extends Fragment {
         }.setReturnType(new TypeToken<NewsFeed>() {
         }.getType()));
         request.execute();
+    }
+
+    @Override
+    public void onDestroy() {
+
+        if(GlobalParams.view != null){
+            GlobalParams.manager.removeView(GlobalParams.view);
+            GlobalParams.view = null;
+        }
+
+        super.onDestroy();
     }
 
     @Override
