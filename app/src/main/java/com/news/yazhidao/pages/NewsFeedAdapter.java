@@ -2,7 +2,11 @@ package com.news.yazhidao.pages;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Paint;
+import android.graphics.Rect;
 import android.os.Handler;
+import android.text.TextUtils;
+import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -22,6 +26,7 @@ import com.news.yazhidao.R;
 import com.news.yazhidao.constant.CommonConstant;
 import com.news.yazhidao.entity.NewsFeed;
 import com.news.yazhidao.net.request.UserPraiseNewsRequest;
+import com.news.yazhidao.utils.DensityUtil;
 import com.news.yazhidao.utils.DeviceInfoUtil;
 import com.news.yazhidao.utils.ImageLoaderHelper;
 import com.news.yazhidao.utils.Logger;
@@ -114,7 +119,7 @@ public class NewsFeedAdapter extends BaseAdapter {
         final ArrayList<NewsFeed.Element> elementList = mChannelsArr.get(position).elementList;
         //判断当前的view是否已经添加过两个view
         if (!mCacheAddedView.contains(layout.hashCode())) {
-            for (int index = 1; index < 3; index++) {
+            for (int index = 1; index <= 3; index++) {
                 NewsFeed.Element element = elementList.get(index);
                 final int finalIndex = index;
                 View childView=generateNewsCell(element,new View.OnClickListener() {
@@ -153,7 +158,7 @@ public class NewsFeedAdapter extends BaseAdapter {
             @Override
             public void onClick(View v) {
                 if (elementList != null) {
-                    for (int index = 3; index < elementList.size(); index++) {
+                    for (int index = 4; index < elementList.size(); index++) {
                         NewsFeed.Element element = elementList.get(index);
                         final int finalIndex = index;
                         View childView=generateNewsCell(element,new View.OnClickListener() {
@@ -239,25 +244,31 @@ public class NewsFeedAdapter extends BaseAdapter {
      * @return
      */
     private View generateNewsCell(final NewsFeed.Element element,View.OnClickListener listener){
-        View childView = LayoutInflater.from(mContext).inflate(R.layout.aty_news_show_list_cell, null);
-        childView.setLayoutParams(new AbsListView.LayoutParams(DeviceInfoUtil.getScreenWidth(), (int) (DeviceInfoUtil.getScreenHeight()*0.16)));
+        final View childView = LayoutInflater.from(mContext).inflate(R.layout.aty_news_show_list_cell, null);
+        if(DeviceInfoUtil.getScreenWidth()<=480){
+            childView.setLayoutParams(new AbsListView.LayoutParams(DeviceInfoUtil.getScreenWidth(), (int) (DeviceInfoUtil.getScreenHeight() * 0.18)));
+        }else{
+            childView.setLayoutParams(new AbsListView.LayoutParams(DeviceInfoUtil.getScreenWidth(), (int) (DeviceInfoUtil.getScreenHeight() * 0.16)));
+        }
         ImageView mCellImage = (ImageView) childView.findViewById(R.id.mCellImage);
         TextView mCellSourceSiteName = (TextView) childView.findViewById(R.id.mCellSourceSiteName);
-        TextView mCellTitle = (TextView) childView.findViewById(R.id.mCellTitle);
+        final TextView mCellTitle = (TextView) childView.findViewById(R.id.mCellTitle);
         TextView mCellTemperature = (TextView) childView.findViewById(R.id.mCellTemperature);
         View mCellPraiseWrapper = childView.findViewById(R.id.mCellPraiseWrapper);
+        View mCellImageWrapper = childView.findViewById(R.id.mCellImageWrapper);
         final ImageView mCellPraiseImg = (ImageView) childView.findViewById(R.id.mCellPraiseImg);
         final TextView mCellPraiseTv = (TextView) childView.findViewById(R.id.mCellPraiseTv);
         final TextView mCellPraisePlus = (TextView) childView.findViewById(R.id.mCellPraisePlus);
         mCellPraiseWrapper.setOnClickListener(new View.OnClickListener() {
             boolean isPraise;
+
             @Override
             public void onClick(View v) {
-                if(isPraise){
+                if (isPraise) {
                     mCellPraiseImg.setImageResource(R.drawable.news_list_table_cell_unpraised_in_home);
-                    mCellPraiseTv.setText((TextUtil.parsePraiseNumber(mCellPraiseTv.getText().toString())-1)+"人热赞");
+                    mCellPraiseTv.setText((TextUtil.parsePraiseNumber(mCellPraiseTv.getText().toString()) - 1) + "人热赞");
                     mCellPraiseTv.setTextColor(mContext.getResources().getColor(R.color.news_list_cell_sourcesitename));
-                    isPraise=false;
+                    isPraise = false;
                     UserPraiseNewsRequest.praiseNews(element.sourceUrl, false, new UserPraiseNewsRequest.PraiseNewsCallback() {
                         @Override
                         public void success() {
@@ -269,19 +280,19 @@ public class NewsFeedAdapter extends BaseAdapter {
                             ToastUtil.toastShort("取消点赞失败");
                         }
                     });
-                }else{
+                } else {
                     mCellPraisePlus.setVisibility(View.VISIBLE);
                     mCellPraisePlus.startAnimation(animation);
-                    new Handler().postDelayed(new Runnable(){
+                    new Handler().postDelayed(new Runnable() {
                         public void run() {
                             mCellPraisePlus.setVisibility(View.GONE);
                         }
                     }, 1000);
                     mCellPraiseImg.setImageResource(R.drawable.news_list_table_cell_praised);
-                    mCellPraiseTv.setText((TextUtil.parsePraiseNumber(mCellPraiseTv.getText().toString())+1)+"人热赞");
+                    mCellPraiseTv.setText((TextUtil.parsePraiseNumber(mCellPraiseTv.getText().toString()) + 1) + "人热赞");
                     mCellPraiseTv.setTextColor(mContext.getResources().getColor(R.color.common_theme_color));
-                    isPraise=true;
-                    UserPraiseNewsRequest.praiseNews(element.sourceUrl,true,new UserPraiseNewsRequest.PraiseNewsCallback() {
+                    isPraise = true;
+                    UserPraiseNewsRequest.praiseNews(element.sourceUrl, true, new UserPraiseNewsRequest.PraiseNewsCallback() {
                         @Override
                         public void success() {
                             ToastUtil.toastShort("点赞成功");
@@ -295,7 +306,26 @@ public class NewsFeedAdapter extends BaseAdapter {
                 }
             }
         });
-        ImageLoaderHelper.getImageLoader(mContext).displayImage(element.imgUrl, mCellImage, ImageLoaderHelper.getOption());
+        if(TextUtils.isEmpty(element.imgUrl)){
+            Paint mPaint=new Paint();
+            mPaint.setTextSize(TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_SP,18,mContext.getResources().getDisplayMetrics()));
+            float length = mPaint.measureText(element.title.replace("(图)",""));
+            Logger.i("text length="+element.title,"actual length="+length+">>total length="+DeviceInfoUtil.getScreenWidth()*0.89);
+            mCellImageWrapper.setVisibility(View.GONE);
+            if(length<DeviceInfoUtil.getScreenWidth()*0.89){
+                if(DeviceInfoUtil.getScreenWidth()<=480){
+                    childView.setLayoutParams(new AbsListView.LayoutParams(DeviceInfoUtil.getScreenWidth(), (int) (DeviceInfoUtil.getScreenHeight() * 0.14)));
+                }else{
+                    childView.setLayoutParams(new AbsListView.LayoutParams(DeviceInfoUtil.getScreenWidth(), (int) (DeviceInfoUtil.getScreenHeight() * 0.12)));
+                }
+            }else {
+                if (DeviceInfoUtil.getScreenWidth() <= 480) {
+                    childView.setLayoutParams(new AbsListView.LayoutParams(DeviceInfoUtil.getScreenWidth(), (int) (DeviceInfoUtil.getScreenHeight() * 0.18)));
+                }
+            }
+        }else{
+            ImageLoaderHelper.getImageLoader(mContext).displayImage(element.imgUrl, mCellImage, ImageLoaderHelper.getOption());
+        }
         mCellSourceSiteName.setText(element.sourceSiteName);
         mCellTitle.setText(element.title);
         mCellTemperature.setText(TextUtil.convertTemp(mNewsFeed.root_alias));

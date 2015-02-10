@@ -35,4 +35,5 @@ dependencies {
     compile files('libs/TalkingDataAnalytics_V1.2.61.jar')
     compile files('libs/umeng-analytics-v5.4.1.jar')
     compile files('libs/umeng-update-v2.5.0.jar')
+    compile files('libs/SocialSDK_AtFriends.jar')
 }

@@ -33,21 +33,11 @@
                 android:layout_alignParentBottom="true"
                 android:layout_marginTop="15dp">
 
-                <TextView
-                    android:id="@+id/mCellSourceSiteName"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentBottom="true"
-                    android:text="网易新闻"
-                    android:textColor="@color/news_list_cell_sourcesitename"
-                    android:textSize="12sp" />
-
                 <LinearLayout
                     android:id="@+id/mCellPraiseWrapper"
                     android:layout_width="wrap_content"
                     android:layout_height="30dp"
                     android:layout_alignParentBottom="true"
-                    android:layout_alignParentRight="true"
                     android:layout_toLeftOf="@+id/mNewsDetailShare"
                     android:orientation="horizontal">
 
@@ -67,19 +57,27 @@
                         android:layout_centerVertical="true"
                         android:layout_gravity="bottom"
                         android:drawablePadding="5dp"
-                        android:text="989人热赞"
+                        android:text="0人热赞"
                         android:textColor="@color/news_list_cell_sourcesitename"
                         android:textSize="12sp" />
 
                 </LinearLayout>
-
+                <TextView
+                    android:id="@+id/mCellSourceSiteName"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentBottom="true"
+                    android:layout_alignParentRight="true"
+                    android:text="网易新闻"
+                    android:textColor="@color/news_list_cell_sourcesitename"
+                    android:textSize="12sp" />
                 <TextView
                     android:id="@+id/mCellPraisePlus"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignLeft="@+id/mCellPraiseWrapper"
                     android:layout_alignParentBottom="true"
-                    android:layout_marginLeft="20dp"
+                    android:layout_marginLeft="15dp"
                     android:text="+1"
                     android:textColor="@color/common_theme_color"
                     android:textSize="14sp"
@@ -88,6 +86,7 @@
         </RelativeLayout>
 
         <RelativeLayout
+            android:id="@+id/mCellImageWrapper"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_marginLeft="16dp"

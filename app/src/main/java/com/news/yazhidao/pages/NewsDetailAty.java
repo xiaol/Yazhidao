@@ -70,7 +70,7 @@ public class NewsDetailAty extends BaseActivity implements View.OnClickListener 
             public void success(NewsDetail result) {
                 if (result != null && result.content != null && result.content.size() > 0) {
                     mNewsDetailListContent.addHeaderView(generateListHeader());
-                    mNewsDetailAdapter = new NewsDetailAdapter(NewsDetailAty.this, result, mNewsEle.imgUrl,finalNewsId);
+                    mNewsDetailAdapter = new NewsDetailAdapter(NewsDetailAty.this, result, mNewsEle,mNewsEle.imgUrl,finalNewsId);
                     mNewsDetailListContent.setAdapter(mNewsDetailAdapter);
                     mNewsDetailLoadingWrapper.setVisibility(View.GONE);
                     mAniNewsLoading.stop();
