@@ -1,22 +1,61 @@
-<com.news.yazhidao.UI.MyRelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/rl_content"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <ImageView
-        android:id="@+id/iv_section"
-        android:layout_width="match_parent"
-        android:layout_height="240dip"
-        android:background="@drawable/section4" />
 
-    <com.news.yazhidao.UI.MyListView
-        android:id="@+id/mNewsShowList"
-        android:layout_below="@+id/iv_section"
+    <com.news.yazhidao.UI.MyRelativeLayout
+        android:id="@+id/rl_content"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <ImageView
+            android:id="@+id/iv_section"
+            android:layout_width="match_parent"
+            android:layout_height="240dip"
+            android:background="@drawable/section4" />
+
+        <com.news.yazhidao.UI.MyListView
+            android:id="@+id/mNewsShowList"
+            android:layout_below="@+id/iv_section"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/news_list_bg"
+            android:dividerHeight="10dp" />
+
+    </com.news.yazhidao.UI.MyRelativeLayout>
+
+
+    <FrameLayout
+        android:id="@+id/mNewsDetailCilckRefresh"
+        android:visibility="gone"
+        android:layout_height="match_parent"
+        android:layout_width="match_parent">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/news_detail_empty"
+            android:layout_gravity="center" />
+    </FrameLayout>
+
+    <LinearLayout
+        android:id="@+id/mNewsDetailLoadingWrapper"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/news_list_bg"
-        android:dividerHeight="10dp"
-        android:divider="@color/news_list_bg"
-        />
+        android:orientation="vertical"
+        android:layout_gravity="center"
+        android:gravity="center">
 
-</com.news.yazhidao.UI.MyRelativeLayout>
+        <ImageView
+            android:id="@+id/mNewsLoadingImg"
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:background="@drawable/news_progress_animation_list" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="玩命加载中..."
+            android:textColor="@color/black" />
+    </LinearLayout>
+</FrameLayout>

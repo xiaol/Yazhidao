@@ -3,7 +3,6 @@ package com.news.yazhidao.pages;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Paint;
-import android.graphics.Rect;
 import android.os.Handler;
 import android.text.TextUtils;
 import android.util.TypedValue;
@@ -217,7 +216,7 @@ public class NewsFeedAdapter extends BaseAdapter {
                 break;
 
             case 1184: //moto g
-                GlobalParams.LISTVIEW_ERROR += 940;
+                GlobalParams.LISTVIEW_ERROR += 890;
                 break;
 
             case 800:
@@ -291,7 +290,7 @@ public class NewsFeedAdapter extends BaseAdapter {
                     mCellPraiseTv.setText((TextUtil.parsePraiseNumber(mCellPraiseTv.getText().toString()) - 1) + "人热赞");
                     mCellPraiseTv.setTextColor(mContext.getResources().getColor(R.color.news_list_cell_sourcesitename));
                     isPraise = false;
-                    UserPraiseNewsRequest.praiseNews(element.sourceUrl, false, new UserPraiseNewsRequest.PraiseNewsCallback() {
+                    UserPraiseNewsRequest.praiseNews(element.id, false, new UserPraiseNewsRequest.PraiseNewsCallback() {
                         @Override
                         public void success() {
                             ToastUtil.toastShort("取消点赞成功");
@@ -314,7 +313,7 @@ public class NewsFeedAdapter extends BaseAdapter {
                     mCellPraiseTv.setText((TextUtil.parsePraiseNumber(mCellPraiseTv.getText().toString()) + 1) + "人热赞");
                     mCellPraiseTv.setTextColor(mContext.getResources().getColor(R.color.common_theme_color));
                     isPraise = true;
-                    UserPraiseNewsRequest.praiseNews(element.sourceUrl, true, new UserPraiseNewsRequest.PraiseNewsCallback() {
+                    UserPraiseNewsRequest.praiseNews(element.id, true, new UserPraiseNewsRequest.PraiseNewsCallback() {
                         @Override
                         public void success() {
                             ToastUtil.toastShort("点赞成功");

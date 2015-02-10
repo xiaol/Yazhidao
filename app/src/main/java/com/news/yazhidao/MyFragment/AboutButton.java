@@ -20,7 +20,7 @@ public class AboutButton extends Fragment {
 
         View view = View.inflate(this.getActivity(), R.layout.aboutpage, null);
 
-        if(!GlobalParams.DELETE_FLAG) {
+        if(!GlobalParams.DELETE_FLAG && GlobalParams.view != null) {
             GlobalParams.manager.removeView(GlobalParams.view);
             GlobalParams.DELETE_FLAG = true;
         }

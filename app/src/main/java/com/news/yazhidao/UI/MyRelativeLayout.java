@@ -114,7 +114,11 @@ public class MyRelativeLayout extends RelativeLayout {
                 break;
 
             case 1280:
-                error = 150 + margin;
+                error = 150;
+                break;
+
+            case 1184:
+                error = 150;
                 break;
 
             case 800:
