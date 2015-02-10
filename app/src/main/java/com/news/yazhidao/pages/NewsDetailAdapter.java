@@ -1,9 +1,12 @@
 package com.news.yazhidao.pages;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Paint;
 import android.os.Handler;
 import android.text.TextUtils;
+import android.util.TypedValue;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.AnimationUtils;
@@ -48,9 +51,11 @@ public class NewsDetailAdapter extends BaseAdapter {
     private View mRelateView;
     private boolean isPraise ;
     private android.view.animation.Animation mAnimation;
-    public NewsDetailAdapter(Context mContext, NewsDetail newsDetail, String subjectUrl, String newsId) {
+    private NewsFeed.Element mNewsEle;
+    public NewsDetailAdapter(Context mContext, NewsDetail newsDetail,NewsFeed.Element mNewsEle, String subjectUrl, String newsId) {
         this.mContext = mContext;
         this.mSectionArr = newsDetail.content;
+        this.mNewsEle=mNewsEle;
         this.mSubjectUrl = subjectUrl;
         this.mElementArr = newsDetail.elementList;
         this.mNewsId = newsId;
@@ -140,10 +145,8 @@ public class NewsDetailAdapter extends BaseAdapter {
                 @Override
                 public void onClick(View v) {
                     //TODO 新浪分享
-                    NewsFeed.Element news=new NewsFeed.Element();
-                    news.sourceUrl=mNewsId;
-                    news.imgUrl=mSubjectUrl;
-                    UmengShareHelper.shareSina(mContext,news);
+//                    UmengShareHelper.shareSina(mContext,news);
+                    UmengShareHelper.share((Activity)mContext,mNewsEle);
                 }
             });
             share.setOnClickListener(null);
@@ -194,7 +197,11 @@ public class NewsDetailAdapter extends BaseAdapter {
         if (mElementArr != null && mElementArr.size() > 0) {
             for (int index = 0; index < mElementArr.size(); index++) {
                 View relateViewItem = View.inflate(mContext, R.layout.aty_news_show_list_cell, null);
-                relateViewItem.setLayoutParams(new AbsListView.LayoutParams(DeviceInfoUtil.getScreenWidth(), (int) (DeviceInfoUtil.getScreenHeight()*0.16)));
+                if(DeviceInfoUtil.getScreenWidth()<=480){
+                    relateViewItem.setLayoutParams(new AbsListView.LayoutParams(DeviceInfoUtil.getScreenWidth(), (int) (DeviceInfoUtil.getScreenHeight()*0.18)));
+                }else{
+                    relateViewItem.setLayoutParams(new AbsListView.LayoutParams(DeviceInfoUtil.getScreenWidth(), (int) (DeviceInfoUtil.getScreenHeight()*0.16)));
+                }
                 TextView mCellTitle = (TextView) relateViewItem.findViewById(R.id.mCellTitle);
                 ImageView mCellImage = (ImageView) relateViewItem.findViewById(R.id.mCellImage);
                 View mCellPraise = relateViewItem.findViewById(R.id.mCellPraiseWrapper);
@@ -203,11 +210,32 @@ public class NewsDetailAdapter extends BaseAdapter {
                 final TextView mCellPraisePlus= (TextView) relateViewItem.findViewById(R.id.mCellPraisePlus);
                 final ImageView mCellPraiseImg= (ImageView) relateViewItem.findViewById(R.id.mCellPraiseImg);
                 final TextView mCellPraiseTv= (TextView) relateViewItem.findViewById(R.id.mCellPraiseTv);
+                final View mCellImageWrapper=  relateViewItem.findViewById(R.id.mCellImageWrapper);
 
                 mCellTitle.setText(mElementArr.get(index).title);
                 mCellTemperature.setText(convertClassToTemp(mElementArr.get(index).RootClass));
                 mCellSourceSiteName.setText(mElementArr.get(index).sourceSiteName);
                 ImageLoaderHelper.dispalyImage(mContext, mElementArr.get(index).imgUrl, mCellImage);
+                if(TextUtils.isEmpty(mElementArr.get(index).imgUrl)){
+                    Paint mPaint=new Paint();
+                    mPaint.setTextSize(TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_SP, 18, mContext.getResources().getDisplayMetrics()));
+                    float length = mPaint.measureText(mElementArr.get(index).title);
+                    Logger.i("text length="+mElementArr.get(index).title,"actual length="+length+">>total length="+DeviceInfoUtil.getScreenWidth()*0.889);
+                    mCellImageWrapper.setVisibility(View.GONE);
+                    if(length<DeviceInfoUtil.getScreenWidth()*0.89){
+                        if(DeviceInfoUtil.getScreenWidth()<=480){
+                            relateViewItem.setLayoutParams(new AbsListView.LayoutParams(DeviceInfoUtil.getScreenWidth(), (int) (DeviceInfoUtil.getScreenHeight() * 0.14)));
+                        }else{
+                            relateViewItem.setLayoutParams(new AbsListView.LayoutParams(DeviceInfoUtil.getScreenWidth(), (int) (DeviceInfoUtil.getScreenHeight() * 0.12)));
+                        }
+                    }else {
+                        if (DeviceInfoUtil.getScreenWidth() <= 480) {
+                            relateViewItem.setLayoutParams(new AbsListView.LayoutParams(DeviceInfoUtil.getScreenWidth(), (int) (DeviceInfoUtil.getScreenHeight() * 0.18)));
+                        }
+                    }
+                }else{
+                    ImageLoaderHelper.dispalyImage(mContext, mElementArr.get(index).imgUrl, mCellImage);
+                }
                 final int finalIndex = index;
                 relateViewItem.setOnClickListener(new View.OnClickListener() {
                     @Override

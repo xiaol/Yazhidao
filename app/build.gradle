@@ -32,4 +32,8 @@ dependencies {
     compile 'com.google.code.gson:gson:2.2.4'
     compile 'com.android.support:support-v4:21.0.3'
     compile project(':umeng_social_sdk_library')
+    compile files('libs/TalkingDataAnalytics_V1.2.61.jar')
+    compile files('libs/umeng-analytics-v5.4.1.jar')
+    compile files('libs/umeng-update-v2.5.0.jar')
+    compile files('libs/SocialSDK_AtFriends.jar')
 }

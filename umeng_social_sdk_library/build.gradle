@@ -35,4 +35,5 @@ dependencies {
     compile files('libs/SocialSDK_tumblr.jar')
     compile files('libs/httpmime-4.1.3.jar')
     compile files('libs/umeng_social_sdk.jar')
+    compile files('libs/SocialSDK_AtFriends.jar')
 }
