@@ -119,6 +119,8 @@ public class NewsFeedAdapter extends BaseAdapter {
             holder.mTablePullDown = (RelativeLayout) convertView.findViewById(R.id.mTablePullDown);
             holder.mTableSetting = (FrameLayout) convertView.findViewById(R.id.mTableSetting);
             holder.mTableHeaderWrapper = (RelativeLayout) convertView.findViewById(R.id.mTableHeaderWrapper);
+            holder.mTableChannelNameWrapper =  convertView.findViewById(R.id.mTableChannelNameWrapper);
+            holder.mTableChannelNameWrapper.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, (int) (DeviceInfoUtil.getScreenHeight()*0.062)));
             convertView.setTag(holder);
         } else {
             Logger.i(">>>","reused the convertView");
@@ -243,6 +245,7 @@ public class NewsFeedAdapter extends BaseAdapter {
         public RelativeLayout mTablePullDown;
         public FrameLayout mTableSetting;
         public RelativeLayout mTableHeaderWrapper;
+        public View mTableChannelNameWrapper;
     }
 
     /**

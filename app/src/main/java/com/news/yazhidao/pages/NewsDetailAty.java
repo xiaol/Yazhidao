@@ -57,7 +57,7 @@ public class NewsDetailAty extends BaseActivity implements View.OnClickListener 
         mNewsDetailCilckRefresh = findViewById(R.id.mNewsDetailCilckRefresh);
         mNewsDetailCilckRefresh.setOnClickListener(this);
         mNewsDetailCilckRefresh.setTag(mNewsEle.sourceUrl);
-        loadNewsDetail(mNewsEle.sourceUrl);
+        loadNewsDetail(mNewsEle.id);
     }
 
     private void loadNewsDetail(String newsId) {
