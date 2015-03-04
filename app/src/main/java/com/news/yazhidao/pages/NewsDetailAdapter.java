@@ -217,22 +217,27 @@ public class NewsDetailAdapter extends BaseAdapter {
                 mCellSourceSiteName.setText(mElementArr.get(index).sourceSiteName);
                 ImageLoaderHelper.dispalyImage(mContext, mElementArr.get(index).imgUrl, mCellImage);
                 if(TextUtils.isEmpty(mElementArr.get(index).imgUrl)){
-                    Paint mPaint=new Paint();
-                    mPaint.setTextSize(TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_SP, 18, mContext.getResources().getDisplayMetrics()));
-                    float length = mPaint.measureText(mElementArr.get(index).title);
-                    Logger.i("text length="+mElementArr.get(index).title,"actual length="+length+">>total length="+DeviceInfoUtil.getScreenWidth()*0.889);
+                    //不要删除  以后适配要用
+//                    Paint mPaint=new Paint();
+//                    mPaint.setTextSize(TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_SP, 18, mContext.getResources().getDisplayMetrics()));
+//                    float length = mPaint.measureText(mElementArr.get(index).title);
+//                    Logger.i("text length="+mElementArr.get(index).title,"actual length="+length+">>total length="+DeviceInfoUtil.getScreenWidth()*0.889);
                     mCellImageWrapper.setVisibility(View.GONE);
-                    if(length<DeviceInfoUtil.getScreenWidth()*0.89){
-                        if(DeviceInfoUtil.getScreenWidth()<=480){
-                            relateViewItem.setLayoutParams(new AbsListView.LayoutParams(DeviceInfoUtil.getScreenWidth(), (int) (DeviceInfoUtil.getScreenHeight() * 0.14)));
-                        }else{
-                            relateViewItem.setLayoutParams(new AbsListView.LayoutParams(DeviceInfoUtil.getScreenWidth(), (int) (DeviceInfoUtil.getScreenHeight() * 0.12)));
-                        }
-                    }else {
-                        if (DeviceInfoUtil.getScreenWidth() <= 480) {
-                            relateViewItem.setLayoutParams(new AbsListView.LayoutParams(DeviceInfoUtil.getScreenWidth(), (int) (DeviceInfoUtil.getScreenHeight() * 0.18)));
-                        }
-                    }
+//                    if(length<DeviceInfoUtil.getScreenWidth()*0.89){
+//                        if(DeviceInfoUtil.getScreenWidth()<=480){
+//                            relateViewItem.setLayoutParams(new AbsListView.LayoutParams(DeviceInfoUtil.getScreenWidth(), (int) (DeviceInfoUtil.getScreenHeight() * 0.14)));
+//                        }else{
+//                            relateViewItem.setLayoutParams(new AbsListView.LayoutParams(DeviceInfoUtil.getScreenWidth(), (int) (DeviceInfoUtil.getScreenHeight() * 0.12)));
+//                        }
+//                    }else {
+//                        if (DeviceInfoUtil.getScreenWidth() <= 480) {
+//                            relateViewItem.setLayoutParams(new AbsListView.LayoutParams(DeviceInfoUtil.getScreenWidth(), (int) (DeviceInfoUtil.getScreenHeight() * 0.18)));
+//                        }else if(DeviceInfoUtil.getScreenWidth()<=720){
+//                            relateViewItem.setLayoutParams(new AbsListView.LayoutParams(DeviceInfoUtil.getScreenWidth(), (int) (DeviceInfoUtil.getScreenHeight() * 0.16)));
+//                        }else if(DeviceInfoUtil.getScreenWidth()<=1080){
+//                            relateViewItem.setLayoutParams(new AbsListView.LayoutParams(DeviceInfoUtil.getScreenWidth(), (int) (DeviceInfoUtil.getScreenHeight() * 0.15)));
+//                        }
+//                    }
                 }else{
                     ImageLoaderHelper.dispalyImage(mContext, mElementArr.get(index).imgUrl, mCellImage);
                 }

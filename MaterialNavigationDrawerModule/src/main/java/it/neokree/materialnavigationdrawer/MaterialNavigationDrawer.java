@@ -39,6 +39,11 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.umeng.socialize.bean.RequestType;
+import com.umeng.socialize.controller.UMServiceFactory;
+import com.umeng.socialize.controller.UMSocialService;
+import com.umeng.socialize.sso.UMSsoHandler;
+
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
@@ -864,7 +869,16 @@ public abstract class MaterialNavigationDrawer<Fragment> extends ActionBarActivi
 
         super.onSaveInstanceState(outState);
     }
-
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        /**使用SSO授权必须添加如下代码 */
+        UMSocialService mController = UMServiceFactory.getUMSocialService("com.umeng.share", RequestType.SOCIAL);
+        UMSsoHandler ssoHandler = mController.getConfig().getSsoHandler(requestCode) ;
+        if(ssoHandler != null){
+            ssoHandler.authorizeCallBack(requestCode, resultCode, data);
+        }
+    }
     @Override
     protected void onDestroy() {
         super.onDestroy();
