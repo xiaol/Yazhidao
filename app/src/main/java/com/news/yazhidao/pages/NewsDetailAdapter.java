@@ -3,10 +3,8 @@ package com.news.yazhidao.pages;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Paint;
 import android.os.Handler;
 import android.text.TextUtils;
-import android.util.TypedValue;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.AnimationUtils;
@@ -15,16 +13,11 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.news.yazhidao.R;
 import com.news.yazhidao.constant.CommonConstant;
-import com.news.yazhidao.constant.HttpConstant;
 import com.news.yazhidao.entity.NewsDetail;
 import com.news.yazhidao.entity.NewsFeed;
-import com.news.yazhidao.net.MyAppException;
-import com.news.yazhidao.net.NetworkRequest;
-import com.news.yazhidao.net.StringCallback;
 import com.news.yazhidao.net.request.UserPraiseNewsRequest;
 import com.news.yazhidao.utils.DeviceInfoUtil;
 import com.news.yazhidao.utils.ImageLoaderHelper;
@@ -35,9 +28,7 @@ import com.news.yazhidao.utils.helper.UmengShareHelper;
 import com.news.yazhidao.widget.StrokeTextView;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.Map;
-import java.util.Objects;
 
 /**
  * Created by fengjigang on 15/1/21.
@@ -100,7 +91,7 @@ public class NewsDetailAdapter extends BaseAdapter {
                 @Override
                 public void onClick(View v) {
                     if (isPraise) {
-                        mNewsDetailPraiseImg.setImageResource(R.drawable.news_list_table_cell_unpraised);
+                        mNewsDetailPraiseImg.setImageResource(R.drawable.news_list_table_detail_unpraised);
                         mNewsDetailPraiseTv.setText((TextUtil.parsePraiseNumber(mNewsDetailPraiseTv.getText().toString()) - 1) + "人热赞");
                         isPraise = false;
                         //TODO 向后台确认点赞
@@ -123,7 +114,7 @@ public class NewsDetailAdapter extends BaseAdapter {
                                 mNewsDetailPraisePlus.setVisibility(View.GONE);
                             }
                         }, 1000);
-                        mNewsDetailPraiseImg.setImageResource(R.drawable.news_list_table_cell_praised);
+                        mNewsDetailPraiseImg.setImageResource(R.drawable.news_list_table_detail_praised);
                         mNewsDetailPraiseTv.setText((TextUtil.parsePraiseNumber(mNewsDetailPraiseTv.getText().toString()) + 1) + "人热赞");
                         isPraise = true;
                         //TODO 向后台取消点赞
@@ -253,7 +244,7 @@ public class NewsDetailAdapter extends BaseAdapter {
                     @Override
                     public void onClick(View view) {
                         if(isRelatePraise){
-                            mCellPraiseImg.setImageResource(R.drawable.news_list_table_cell_unpraised_in_home);
+                            mCellPraiseImg.setImageResource(R.drawable.news_list_table_cell_unpraised);
                             mCellPraiseTv.setText((TextUtil.parsePraiseNumber(mCellPraiseTv.getText().toString()) - 1) + "人热赞");
                             mCellPraiseTv.setTextColor(mContext.getResources().getColor(R.color.news_list_cell_sourcesitename));
                             isRelatePraise=false;

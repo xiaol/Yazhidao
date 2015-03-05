@@ -1,16 +1,28 @@
 package com.news.yazhidao.MyFragment;
 
+import android.app.AlertDialog;
+import android.content.BroadcastReceiver;
+import android.content.Context;
+import android.content.Intent;
+import android.content.IntentFilter;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.View;
+import android.widget.Button;
 import android.widget.Toast;
 
 import com.news.yazhidao.GlobalParams;
+import com.news.yazhidao.MyActivity.SignActivity;
 import com.news.yazhidao.R;
+import com.news.yazhidao.constant.CommonConstant;
 import com.news.yazhidao.entity.User;
+import com.news.yazhidao.pages.UserLoginAty;
 import com.news.yazhidao.utils.helper.DrawableUtil;
+import com.news.yazhidao.utils.helper.SettingHelper;
 import com.news.yazhidao.utils.helper.UmengShareHelper;
 import com.news.yazhidao.utils.helper.UserDataManager;
+import com.news.yazhidao.widget.AlertDialogImpl;
 import com.umeng.socialize.bean.SHARE_MEDIA;
 
 import java.io.InputStream;
@@ -22,11 +34,22 @@ import it.neokree.materialnavigationdrawer.elements.MaterialAccount;
  * Created by berkley on 20/01/15.
  */
 public class KitkatStatusBar extends MaterialNavigationDrawer {
-
+    public static final String ACTION_USER_LOGIN="com.news.yazhidao.ACTION_USER_LOGIN_IN_HOME";
+    private MaterialAccount account;
     private String username;
     private String profile;
     InputStream stream = null;
+    private BroRecUserLogin mBroRecUserLogin=new BroRecUserLogin();
 
+    private class BroRecUserLogin extends BroadcastReceiver {
+
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            if(ACTION_USER_LOGIN.equals(intent.getAction())){
+                setSinaUserLogin();
+            }
+        }
+    }
     protected View.OnClickListener listener = new View.OnClickListener() {
 
         @Override
@@ -42,18 +65,48 @@ public class KitkatStatusBar extends MaterialNavigationDrawer {
                 layout.closeDrawer(drawer);
 
                 boolean isLogin = UmengShareHelper.isAuthenticated(getApplicationContext(), SHARE_MEDIA.SINA);
-                if(isLogin){
-
+                String loginSinaId=SettingHelper.get(CommonConstant.UserInfoConstant.SETTING_FILE, CommonConstant.UserInfoConstant.KEY_USER_LOGIN_SINA);
+                if(isLogin&&!TextUtils.isEmpty(loginSinaId)){
                     //弹框 确认是否注销
-                    Toast.makeText(getApplicationContext(),"已经登录",Toast.LENGTH_LONG).show();
-
+                    showLogoutDialog();
                 }else{
-                    UmengShareHelper.oAuthSina(getApplicationContext(),null);
+                    UmengShareHelper.oAuthSina(KitkatStatusBar.this,null);
                 }
 
             }
         }
     };
+    AlertDialogImpl dialog;
+    private void showLogoutDialog() {
+        dialog=new AlertDialogImpl.Builder(this).setTitle("退出登录").setMessage("确定要退出登陆吗？").setPositive("确定", new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                UmengShareHelper.logout(KitkatStatusBar.this);
+                setSinaUserLogout();
+                dialog.dismiss();
+            }
+        }).setNegative("取消", new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog.dismiss();
+            }
+        }).show();;
+        dialog.setCancelable(false);
+    }
+
+    private void setSinaUserLogout() {
+        account.setTitle("立即登录");
+        DrawableUtil.displayImage2Circle(getApplicationContext(),userphoto,R.drawable.icon144);
+        notifyAccountDataChanged();
+    }
+    private void setSinaUserLogin() {
+        account.setTitle(UserDataManager.readUser().getScreenName());
+        notifyAccountDataChanged();
+        String profile=UserDataManager.readUser().getSinaProfileImageUrl();
+        if(profile != null && profile.length() > 0) {
+            DrawableUtil.displayImage2Circle(getApplicationContext(), userphoto, profile);
+        }
+    }
 
 
     @Override
@@ -64,13 +117,13 @@ public class KitkatStatusBar extends MaterialNavigationDrawer {
             username = user.getScreenName();
 
             if(username == null){
-                username = "未登录用户";
+                username = "立即登录";
             }
             profile = user.getSinaProfileImageUrl();
         }
 
         // add accounts
-        MaterialAccount account = new MaterialAccount(this.getResources(), username, "", R.drawable.icon144, R.drawable.bj);
+        account = new MaterialAccount(this.getResources(), username, "", R.drawable.icon144, R.drawable.bj);
         this.addAccount(account);
 
         if(profile != null && profile.length() > 0) {
@@ -95,6 +148,14 @@ public class KitkatStatusBar extends MaterialNavigationDrawer {
         //this.addBottomSection(newSection("Bottom Section",R.drawable.ic_settings_black_24dp,new Intent(this,Settings.class)));
 
         this.disableLearningPattern();
+        IntentFilter filter=new IntentFilter();
+        filter.addAction(ACTION_USER_LOGIN);
+        this.registerReceiver(mBroRecUserLogin,filter);
     }
 
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        this.unregisterReceiver(mBroRecUserLogin);
+    }
 }

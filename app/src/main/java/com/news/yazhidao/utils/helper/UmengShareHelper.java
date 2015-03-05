@@ -9,6 +9,7 @@ import android.text.TextUtils;
 import android.widget.Toast;
 
 import com.google.gson.reflect.TypeToken;
+import com.news.yazhidao.MyFragment.KitkatStatusBar;
 import com.news.yazhidao.R;
 import com.news.yazhidao.constant.CommonConstant;
 import com.news.yazhidao.constant.HttpConstant;
@@ -20,6 +21,7 @@ import com.news.yazhidao.net.UserLoginCallBack;
 import com.news.yazhidao.pages.UserLoginAty;
 import com.news.yazhidao.utils.DeviceInfoUtil;
 import com.news.yazhidao.utils.Logger;
+import com.news.yazhidao.utils.TextUtil;
 import com.umeng.socialize.bean.RequestType;
 import com.umeng.socialize.bean.SHARE_MEDIA;
 import com.umeng.socialize.bean.SocializeEntity;
@@ -27,6 +29,7 @@ import com.umeng.socialize.controller.UMServiceFactory;
 import com.umeng.socialize.controller.UMSocialService;
 import com.umeng.socialize.controller.listener.SocializeListeners;
 import com.umeng.socialize.exception.SocializeException;
+import com.umeng.socialize.media.DoubanShareContent;
 import com.umeng.socialize.media.QQShareContent;
 import com.umeng.socialize.media.QZoneShareContent;
 import com.umeng.socialize.media.RenrenShareContent;
@@ -104,8 +107,15 @@ public class UmengShareHelper {
                                 if (news != null) {
                                     shareToPlatform(mContext, news, SHARE_MEDIA.SINA);
                                 } else {
-                                    mContext.sendBroadcast(new Intent(UserLoginAty.ACTION_USER_LOGIN));
-
+                                    //说明在首定的时候没有登录
+                                    String isShareSinaId=SettingHelper.get(CommonConstant.UserInfoConstant.SETTING_FILE,CommonConstant.UserInfoConstant.KEY_USER_LOGIN_SINA);
+                                    if(!TextUtils.isEmpty(isShareSinaId)){
+                                        mContext.sendBroadcast(new Intent(KitkatStatusBar.ACTION_USER_LOGIN));
+                                    }else{
+                                        mContext.sendBroadcast(new Intent(UserLoginAty.ACTION_USER_LOGIN));
+                                    }
+                                    //只用来分享新闻
+                                    SettingHelper.save(CommonConstant.UserInfoConstant.SETTING_FILE,CommonConstant.UserInfoConstant.KEY_USER_LOGIN_SINA,user.getSinaId());
                                 }
                                 //TODO 保存用户信息并修改用户登陆的头像信息等
                                 UserDataManager.saveUser(user);
@@ -135,7 +145,16 @@ public class UmengShareHelper {
         }, 10000);
     }
 
-
+    /**
+     * 用户退出登录
+     * @param mContext
+     */
+    public static void logout(Context mContext) {
+        //1.删除新浪登录认证
+        deleteShareSina(mContext);
+        //2.删除本地保存的用户信息
+        SettingHelper.remove(CommonConstant.UserInfoConstant.SETTING_FILE, CommonConstant.UserInfoConstant.KEY_USER_ID);
+    }
     /**
      * 删除新浪微博授权
      *
@@ -300,7 +319,6 @@ public class UmengShareHelper {
         // 配置SSO
         mController.getConfig().setSsoHandler(new SinaSsoHandler());
         mController.getConfig().setSsoHandler(new TencentWBSsoHandler());
-
         QZoneSsoHandler qZoneSsoHandler = new QZoneSsoHandler(mActivity,
                 "100424468", "c7394704798a158208a74ab60104f0ba");
         qZoneSsoHandler.addToSocialSDK();
@@ -327,6 +345,17 @@ public class UmengShareHelper {
         weixinContent.setTargetUrl(news.sourceUrl);
         weixinContent.setShareMedia(urlImage);
         mController.setShareMedia(weixinContent);
+
+        //豆瓣分享
+        DoubanShareContent doubanContent = new DoubanShareContent();
+        doubanContent.setShareContent(news.title+"。"+news.sourceUrl);
+        doubanContent.setTitle(mActivity.getResources().getString(R.string.app_name)+"分享-豆瓣");
+        doubanContent.setTargetUrl(news.sourceUrl);
+        if(urlImage!=null){
+            doubanContent.setShareMedia(urlImage);
+        }
+        doubanContent.setShareMedia(urlImage);
+        mController.setShareMedia(doubanContent);
 
         // 设置朋友圈分享的内容
         CircleShareContent circleMedia = new CircleShareContent();

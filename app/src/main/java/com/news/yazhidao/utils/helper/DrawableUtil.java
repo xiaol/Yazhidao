@@ -2,6 +2,7 @@ package com.news.yazhidao.utils.helper;
 
 import android.content.Context;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.graphics.PorterDuff;
@@ -11,6 +12,7 @@ import android.graphics.RectF;
 import android.view.View;
 import android.widget.ImageView;
 
+import com.news.yazhidao.R;
 import com.news.yazhidao.utils.ImageLoaderHelper;
 import com.nostra13.universalimageloader.core.listener.SimpleImageLoadingListener;
 
@@ -60,5 +62,9 @@ public class DrawableUtil {
         }
         ImageLoaderHelper.dispalyImage(context, url, (ImageView)container,listener);
     }
+    public static <T extends ImageView> void displayImage2Circle(Context context,T container,int resouceId){
+        container.setImageBitmap(getRoundedCornerBitmap(BitmapFactory.decodeResource(context.getResources(), R.drawable.icon144)));
+    }
+
 
 }

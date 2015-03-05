@@ -13,5 +13,6 @@ public class CommonConstant {
         public static final String SETTING_FILE="user";
         public static final String KEY_USER_ID="key_user_id";
         public static final String KEY_USER_INFO="key_user_info";
+        public static final String KEY_USER_LOGIN_SINA="key_user_login_sina";
     }
 }
