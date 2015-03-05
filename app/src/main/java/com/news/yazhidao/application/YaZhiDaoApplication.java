@@ -14,6 +14,9 @@ public class YaZhiDaoApplication extends Application {
     public void onCreate() {
         mContext=this;
         super.onCreate();
+        
+        
+        
     }
     public static Context getAppContext(){
         return mContext;
