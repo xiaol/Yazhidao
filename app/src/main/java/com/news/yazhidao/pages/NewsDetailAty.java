@@ -1,7 +1,9 @@
 package com.news.yazhidao.pages;
 
+import android.graphics.Paint;
 import android.graphics.drawable.AnimationDrawable;
 import android.os.Bundle;
+import android.util.TypedValue;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.ListView;
@@ -19,10 +21,10 @@ import com.news.yazhidao.net.JsonCallback;
 import com.news.yazhidao.net.MyAppException;
 import com.news.yazhidao.net.NetworkRequest;
 import com.news.yazhidao.net.TextUtils;
+import com.news.yazhidao.utils.DensityUtil;
+import com.news.yazhidao.utils.DeviceInfoUtil;
 import com.news.yazhidao.utils.ImageLoaderHelper;
 import com.news.yazhidao.utils.Logger;
-import com.news.yazhidao.utils.gifview.GifView;
-import com.nostra13.universalimageloader.core.ImageLoader;
 
 /**
  * Created by fengjigang on 15/1/21.
@@ -117,6 +119,22 @@ public class NewsDetailAty extends BaseActivity implements View.OnClickListener 
         }
         mNewsDetailHeaderTitleNoImg.setText(mNewsEle.title);
         mNewsDetailHeaderTitle.setText(mNewsEle.title);
+        int textSize=24;
+        int textSpace = DeviceInfoUtil.getScreenWidth()-DensityUtil.dip2px(this, 15);
+        Paint mPaint=new Paint();
+        mPaint.setTextSize(TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_SP, textSize, this.getResources().getDisplayMetrics()));
+        float length = mPaint.measureText(mNewsEle.title);
+        if(length<textSpace){
+            mNewsDetailHeaderTitle.setLines(1);
+            mNewsDetailHeaderTitleNoImg.setLines(1);
+        }else{
+            while (length/textSpace>=2){
+                mPaint.setTextSize(TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_SP, --textSize, this.getResources().getDisplayMetrics()));
+                length=mPaint.measureText(mNewsEle.title);
+            }
+            mNewsDetailHeaderTitle.setTextSize(TypedValue.COMPLEX_UNIT_SP,textSize);
+            mNewsDetailHeaderTitleNoImg.setTextSize(TypedValue.COMPLEX_UNIT_SP,textSize);
+        }
         String originAndTime = String.format(NewsDetailAty.this.getResources().getString(R.string.news_detail_origin_and_time), mNewsEle.sourceSiteName, mNewsEle.updateTime);
         mNewsDetailHeaderOriginAndTime.setText(originAndTime);
         mNewsDetailHeaderOriginAndTimeNoImg.setText(originAndTime);

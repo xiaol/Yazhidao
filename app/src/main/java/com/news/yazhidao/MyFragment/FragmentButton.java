@@ -31,6 +31,7 @@ import com.news.yazhidao.net.MyAppException;
 import com.news.yazhidao.net.NetworkRequest;
 import com.news.yazhidao.pages.NewsFeedAdapter;
 import com.news.yazhidao.utils.DeviceInfoUtil;
+import com.news.yazhidao.utils.Logger;
 import com.news.yazhidao.utils.NetUtil;
 import com.news.yazhidao.utils.helper.UmengShareHelper;
 import com.umeng.socialize.bean.SHARE_MEDIA;
@@ -132,7 +133,8 @@ public class FragmentButton extends Fragment implements View.OnClickListener {
         iv_section = (ImageView) view.findViewById(R.id.iv_section);
         GlobalParams.iv_orbit = (ImageView) view.findViewById(R.id.iv_orbit);
         mNewsShowList = (MyListView) view.findViewById(R.id.mNewsShowList);
-
+        Logger.e("xxx",(int)(30*1.0/1080*DeviceInfoUtil.getScreenHeight())+"");
+        mNewsShowList.setDividerHeight((int)(30*1.0/1080*DeviceInfoUtil.getScreenHeight()));
         mNewsLoadingImg = (ImageView) view.findViewById(R.id.mNewsLoadingImg);
         mNewsLoadingImg.setImageResource(R.drawable.news_progress_animation_list);
         mAniNewsLoading = (AnimationDrawable) mNewsLoadingImg.getDrawable();
