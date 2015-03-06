@@ -24,4 +24,8 @@ public class GlobalParams {
     public static boolean ONE_FLAG = false;
     public static KitkatStatusBar mainSection = null;
     public static int currentPos = 3;
+    
+    
+    
+    
 }
