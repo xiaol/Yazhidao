@@ -1,14 +1,10 @@
 package com.news.yazhidao.MyFragment;
 
 import android.app.Activity;
-import android.content.BroadcastReceiver;
 import android.content.Context;
-import android.content.Intent;
-import android.content.IntentFilter;
 import android.graphics.PixelFormat;
 import android.graphics.drawable.AnimationDrawable;
 import android.os.Bundle;
-import android.os.Handler;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.util.Log;
@@ -28,15 +24,18 @@ import com.news.yazhidao.GlobalParams;
 import com.news.yazhidao.R;
 import com.news.yazhidao.UI.MyListView;
 import com.news.yazhidao.UI.MyRelativeLayout;
-import com.news.yazhidao.constant.CommonConstant;
 import com.news.yazhidao.constant.HttpConstant;
 import com.news.yazhidao.entity.NewsFeed;
 import com.news.yazhidao.net.JsonCallback;
 import com.news.yazhidao.net.MyAppException;
 import com.news.yazhidao.net.NetworkRequest;
 import com.news.yazhidao.pages.NewsFeedAdapter;
-import com.news.yazhidao.utils.Logger;
+import com.news.yazhidao.utils.DeviceInfoUtil;
 import com.news.yazhidao.utils.NetUtil;
+import com.news.yazhidao.utils.helper.UmengShareHelper;
+import com.umeng.socialize.bean.SHARE_MEDIA;
+
+import java.util.HashMap;
 
 
 /**
@@ -59,7 +58,6 @@ public class FragmentButton extends Fragment implements View.OnClickListener {
 
     private int width;
     private int height;
-    private int currentPos = 0;
     private boolean flag = false;
 
     private View view;
@@ -72,7 +70,6 @@ public class FragmentButton extends Fragment implements View.OnClickListener {
     private static NewsFeedAdapter mNewsFeedAdapter;
     public static NewsFeed mNewsFeed;
     public static final String ARG_PLANET_NUMBER = "planet_number";
-    private ChangeNewsModulBroRec mChangeNewsModulBroRec = new ChangeNewsModulBroRec();
 
     private View mNewsDetailLoadingWrapper;
     private ImageView mNewsLoadingImg;
@@ -107,37 +104,16 @@ public class FragmentButton extends Fragment implements View.OnClickListener {
 
     }
 
-    public class ChangeNewsModulBroRec extends BroadcastReceiver {
-
-        @Override
-        public void onReceive(Context context, Intent intent) {
-            int newsModulePos = intent.getIntExtra(CommonConstant.KEY_NEWS_MODULE_POSITION, 0);
-            Logger.i(TAG, ">>>change news module ");
-            loadNewsData(context, newsModulePos);
-        }
-    }
-
-    private void registerBReceiver() {
-        IntentFilter filter = new IntentFilter();
-        filter.addAction(CommonConstant.ACTION_CHANGE_NEWS_MODULE);
-        getActivity().registerReceiver(mChangeNewsModulBroRec, filter);
-    }
-
-    private void unregisterBReceiver() {
-        getActivity().unregisterReceiver(mChangeNewsModulBroRec);
-    }
 
     @Override
     public void onAttach(Activity activity) {
         super.onAttach(activity);
-        registerBReceiver();
 
     }
 
     @Override
     public void onDetach() {
         super.onDetach();
-        unregisterBReceiver();
     }
 
     @Override
@@ -169,7 +145,13 @@ public class FragmentButton extends Fragment implements View.OnClickListener {
             mNewsDetailCilckRefresh.setVisibility(View.GONE);
             rl_content.setVisibility(View.GONE);
             mNewsDetailLoadingWrapper.setVisibility(View.VISIBLE);
-
+            boolean isLogin = UmengShareHelper.isAuthenticated(getActivity(), SHARE_MEDIA.SINA);
+            if(isLogin){
+                //如果用户在首订的时候登陆了，就进入36°C，否则进入40°C
+                GlobalParams.currentPos=2;
+            }else{
+                GlobalParams.currentPos=3;
+            }
             loadNewsData(getActivity(), GlobalParams.currentPos);
 
         } else {
@@ -431,11 +413,21 @@ public class FragmentButton extends Fragment implements View.OnClickListener {
         // 对其方式
         GlobalParams.params.gravity = Gravity.LEFT + Gravity.TOP;
 
-        // 指定距离屏幕左边的距离 必须与 Gravity.LEFT同时使用
-        GlobalParams.params.x = (int) (POINT_FOUR_X);
-        //GlobalParams.params.x = 75;
-        // 指定距离屏幕上边的距离 必须与 Gravity.TOP同时使用
-        GlobalParams.params.y = POINT_FOUR_Y;
+        boolean isLogin = UmengShareHelper.isAuthenticated(getActivity(), SHARE_MEDIA.SINA);
+        if(isLogin){
+            // 指定距离屏幕左边的距离 必须与 Gravity.LEFT同时使用
+            GlobalParams.params.x = POINT_THREE_X;
+            //GlobalParams.params.x = 75;
+            // 指定距离屏幕上边的距离 必须与 Gravity.TOP同时使用
+            GlobalParams.params.y = POINT_THREE_Y;
+        }else{
+            // 指定距离屏幕左边的距离 必须与 Gravity.LEFT同时使用
+            GlobalParams.params.x = POINT_FOUR_X;
+            //GlobalParams.params.x = 75;
+            // 指定距离屏幕上边的距离 必须与 Gravity.TOP同时使用
+            GlobalParams.params.y = POINT_FOUR_Y;
+        }
+
 
         // 土司的宽高
         GlobalParams.params.height = (int) (SUN_WIDTH * width / STANDARD_WIDTH);
@@ -455,30 +447,17 @@ public class FragmentButton extends Fragment implements View.OnClickListener {
 
     }
 
-    private void delayNotifyChangeNews() {
-
-        GlobalParams.LISTVIEW_HEIGHT = 0;
-        GlobalParams.LISTVIEW_ERROR = 0;
-
-        Handler handler = new Handler();
-        handler.postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                Intent intent = new Intent(CommonConstant.ACTION_CHANGE_NEWS_MODULE);
-                intent.putExtra(CommonConstant.KEY_NEWS_MODULE_POSITION, GlobalParams.currentPos);
-                getActivity().sendBroadcast(intent);
-            }
-        }, 500);
-        Logger.i(TAG, ">>currentPos=" + GlobalParams.currentPos);
-    }
-
-
     private void loadNewsData(final Context mContext, int newsModulePos) {
 
         GlobalParams.LISTVIEW_HEIGHT = 0;
         GlobalParams.LISTVIEW_ERROR = 0;
 
-        NetworkRequest request = new NetworkRequest(HttpConstant.URL_FETCH_NEWS_FOR_MODULE + newsModulePos, NetworkRequest.RequestMethod.GET);
+        NetworkRequest request = new NetworkRequest(HttpConstant.URL_FETCH_NEWS_FOR_MODULE, NetworkRequest.RequestMethod.GET);
+        HashMap<String,Object> params=new HashMap<>();
+        params.put("limit",9);
+        params.put("root_class",newsModulePos);
+        params.put("uuid",DeviceInfoUtil.getUUID());
+        request.getParams=params;
         request.setCallback(new JsonCallback<NewsFeed>() {
 
             @Override
@@ -508,7 +487,6 @@ public class FragmentButton extends Fragment implements View.OnClickListener {
                 } else {
                     Toast.makeText(mContext, "网络异常，请查看网络...", Toast.LENGTH_SHORT).show();
                 }
-
 
             }
 

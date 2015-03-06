@@ -13,4 +13,5 @@
     <color name="border_text">#000000</color>
     <color name="transparent">#00000000</color>
     <color name="gray_black">#8f000000</color>
+    <color name="white_light">#bbffffff</color>
 </resources>

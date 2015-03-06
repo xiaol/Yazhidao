@@ -1,7 +1,7 @@
 package com.news.yazhidao.widget;
 import android.app.Activity;
+import android.app.DialogFragment;
 import android.os.Bundle;
-import android.support.v4.app.DialogFragment;
 import android.support.v4.app.FragmentActivity;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -17,13 +17,13 @@ import android.widget.TextView;
 import com.news.yazhidao.R;
 
 
-public class AlertDialogImpl extends DialogFragment{
+public class AlertDialogImpl extends DialogFragment {
 	
 	public static class Builder {
 		
-		private FragmentActivity mActivity;
+		private Activity mActivity;
 		
-		public Builder(FragmentActivity activity) {
+		public Builder(Activity activity) {
 			this.mActivity = activity;
 		}
 		
@@ -61,7 +61,7 @@ public class AlertDialogImpl extends DialogFragment{
 		
 		public AlertDialogImpl show() {
 			AlertDialogImpl impl = new AlertDialogImpl();
-			impl.show(mActivity.getSupportFragmentManager(), "DialogBuilder");
+			impl.show(mActivity.getFragmentManager(), "DialogBuilder");
 			return impl;
 		}
 		

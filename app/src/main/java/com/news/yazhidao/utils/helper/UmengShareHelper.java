@@ -21,7 +21,7 @@ import com.news.yazhidao.net.UserLoginCallBack;
 import com.news.yazhidao.pages.UserLoginAty;
 import com.news.yazhidao.utils.DeviceInfoUtil;
 import com.news.yazhidao.utils.Logger;
-import com.news.yazhidao.utils.TextUtil;
+import com.news.yazhidao.widget.ProgressDialogImpl;
 import com.umeng.socialize.bean.RequestType;
 import com.umeng.socialize.bean.SHARE_MEDIA;
 import com.umeng.socialize.bean.SocializeEntity;
@@ -56,7 +56,7 @@ public class UmengShareHelper {
     public static final UMSocialService mController = UMServiceFactory.getUMSocialService("com.umeng.share", RequestType.SOCIAL);
     private static final String TAG = "UmengShareHelper";
     private static Handler mHandler = new Handler();
-
+    private static ProgressDialogImpl mProgressBar;
 
     public static void oAuthSina(final Context mContext, final NewsFeed.Element news) {
         mController.getConfig().setSsoHandler(new SinaSsoHandler());
@@ -77,7 +77,7 @@ public class UmengShareHelper {
 
                     @Override
                     public void onStart() {
-                        System.out.println("aaaaa");
+                        mProgressBar= ProgressDialogImpl.show((Activity)mContext);
                     }
 
                     @Override
@@ -109,21 +109,30 @@ public class UmengShareHelper {
                                 } else {
                                     //说明在首定的时候没有登录
                                     String isShareSinaId=SettingHelper.get(CommonConstant.UserInfoConstant.SETTING_FILE,CommonConstant.UserInfoConstant.KEY_USER_LOGIN_SINA);
-                                    if(!TextUtils.isEmpty(isShareSinaId)){
-                                        mContext.sendBroadcast(new Intent(KitkatStatusBar.ACTION_USER_LOGIN));
-                                    }else{
+                                    boolean isFirstLogin=SettingHelper.getBoolean(CommonConstant.UserInfoConstant.SETTING_FILE,CommonConstant.UserInfoConstant.KEY_USER_FIRST_LOGIN_SINA);
+                                    if(!isFirstLogin){
                                         mContext.sendBroadcast(new Intent(UserLoginAty.ACTION_USER_LOGIN));
+                                    }else{
+                                        mContext.sendBroadcast(new Intent(KitkatStatusBar.ACTION_USER_LOGIN));
                                     }
-                                    //只用来分享新闻
-                                    SettingHelper.save(CommonConstant.UserInfoConstant.SETTING_FILE,CommonConstant.UserInfoConstant.KEY_USER_LOGIN_SINA,user.getSinaId());
+//                                    if(!TextUtils.isEmpty(isShareSinaId)||!isFirstLogin){
+//                                        mContext.sendBroadcast(new Intent(KitkatStatusBar.ACTION_USER_LOGIN));
+//                                    }else{
+//                                        mContext.sendBroadcast(new Intent(UserLoginAty.ACTION_USER_LOGIN));
+//                                        SettingHelper.save(CommonConstant.UserInfoConstant.SETTING_FILE,CommonConstant.UserInfoConstant.KEY_USER_FIRST_LOGIN_SINA,true);
+//                                    }
+//                                    //只用来分享新闻
+//                                    SettingHelper.save(CommonConstant.UserInfoConstant.SETTING_FILE,CommonConstant.UserInfoConstant.KEY_USER_LOGIN_SINA,user.getSinaId());
                                 }
                                 //TODO 保存用户信息并修改用户登陆的头像信息等
                                 UserDataManager.saveUser(user);
+                                mProgressBar.dismiss();
                             }
 
                             @Override
                             public void failed(MyAppException exception) {
                                 Logger.e(TAG, "login failed " + exception.getMessage());
+                                mProgressBar.dismiss();
                             }
                         }.setReturnType(new TypeToken<User>() {
                         }.getType()));
@@ -137,12 +146,6 @@ public class UmengShareHelper {
                 Toast.makeText(mContext, "授权取消", Toast.LENGTH_SHORT).show();
             }
         });
-
-        mHandler.postDelayed(new Runnable() { //防止网络异常
-            @Override
-            public void run() {
-            }
-        }, 10000);
     }
 
     /**
@@ -171,8 +174,7 @@ public class UmengShareHelper {
                 if (status == 200) {
                     Logger.d(TAG, "删除新浪授权成功");
                 } else {
-                    deleteShareSina(mContext); //如果失败继续删除
-                    Logger.d(TAG, "删除新浪授权失败");
+                    Logger.d(TAG, "删除新浪授权失败 status="+status);
                 }
             }
         });

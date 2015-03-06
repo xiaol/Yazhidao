@@ -14,5 +14,6 @@ public class CommonConstant {
         public static final String KEY_USER_ID="key_user_id";
         public static final String KEY_USER_INFO="key_user_info";
         public static final String KEY_USER_LOGIN_SINA="key_user_login_sina";
+        public static final String KEY_USER_FIRST_LOGIN_SINA="key_user_first_login_sina";
     }
 }

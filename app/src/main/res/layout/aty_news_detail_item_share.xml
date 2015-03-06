@@ -42,7 +42,7 @@
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
             android:layout_gravity="bottom"
-            android:text="8989人热赞"
+            android:text="0人热赞"
             android:textColor="@color/common_theme_color"
             android:textSize="12sp" />
     </LinearLayout>

@@ -12,6 +12,8 @@ import com.news.yazhidao.MyActivity.SignActivity;
 import com.news.yazhidao.MyFragment.KitkatStatusBar;
 import com.news.yazhidao.R;
 import com.news.yazhidao.common.BaseActivity;
+import com.news.yazhidao.constant.CommonConstant;
+import com.news.yazhidao.utils.helper.SettingHelper;
 import com.news.yazhidao.utils.helper.UmengShareHelper;
 import com.umeng.socialize.bean.SHARE_MEDIA;
 
@@ -28,9 +30,9 @@ public class UserLoginAty extends BaseActivity implements View.OnClickListener {
 
         @Override
         public void onReceive(Context context, Intent intent) {
-            if(ACTION_USER_LOGIN.equals(intent.getAction())){
-            UserLoginAty.this.finish();
-            startActivity(new Intent(UserLoginAty.this, SignActivity.class));
+            if (ACTION_USER_LOGIN.equals(intent.getAction())) {
+                UserLoginAty.this.finish();
+                startActivity(new Intent(UserLoginAty.this, SignActivity.class));
             }
         }
     }
@@ -62,6 +64,12 @@ public class UserLoginAty extends BaseActivity implements View.OnClickListener {
     @Override
     protected void onPause() {
         super.onPause();
+    }
+
+    @Override
+    public void finish() {
+        super.finish();
+        SettingHelper.save(CommonConstant.UserInfoConstant.SETTING_FILE, CommonConstant.UserInfoConstant.KEY_USER_FIRST_LOGIN_SINA, true);
     }
 
     @Override

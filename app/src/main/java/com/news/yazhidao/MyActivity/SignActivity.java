@@ -96,8 +96,6 @@ public class SignActivity extends Activity {
                 }
 
                 setSubscribe(uuid, sinaId,sinaToken,screenName,sinaProfileImageUrl,names);
-                Intent intent = new Intent(SignActivity.this, KitkatStatusBar.class);
-                startActivity(intent);
 
             }
         });
@@ -177,7 +175,7 @@ public class SignActivity extends Activity {
 
     }
 
-    private static void setSubscribe(String uuid, String sinaId,String sinaToken,String screenName ,String sinaProfileImageUrl, List<String> tagStr) {
+    private  void setSubscribe(String uuid, String sinaId,String sinaToken,String screenName ,String sinaProfileImageUrl, List<String> tagStr) {
 
         String url = HttpConstant.URL_USER_LOGIN + "uuid=" + uuid + "&sinaId=" + sinaId + "&sinaToken=" + sinaToken + "&screenName=" + screenName + "&sinaProfileImageUrl=" + sinaProfileImageUrl;
 
@@ -193,11 +191,17 @@ public class SignActivity extends Activity {
                         if (result != null) {
                             UserDataManager.saveUser(result);
                         }
+                        SignActivity.this.finish();
+                        Intent intent = new Intent(SignActivity.this, KitkatStatusBar.class);
+                        startActivity(intent);
                     }
 
                     @Override
                     public void failed(MyAppException exception) {
                         System.out.println("failure");
+                        SignActivity.this.finish();
+                        Intent intent = new Intent(SignActivity.this, KitkatStatusBar.class);
+                        startActivity(intent);
                     }
                 }.setReturnType(new TypeToken<User>() {
 

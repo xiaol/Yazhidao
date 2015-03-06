@@ -1,25 +1,17 @@
 package com.news.yazhidao.MyFragment;
 
-import android.app.AlertDialog;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.graphics.Color;
 import android.os.Bundle;
-import android.text.TextUtils;
 import android.view.View;
-import android.widget.Button;
-import android.widget.Toast;
 
 import com.news.yazhidao.GlobalParams;
-import com.news.yazhidao.MyActivity.SignActivity;
 import com.news.yazhidao.R;
-import com.news.yazhidao.constant.CommonConstant;
 import com.news.yazhidao.entity.User;
-import com.news.yazhidao.pages.UserLoginAty;
 import com.news.yazhidao.utils.helper.DrawableUtil;
-import com.news.yazhidao.utils.helper.SettingHelper;
 import com.news.yazhidao.utils.helper.UmengShareHelper;
 import com.news.yazhidao.utils.helper.UserDataManager;
 import com.news.yazhidao.widget.AlertDialogImpl;
@@ -65,8 +57,7 @@ public class KitkatStatusBar extends MaterialNavigationDrawer {
                 layout.closeDrawer(drawer);
 
                 boolean isLogin = UmengShareHelper.isAuthenticated(getApplicationContext(), SHARE_MEDIA.SINA);
-                String loginSinaId=SettingHelper.get(CommonConstant.UserInfoConstant.SETTING_FILE, CommonConstant.UserInfoConstant.KEY_USER_LOGIN_SINA);
-                if(isLogin&&!TextUtils.isEmpty(loginSinaId)){
+                if(isLogin){
                     //弹框 确认是否注销
                     showLogoutDialog();
                 }else{
@@ -90,7 +81,7 @@ public class KitkatStatusBar extends MaterialNavigationDrawer {
             public void onClick(View v) {
                 dialog.dismiss();
             }
-        }).show();;
+        }).show();
         dialog.setCancelable(false);
     }
 
