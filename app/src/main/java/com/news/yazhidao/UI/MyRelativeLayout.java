@@ -6,12 +6,15 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewConfiguration;
 import android.view.WindowManager;
+import android.view.animation.AlphaAnimation;
+import android.view.animation.Animation;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.Scroller;
 
-import com.news.yazhidao.GlobalParams;
 import com.news.yazhidao.R;
+import com.news.yazhidao.constant.GlobalParams;
 import com.news.yazhidao.utils.DensityUtil;
 
 public class MyRelativeLayout extends RelativeLayout {
@@ -34,19 +37,22 @@ public class MyRelativeLayout extends RelativeLayout {
     private int delta;
     private int width;
     private int height;
-    private boolean flag = false;
+    private boolean image_flag = false;
     private boolean listview_flag = false;
     private Scroller scroller;
     private Context context;
     private int mTouchSlop;
     private MyListView listView;
     private ImageView iv_section;
+    private ImageView iv_orbit;
     private boolean sun_flag;
     private ImageView iv_sun;
     private int margin;
-    private final int ANIMATION_SCREEN = 1;    // 鍔ㄧ敾鐣岄潰
-    private final int MAIN_SCREEN = 2;    // 涓荤晫闈�
-    private int currentScreen = MAIN_SCREEN;        // 褰撳墠鐨勫睆骞曟樉绀虹晫闈�, 榛樿涓轰富鐣岄潰
+    private final int ANIMATION_SCREEN = 1;
+    private final int MAIN_SCREEN = 2;
+    private int currentScreen = MAIN_SCREEN;
+    private boolean flag = false;
+    private int view_height = 0;
 
     public MyRelativeLayout(Context context) {
         super(context);
@@ -83,22 +89,27 @@ public class MyRelativeLayout extends RelativeLayout {
 
         setError();
 
-        iv_section = (ImageView) this.getChildAt(0);
-        setImageBackground();
-        int view_height = SECTION_VIEW_HEIGHT * width / STANDARD_WIDTH;
-        iv_section.layout(0, 0, width, view_height);
+        FrameLayout layout = (FrameLayout) this.getChildAt(0);
+        iv_section = (ImageView)layout.findViewById(R.id.iv_section);
 
-        listView = (MyListView) this.getChildAt(1);
+        view_height = SECTION_VIEW_HEIGHT * width / STANDARD_WIDTH;
+        layout.layout(0, 0, width, view_height);
+
+        ImageView shadow = (ImageView) this.getChildAt(1);
+        shadow.layout(0, view_height - 2, width, view_height + 10);
+
+        listView = (MyListView) this.getChildAt(2);
 
         if (listView.getMeasuredHeight() != 0) {
             GlobalParams.LISTVIEW_HEIGHT = listView.getMeasuredHeight() + GlobalParams.LISTVIEW_ERROR;
         }
 
-        listView.layout(0, view_height, width, view_height + GlobalParams.LISTVIEW_HEIGHT);
+        listView.layout(0, view_height + margin, width, view_height + GlobalParams.LISTVIEW_HEIGHT + margin);
 
     }
 
     private void setError() {
+
         switch (height) {
 
             case 1920:
@@ -106,7 +117,7 @@ public class MyRelativeLayout extends RelativeLayout {
                 break;
 
             case 1800:
-                error = 330;
+                error = 222;
                 break;
 
             case 1776:
@@ -114,11 +125,11 @@ public class MyRelativeLayout extends RelativeLayout {
                 break;
 
             case 1280:
-                error = 150;
+                error = 190;
                 break;
 
             case 1184:
-                error = 150;
+                error = 190;
                 break;
 
             case 800:
@@ -136,16 +147,16 @@ public class MyRelativeLayout extends RelativeLayout {
         switch (GlobalParams.currentPos) {
 
             case 0:
-                iv_section.setBackgroundResource(R.drawable.section1);
+                iv_section.setBackgroundResource(R.drawable.section11);
                 break;
             case 1:
-                iv_section.setBackgroundResource(R.drawable.section2);
+                iv_section.setBackgroundResource(R.drawable.section22);
                 break;
             case 2:
-                iv_section.setBackgroundResource(R.drawable.section3);
+                iv_section.setBackgroundResource(R.drawable.section33);
                 break;
             case 3:
-                iv_section.setBackgroundResource(R.drawable.section4);
+                iv_section.setBackgroundResource(R.drawable.section44);
                 break;
 
         }
@@ -154,67 +165,114 @@ public class MyRelativeLayout extends RelativeLayout {
 
     @Override
     public boolean onTouchEvent(MotionEvent event) {
-        switch (event.getAction()) {
-            case MotionEvent.ACTION_DOWN:
-                mMostRecentY = (int) event.getY();
-                break;
-            case MotionEvent.ACTION_MOVE:
+        if(!GlobalParams.REFRESH_FLAG){
+            switch (event.getAction()) {
+                case MotionEvent.ACTION_DOWN:
+                    mMostRecentY = (int) event.getY();
+                    break;
+                case MotionEvent.ACTION_MOVE:
 
-                int currentY = (int) event.getY();
-                int delta = 0;
-                if (GlobalParams.SUN_FLAG) {
-                    delta = mMostRecentY - currentY;
-                } else {
-                    delta = (int) ((mMostRecentY - currentY) * 2);
-                }
-
-                int scrollY = (getScrollY() + delta);
-
-                int bottom = GlobalParams.LISTVIEW_HEIGHT + SECTION_VIEW_HEIGHT * width / STANDARD_WIDTH - height;
-
-                if (scrollY < 0) {        // 褰撳墠瓒呭嚭浜嗕笂杈圭晫
-                    scrollTo(0, 0);    // 婊氬姩鍒拌彍鍗曠殑涓婅竟鐣�
-
-                } else if (scrollY > bottom + error) {
-                    if(GlobalParams.ONE_FLAG){
-
-                        if(delta < 0){
-                            scrollBy(0, delta);
-                        }
-                    }else {
-                        scrollTo(0, bottom + error);
-                    }
-                } else {        // 姝ｅ父绉诲姩
-                    scrollBy(0, delta);
-                }
-
-                mMostRecentY = currentY;
-
-                int visibility = GlobalParams.view.getVisibility();
-
-                if (visibility == View.VISIBLE) {
-                    GlobalParams.view.setVisibility(View.GONE);
-                }
-
-                break;
-            case MotionEvent.ACTION_UP:
-
-
-                int view_height = SECTION_VIEW_HEIGHT * width / STANDARD_WIDTH;
-                // 鑿滃崟鐨勪腑蹇冪偣
-                int menuCenter = view_height / 2;
-
-                int _y = getScrollY();
-
-
-                if (_y < view_height && _y > 0) {
+                    int currentY = (int) event.getY();
+                    int delta = 0;
                     if (GlobalParams.SUN_FLAG) {
-                        scrollTo(0, view_height);
-                        currentScreen = MAIN_SCREEN;
+                        delta = mMostRecentY - currentY;
+                    } else {
+                        delta = (int) ((mMostRecentY - currentY) * 2);
+                    }
 
-                        GlobalParams.SUN_FLAG = false;
-                        GlobalParams.mainSection.setGlobalFlag(false);//太阳隐藏的时候
-                    } else{
+                    int scrollY = (getScrollY() + delta);
+
+                    int bottom = GlobalParams.LISTVIEW_HEIGHT + SECTION_VIEW_HEIGHT * width / STANDARD_WIDTH - height;
+
+                    int visibility = GlobalParams.view.getVisibility();
+
+                    if (scrollY < 0) {
+                        scrollTo(0, 0);
+
+                        GlobalParams.iv_orbit.setVisibility(View.VISIBLE);
+
+                        AlphaAnimation mAnimation = new AlphaAnimation(0.0f, 1.0f);
+
+                        mAnimation.setDuration(1000);
+
+                        mAnimation.setAnimationListener(new Animation.AnimationListener() {
+                            @Override
+                            public void onAnimationStart(Animation animation) {
+
+                            }
+
+                            @Override
+                            public void onAnimationEnd(Animation animation) {
+                                AlphaAnimation mBigAnimation =  new AlphaAnimation(1.0f,0.0f);
+
+                                mBigAnimation.setDuration(1000);
+
+                                GlobalParams.iv_orbit.startAnimation(mBigAnimation);
+                            }
+
+                            @Override
+                            public void onAnimationRepeat(Animation animation) {
+
+                            }
+                        });
+
+                        GlobalParams.iv_orbit.startAnimation(mAnimation);
+
+                    } else if (scrollY > bottom + error) {
+                        if(GlobalParams.ONE_FLAG){
+
+                            if(delta < 0){
+                                scrollBy(0, delta);
+                            }
+                        }else {
+                            scrollTo(0, bottom + error);
+                        }
+
+                        if (visibility == View.VISIBLE) {
+                            GlobalParams.view.setVisibility(View.GONE);
+                        }
+
+                    } else {        // 姝ｅ父绉诲姩
+                        scrollBy(0, delta);
+
+                        if (visibility == View.VISIBLE) {
+                            GlobalParams.view.setVisibility(View.GONE);
+                        }
+                    }
+
+                    mMostRecentY = currentY;
+
+                    break;
+                case MotionEvent.ACTION_UP:
+
+                    int view_height = SECTION_VIEW_HEIGHT * width / STANDARD_WIDTH;
+                    // 鑿滃崟鐨勪腑蹇冪偣
+                    int menuCenter = view_height / 2;
+
+                    int _y = getScrollY();
+
+
+                    if (_y < view_height && _y > 0) {
+                        if (GlobalParams.SUN_FLAG) {
+                            scrollTo(0, view_height);
+                            currentScreen = MAIN_SCREEN;
+
+                            GlobalParams.SUN_FLAG = false;
+                            GlobalParams.mainSection.setGlobalFlag(false);//太阳隐藏的时候
+                        } else{
+                            scrollTo(0, 0);
+                            currentScreen = ANIMATION_SCREEN;
+
+                            if (GlobalParams.view.getVisibility() == View.GONE) {
+                                GlobalParams.view.setVisibility(View.VISIBLE);
+                            }
+
+                            GlobalParams.SUN_FLAG = true;
+                            GlobalParams.mainSection.setGlobalFlag(true);//太阳展示的时候
+                        }
+
+                    }else if(_y == 0){
+
                         scrollTo(0, 0);
                         currentScreen = ANIMATION_SCREEN;
 
@@ -224,26 +282,17 @@ public class MyRelativeLayout extends RelativeLayout {
 
                         GlobalParams.SUN_FLAG = true;
                         GlobalParams.mainSection.setGlobalFlag(true);//太阳展示的时候
+
                     }
 
-                }else if(_y == 0){
+                    GlobalParams.iv_orbit.setVisibility(View.GONE);
 
-                    scrollTo(0, 0);
-                    currentScreen = ANIMATION_SCREEN;
+                    break;
+                //case MotionEvent.
+                default:
+                    break;
+            }
 
-                    if (GlobalParams.view.getVisibility() == View.GONE) {
-                        GlobalParams.view.setVisibility(View.VISIBLE);
-                    }
-
-                    GlobalParams.SUN_FLAG = true;
-                    GlobalParams.mainSection.setGlobalFlag(true);//太阳展示的时候
-
-                }
-
-                break;
-            //case MotionEvent.
-            default:
-                break;
         }
         return super.onTouchEvent(event);
     }
@@ -254,6 +303,7 @@ public class MyRelativeLayout extends RelativeLayout {
      */
     @Override
     public boolean onInterceptTouchEvent(MotionEvent ev) {
+
         switch (ev.getAction()) {
             case MotionEvent.ACTION_DOWN:
                 mMostRecentY = (int) ev.getY();
@@ -263,21 +313,25 @@ public class MyRelativeLayout extends RelativeLayout {
 
                 int diff = moveY - mMostRecentY;
                 if (Math.abs(diff) > mTouchSlop) {
-                    return true;        // 璁や负鏄í鍚戠Щ鍔ㄧ殑娑堣�楁帀姝や簨浠�
+                    return true;
                 }
 
                 break;
-//            case MotionEvent.ACTION_UP:
-//                onF
+
+            case MotionEvent.ACTION_UP:
+
+                int aaa = (int) ev.getY();
+
+                break;
             default:
                 break;
         }
-        return super.onInterceptTouchEvent(ev);
+       return super.onInterceptTouchEvent(ev);
+        //return true;
     }
 
     @Override
     public void computeScroll() {
-        // 鏇存柊褰撳墠灞忓箷鐨剎杞寸殑鍋忕Щ閲�
 
         if (scroller.computeScrollOffset()) {        // 杩斿洖true浠ｈ〃姝ｅ湪妯℃嫙鏁版嵁涓�, false 宸茬粡鍋滄妯℃嫙鏁版嵁
 

@@ -8,7 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 
-import com.news.yazhidao.GlobalParams;
+import com.news.yazhidao.constant.GlobalParams;
 import com.news.yazhidao.R;
 
 /**

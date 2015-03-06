@@ -18,7 +18,7 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import com.news.yazhidao.GlobalParams;
+import com.news.yazhidao.constant.GlobalParams;
 import com.news.yazhidao.R;
 import com.news.yazhidao.constant.CommonConstant;
 import com.news.yazhidao.entity.NewsFeed;
@@ -168,13 +168,17 @@ public class NewsFeedAdapter extends BaseAdapter {
                     for (int index = 4; index < elementList.size(); index++) {
                         NewsFeed.Element element = elementList.get(index);
                         final int finalIndex = index;
-                        View childView=generateNewsCell(element,new View.OnClickListener() {
+                        LinearLayout childView=generateNewsCell(element,new View.OnClickListener() {
                             @Override
                             public void onClick(View v) {
                                 Logger.i(TAG,"open news >> " + elementList.get(finalIndex).title);
                                 startNewsDetailPage(mChannelsArr.get(position).channelName, elementList.get(finalIndex));
                             }
                         });
+                        //剔除卡片中最后一个item下面的线
+                        if(index==elementList.size()-1){
+                            childView.removeViewAt(childView.getChildCount()-1);
+                        }
                         layout.addView(childView, layout.getChildCount() - 2);
                     }
                 }
@@ -261,8 +265,8 @@ public class NewsFeedAdapter extends BaseAdapter {
      * @param listener
      * @return
      */
-    private View generateNewsCell(final NewsFeed.Element element,View.OnClickListener listener){
-        final View childView = LayoutInflater.from(mContext).inflate(R.layout.aty_news_show_list_cell, null);
+    private LinearLayout generateNewsCell(final NewsFeed.Element element,View.OnClickListener listener){
+        final LinearLayout childView = (LinearLayout) LayoutInflater.from(mContext).inflate(R.layout.aty_news_show_list_cell, null);
         if(DeviceInfoUtil.getScreenWidth()<=480){
             childView.setLayoutParams(new AbsListView.LayoutParams(DeviceInfoUtil.getScreenWidth(), (int) (DeviceInfoUtil.getScreenHeight() * 0.18)));
         }else{

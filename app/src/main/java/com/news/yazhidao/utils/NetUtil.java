@@ -7,7 +7,7 @@ import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.net.Uri;
 
-import com.news.yazhidao.GlobalParams;
+import com.news.yazhidao.constant.GlobalParams;
 
 /**
  * 网络类型判断

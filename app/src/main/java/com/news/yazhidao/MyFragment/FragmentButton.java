@@ -20,7 +20,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.gson.reflect.TypeToken;
-import com.news.yazhidao.GlobalParams;
+import com.news.yazhidao.constant.GlobalParams;
 import com.news.yazhidao.R;
 import com.news.yazhidao.UI.MyListView;
 import com.news.yazhidao.UI.MyRelativeLayout;
@@ -54,7 +54,7 @@ public class FragmentButton extends Fragment implements View.OnClickListener {
     private static int SECTION_ONE = 260;
     private static int SECTION_TWO = 380;
     private static int SECTION_THREE = 480;
-    private static int SUN_WIDTH = 180;
+    private static int SUN_WIDTH = 250;
 
     private int width;
     private int height;
@@ -65,6 +65,7 @@ public class FragmentButton extends Fragment implements View.OnClickListener {
     private static final String TAG = "FragmentButton";
     private ImageView iv_sun;
     private ImageView iv_section;
+    private ImageView iv_orbit;
     private MyRelativeLayout rl_content;
     private static MyListView mNewsShowList;
     private static NewsFeedAdapter mNewsFeedAdapter;
@@ -129,6 +130,7 @@ public class FragmentButton extends Fragment implements View.OnClickListener {
 
         rl_content = (MyRelativeLayout) view.findViewById(R.id.rl_content);
         iv_section = (ImageView) view.findViewById(R.id.iv_section);
+        GlobalParams.iv_orbit = (ImageView) view.findViewById(R.id.iv_orbit);
         mNewsShowList = (MyListView) view.findViewById(R.id.mNewsShowList);
 
         mNewsLoadingImg = (ImageView) view.findViewById(R.id.mNewsLoadingImg);
@@ -146,11 +148,11 @@ public class FragmentButton extends Fragment implements View.OnClickListener {
             rl_content.setVisibility(View.GONE);
             mNewsDetailLoadingWrapper.setVisibility(View.VISIBLE);
             boolean isLogin = UmengShareHelper.isAuthenticated(getActivity(), SHARE_MEDIA.SINA);
-            if(isLogin){
+            if (isLogin) {
                 //如果用户在首订的时候登陆了，就进入36°C，否则进入40°C
-                GlobalParams.currentPos=2;
-            }else{
-                GlobalParams.currentPos=3;
+                GlobalParams.currentPos = 2;
+            } else {
+                GlobalParams.currentPos = 3;
             }
             loadNewsData(getActivity(), GlobalParams.currentPos);
 
@@ -182,41 +184,39 @@ public class FragmentButton extends Fragment implements View.OnClickListener {
 
             case 1920:
 
-                POINT_ONE_X = 70;
-                POINT_ONE_Y = 460;
-                POINT_TWO_X = 346;
-                POINT_TWO_Y = 390;
-                POINT_THREE_X = 445;
-                POINT_THREE_Y = 240;
-                POINT_FOUR_X = 740;
-                POINT_FOUR_Y = 180;
-                SUN_WIDTH = 180;
+                POINT_ONE_X = 80;
+                POINT_ONE_Y = 410;
+                POINT_TWO_X = 280;
+                POINT_TWO_Y = 350;
+                POINT_THREE_X = 350;
+                POINT_THREE_Y = 210;
+                POINT_FOUR_X = 610;
+                POINT_FOUR_Y = 150;
 
                 break;
 
             case 1800:
 
-                POINT_ONE_X = 70;
-                POINT_ONE_Y = 440;
-                POINT_TWO_X = 350;
-                POINT_TWO_Y = 370;
-                POINT_THREE_X = 445;
-                POINT_THREE_Y = 220;
-                POINT_FOUR_X = 730;
-                POINT_FOUR_Y = 150;
-                SUN_WIDTH = 180;
+                POINT_ONE_X = -20;
+                POINT_ONE_Y = 340;
+                POINT_TWO_X = 250;
+                POINT_TWO_Y = 270;
+                POINT_THREE_X = 350;
+                POINT_THREE_Y = 130;
+                POINT_FOUR_X = 800;
+                POINT_FOUR_Y = 70;
 
                 break;
 
 
             case 1776:
 
-                POINT_ONE_X = 70;
-                POINT_ONE_Y = 470;
-                POINT_TWO_X = 350;
-                POINT_TWO_Y = 395;
-                POINT_THREE_X = 445;
-                POINT_THREE_Y = 245;
+                POINT_ONE_X = 0;
+                POINT_ONE_Y = 370;
+                POINT_TWO_X = 250;
+                POINT_TWO_Y = 300;
+                POINT_THREE_X = 360;
+                POINT_THREE_Y = 160;
                 POINT_FOUR_X = 730;
                 POINT_FOUR_Y = 170;
                 SUN_WIDTH = 180;
@@ -226,15 +226,27 @@ public class FragmentButton extends Fragment implements View.OnClickListener {
 
             case 1280:
 
-                POINT_ONE_X = 52;
-                POINT_ONE_Y = 305;
-                POINT_TWO_X = 230;
-                POINT_TWO_Y = 300;
-                POINT_THREE_X = 290;
-                POINT_THREE_Y = 160;
-                POINT_FOUR_X = 490;
-                POINT_FOUR_Y = 125;
-                SUN_WIDTH = 180;
+                POINT_ONE_X = 60;
+                POINT_ONE_Y = 260;
+                POINT_TWO_X = 180;
+                POINT_TWO_Y = 230;
+                POINT_THREE_X = 240;
+                POINT_THREE_Y = 130;
+                POINT_FOUR_X = 400;
+                POINT_FOUR_Y = 80;
+
+                break;
+
+            case 1184:
+
+                POINT_ONE_X = 60;
+                POINT_ONE_Y = 260;
+                POINT_TWO_X = 175;
+                POINT_TWO_Y = 220;
+                POINT_THREE_X = 235;
+                POINT_THREE_Y = 125;
+                POINT_FOUR_X = 400;
+                POINT_FOUR_Y = 80;
 
                 break;
 
@@ -254,15 +266,14 @@ public class FragmentButton extends Fragment implements View.OnClickListener {
 
             case 800:
 
-                POINT_ONE_X = 35;
-                POINT_ONE_Y = 210;
-                POINT_TWO_X = 150;
-                POINT_TWO_Y = 180;
-                POINT_THREE_X = 200;
-                POINT_THREE_Y = 110;
-                POINT_FOUR_X = 330;
-                POINT_FOUR_Y = 87;
-                SUN_WIDTH = 180;
+                POINT_ONE_X = 30;
+                POINT_ONE_Y = 190;
+                POINT_TWO_X = 110;
+                POINT_TWO_Y = 155;
+                POINT_THREE_X = 160;
+                POINT_THREE_Y = 90;
+                POINT_FOUR_X = 300;
+                POINT_FOUR_Y = 50;
 
                 break;
 
@@ -283,9 +294,8 @@ public class FragmentButton extends Fragment implements View.OnClickListener {
         ((KitkatStatusBar) getActivity()).setGlobalFlag(true);
 
 
-
         flag = true;
-        iv_section.setBackgroundResource(R.drawable.section4);
+        iv_section.setBackgroundResource(R.drawable.section44);
 
         // 给view对象组成触摸的监听器
         GlobalParams.view.setOnTouchListener(new View.OnTouchListener() {
@@ -299,7 +309,7 @@ public class FragmentButton extends Fragment implements View.OnClickListener {
                     case MotionEvent.ACTION_DOWN:// 手指按下屏幕 第一次接触屏幕
                         startX = (int) event.getRawX();
                         startY = (int) event.getRawY();
-
+                        GlobalParams.iv_orbit.setVisibility(View.VISIBLE);
                         break;
 
                     case MotionEvent.ACTION_MOVE: // 手指在屏幕上触摸移动
@@ -340,62 +350,60 @@ public class FragmentButton extends Fragment implements View.OnClickListener {
 
                         if (startX > 0 && startX <= width * SECTION_ONE / STANDARD_WIDTH) {
                             //view.scrollTo(50, 320);
-
                             GlobalParams.params.x = (int) (POINT_ONE_X);
                             GlobalParams.params.y = (int) (POINT_ONE_Y);
 
-                            //iv_section.setBackgroundResource(R.drawable.section1);
                             if (GlobalParams.bar != null) {
                                 GlobalParams.bar.setTitle("你未见的时代痛楚");
                             }
+                            iv_section.setBackgroundResource(R.drawable.section11);
                             GlobalParams.currentPos = 0;
 
                         } else if (startX > width * SECTION_ONE / STANDARD_WIDTH && startX <= width * SECTION_TWO / STANDARD_WIDTH) {
                             GlobalParams.params.x = (int) (POINT_TWO_X);
                             GlobalParams.params.y = (int) (POINT_TWO_Y);
 
-                            //iv_section.setBackgroundResource(R.drawable.section2);
                             if (GlobalParams.bar != null) {
                                 GlobalParams.bar.setTitle("你不知道的冷新闻");
                             }
+                            iv_section.setBackgroundResource(R.drawable.section22);
                             GlobalParams.currentPos = 1;
-
 
                         } else if (startX > width * SECTION_TWO / STANDARD_WIDTH && startX <= width * SECTION_THREE / STANDARD_WIDTH) {
                             GlobalParams.params.x = (int) (POINT_THREE_X);
                             GlobalParams.params.y = (int) (POINT_THREE_Y);
 
-                            //iv_section.setBackgroundResource(R.drawable.section3);
                             if (GlobalParams.bar != null) {
                                 GlobalParams.bar.setTitle("同步你的关注热度");
                             }
+
+                            iv_section.setBackgroundResource(R.drawable.section33);
+
                             GlobalParams.currentPos = 2;
 
                         } else if (startX > width * SECTION_THREE / STANDARD_WIDTH && startX <= width) {
                             GlobalParams.params.x = (int) (POINT_FOUR_X);
                             GlobalParams.params.y = (int) (POINT_FOUR_Y);
 
-                            //iv_section.setBackgroundResource(R.drawable.section4);
                             if (GlobalParams.bar != null) {
                                 GlobalParams.bar.setTitle("触摸时下热点所在");
                             }
+
+                            iv_section.setBackgroundResource(R.drawable.section44);
+
                             GlobalParams.currentPos = 3;
 
                         }
 
                         GlobalParams.manager.updateViewLayout(GlobalParams.view, GlobalParams.params);
-
                         if (NetUtil.checkNetWork(getActivity())) {
-
                             //有网络的时候
                             loadNewsData(getActivity(), GlobalParams.currentPos);
-
                         } else {
                             //没有网络的时候
                             mNewsDetailCilckRefresh.setVisibility(View.VISIBLE);
                             rl_content.setVisibility(View.GONE);
                             mNewsDetailLoadingWrapper.setVisibility(View.GONE);
-
                             Toast.makeText(getActivity(), "网络异常，请检查您的网络....", Toast.LENGTH_LONG).show();
                             GlobalParams.view.setVisibility(View.GONE);
                         }
@@ -414,13 +422,13 @@ public class FragmentButton extends Fragment implements View.OnClickListener {
         GlobalParams.params.gravity = Gravity.LEFT + Gravity.TOP;
 
         boolean isLogin = UmengShareHelper.isAuthenticated(getActivity(), SHARE_MEDIA.SINA);
-        if(isLogin){
+        if (isLogin) {
             // 指定距离屏幕左边的距离 必须与 Gravity.LEFT同时使用
             GlobalParams.params.x = POINT_THREE_X;
             //GlobalParams.params.x = 75;
             // 指定距离屏幕上边的距离 必须与 Gravity.TOP同时使用
             GlobalParams.params.y = POINT_THREE_Y;
-        }else{
+        } else {
             // 指定距离屏幕左边的距离 必须与 Gravity.LEFT同时使用
             GlobalParams.params.x = POINT_FOUR_X;
             //GlobalParams.params.x = 75;
@@ -452,12 +460,13 @@ public class FragmentButton extends Fragment implements View.OnClickListener {
         GlobalParams.LISTVIEW_HEIGHT = 0;
         GlobalParams.LISTVIEW_ERROR = 0;
 
+        GlobalParams.REFRESH_FLAG = true;
         NetworkRequest request = new NetworkRequest(HttpConstant.URL_FETCH_NEWS_FOR_MODULE, NetworkRequest.RequestMethod.GET);
-        HashMap<String,Object> params=new HashMap<>();
-        params.put("limit",9);
-        params.put("root_class",newsModulePos);
-        params.put("uuid",DeviceInfoUtil.getUUID());
-        request.getParams=params;
+        HashMap<String, Object> params = new HashMap<>();
+        params.put("limit", 9);
+        params.put("root_class", newsModulePos);
+        params.put("uuid", DeviceInfoUtil.getUUID());
+        request.getParams = params;
         request.setCallback(new JsonCallback<NewsFeed>() {
 
             @Override
@@ -477,13 +486,19 @@ public class FragmentButton extends Fragment implements View.OnClickListener {
                     mAniNewsLoading.stop();
                     mNewsDetailCilckRefresh.setVisibility(View.GONE);
                     rl_content.setVisibility(View.VISIBLE);
+
+                    GlobalParams.iv_orbit.setVisibility(View.GONE);
+
                     if (GlobalParams.view == null) {
                         initView();
                     } else if (GlobalParams.view.getVisibility() == View.GONE) {
                         GlobalParams.view.setVisibility(View.VISIBLE);
-                    }else if (GlobalParams.view.getVisibility() == View.VISIBLE) {
+                    } else if (GlobalParams.view.getVisibility() == View.VISIBLE) {
                         GlobalParams.view.setVisibility(View.VISIBLE);
                     }
+
+                    GlobalParams.REFRESH_FLAG = false;
+
                 } else {
                     Toast.makeText(mContext, "网络异常，请查看网络...", Toast.LENGTH_SHORT).show();
                 }
@@ -500,19 +515,16 @@ public class FragmentButton extends Fragment implements View.OnClickListener {
 
     @Override
     public void onDestroy() {
-
-        if(GlobalParams.view != null){
+        if (GlobalParams.view != null) {
             GlobalParams.manager.removeView(GlobalParams.view);
             GlobalParams.view = null;
         }
-
         super.onDestroy();
     }
 
     @Override
     public void onResume() {
         super.onResume();
-
         if (GlobalParams.SUN_FLAG == false) {
             GlobalParams.view.setVisibility(View.GONE);
         }

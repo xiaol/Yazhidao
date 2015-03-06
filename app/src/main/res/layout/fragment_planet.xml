@@ -8,11 +8,37 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <ImageView
-            android:id="@+id/iv_section"
+        <FrameLayout
+            android:id="@+id/fl_animation_view"
             android:layout_width="match_parent"
-            android:layout_height="240dip"
-            android:background="@drawable/section4" />
+            android:layout_height="240dp">
+
+            <ImageView
+                android:id="@+id/iv_section"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@drawable/section44" />
+
+            <ImageView
+                android:id="@+id/iv_orbit"
+                android:layout_width="200dp"
+                android:layout_height="113dip"
+                android:layout_marginBottom="30dp"
+                android:layout_gravity="center"
+                android:background="@drawable/orbit"
+                />
+
+        </FrameLayout>
+
+
+        <ImageView
+            android:id="@+id/iv_shadow"
+            android:layout_below="@id/fl_animation_view"
+            android:layout_width="match_parent"
+            android:layout_height="2dp"
+            android:background="@drawable/shadow_head"
+            />
+
 
         <com.news.yazhidao.UI.MyListView
             android:id="@+id/mNewsShowList"

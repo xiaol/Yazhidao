@@ -8,7 +8,7 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.view.View;
 
-import com.news.yazhidao.GlobalParams;
+import com.news.yazhidao.constant.GlobalParams;
 import com.news.yazhidao.R;
 import com.news.yazhidao.entity.User;
 import com.news.yazhidao.utils.helper.DrawableUtil;

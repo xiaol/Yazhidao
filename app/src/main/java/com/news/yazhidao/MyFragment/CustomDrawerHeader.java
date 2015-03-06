@@ -5,7 +5,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 
-import com.news.yazhidao.GlobalParams;
+import com.news.yazhidao.constant.GlobalParams;
 import com.news.yazhidao.R;
 
 import it.neokree.materialnavigationdrawer.MaterialNavigationDrawer;
