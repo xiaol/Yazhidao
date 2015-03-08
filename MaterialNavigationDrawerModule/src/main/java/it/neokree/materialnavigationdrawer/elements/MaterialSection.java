@@ -21,7 +21,6 @@ import android.widget.TextView;
 import at.markushi.ui.RevealColorView;
 import it.neokree.materialnavigationdrawer.R;
 import it.neokree.materialnavigationdrawer.elements.listeners.MaterialSectionListener;
-import it.neokree.materialnavigationdrawer.util.Utils;
 
 /**
  * Navigation Drawer section with Material Design style
@@ -144,21 +143,21 @@ public class MaterialSection<Fragment> implements View.OnTouchListener {
         theme.resolveAttribute(R.attr.sectionStyle,typedValue,true);
         TypedArray values = theme.obtainStyledAttributes(typedValue.resourceId,R.styleable.MaterialSection);
         try {
-//            colorPressed = values.getColor(R.styleable.MaterialSection_sectionBackgroundColorPressed,0x16FF7F66);
-//            colorUnpressed = values.getColor(R.styleable.MaterialSection_sectionBackgroundColor,0x00FFFFFF);
-//            colorSelected = values.getColor(R.styleable.MaterialSection_sectionBackgroundColorSelected,0x0FF7F66);
-//
-//            iconColor = values.getColor(R.styleable.MaterialSection_sectionColorIcon,0x00FF7F66);
-//            textColor = values.getColor(R.styleable.MaterialSection_sectionColorText,0x00FF7F66);
-//            notificationColor = values.getColor(R.styleable.MaterialSection_sectionColorNotification,0x00FF7F66);
+            colorPressed = values.getColor(R.styleable.MaterialSection_sectionBackgroundColorPressed,0x16FF7F66);
+            colorUnpressed = values.getColor(R.styleable.MaterialSection_sectionBackgroundColor,0x00FFFFFF);
+            colorSelected = values.getColor(R.styleable.MaterialSection_sectionBackgroundColorSelected,0x0FF7F66);
 
-            colorPressed = 0x16FF7F66;
-            colorUnpressed = 0x00000000;
-            colorSelected = 0x0FF7F66;
-
-            iconColor = 0x00FF7F66;
+            iconColor = values.getColor(R.styleable.MaterialSection_sectionColorIcon,0x00FF7F66);
             textColor = values.getColor(R.styleable.MaterialSection_sectionColorText,0x00FF7F66);
             notificationColor = values.getColor(R.styleable.MaterialSection_sectionColorNotification,0x00FF7F66);
+
+//            colorPressed = 0x16FF7F66;
+//            colorUnpressed = 0x00000000;
+//            colorSelected = 0x0FF7F66;
+//
+//            iconColor = 0x00FF7F66;
+//            textColor = values.getColor(R.styleable.MaterialSection_sectionColorText,0x00FF7F66);
+//            notificationColor = values.getColor(R.styleable.MaterialSection_sectionColorNotification,0x00FF7F66);
 
             if(textColor != 0x000) {
                 text.setTextColor(textColor);
@@ -227,7 +226,7 @@ public class MaterialSection<Fragment> implements View.OnTouchListener {
     public MaterialSection useRealColor() {
         realColor = true;
         if(icon != null) {
-            Utils.setAlpha(icon,1f);
+//            Utils.setAlpha(icon,1f);
         }
 
         return this;
@@ -309,7 +308,7 @@ public class MaterialSection<Fragment> implements View.OnTouchListener {
 
             if(icon != null) {
                 icon.setColorFilter(sectionColor);
-                Utils.setAlpha(icon, 1f);
+//                Utils.setAlpha(icon, 1f);
             }
         }
     }
@@ -328,7 +327,7 @@ public class MaterialSection<Fragment> implements View.OnTouchListener {
 
             if (icon != null) {
                 icon.setColorFilter(iconColor);
-                Utils.setAlpha(icon, 0.54f);
+//                Utils.setAlpha(icon, 0.54f);
             }
         }
     }
@@ -445,7 +444,7 @@ public class MaterialSection<Fragment> implements View.OnTouchListener {
 
             if (icon != null) {
                 icon.setColorFilter(sectionColor);
-                Utils.setAlpha(icon, 1f);
+//                Utils.setAlpha(icon, 1f);
             }
         }
 

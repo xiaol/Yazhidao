@@ -52,11 +52,11 @@
     </style>
 
     <style name="MaterialSectionTheme.Light" >
-        <item name="sectionColorIcon">#000000</item>
-        <item name="sectionColorText">#000000</item>
+        <item name="sectionColorIcon">#ff7f66</item>
+        <item name="sectionColorText">#ff7f66</item>
         <item name="sectionColorNotification">#000000</item>
-        <item name="sectionBackgroundColorPressed">#16000000</item>
-        <item name="sectionBackgroundColorSelected">#0A000000</item>
+        <item name="sectionBackgroundColorPressed">#16ff7f66</item>
+        <item name="sectionBackgroundColorSelected">#55ff7f66</item>
         <item name="sectionBackgroundColor">#00FFFFFF</item>
     </style>
 

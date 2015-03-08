@@ -53,6 +53,7 @@ import it.neokree.materialnavigationdrawer.elements.MaterialSection;
 import it.neokree.materialnavigationdrawer.elements.MaterialSubheader;
 import it.neokree.materialnavigationdrawer.elements.listeners.MaterialAccountListener;
 import it.neokree.materialnavigationdrawer.elements.listeners.MaterialSectionListener;
+import it.neokree.materialnavigationdrawer.util.DeviceInfoUtil;
 import it.neokree.materialnavigationdrawer.util.MaterialDrawerLayout;
 import it.neokree.materialnavigationdrawer.util.TypefaceManager;
 import it.neokree.materialnavigationdrawer.util.Utils;
@@ -1409,7 +1410,7 @@ public abstract class MaterialNavigationDrawer<Fragment> extends ActionBarActivi
 
     public void addSection(MaterialSection section) {
         section.setPosition(sectionList.size());
-        LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, (int) (48 * density));
+        LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, (int) (136*1.0/1080* DeviceInfoUtil.getScreenHeight(this)));
         section.setTypeface(fontManager.getRobotoMedium());
         sectionList.add(section);
         sections.addView(section.getView(), params);
