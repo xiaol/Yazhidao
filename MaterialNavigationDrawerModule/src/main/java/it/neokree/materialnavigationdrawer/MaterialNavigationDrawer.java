@@ -191,114 +191,115 @@ public abstract class MaterialNavigationDrawer<Fragment> extends ActionBarActivi
     private View.OnClickListener accountSwitcherListener = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
-            if (!drawerTouchLocked) {
-
-                // si rimuovono le viste
-                sections.removeAllViews();
-                bottomSections.removeAllViews();
-
-                if (!accountSwitcher) {
-                    // si cambia l'icona del pulsante
-                    userButtonSwitcher.setImageResource(R.drawable.ic_arrow_drop_up_white_24dp);
-
-                    for (MaterialAccount account : accountManager) {
-                        // si inseriscono tutti gli account ma non quello attualmente in uso
-                        if (account.getAccountNumber() != MaterialAccount.FIRST_ACCOUNT) {
-                            LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, (int) (56 * density));
-                            sections.addView(account.getSectionView(MaterialNavigationDrawer.this, fontManager.getRobotoMedium(), defaultSectionListener, rippleSupport, account.getAccountNumber()), params);
-                        }
-                    }
-                    for (MaterialSection section : accountSectionList) {
-                        LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, (int) (48 * density));
-                        sections.addView(section.getView(), params);
-                    }
-
-                    accountSwitcher = true; // si attiva l'account switcher per annotare che si visualizzano gli account.
-                } else {
-                    userButtonSwitcher.setImageResource(R.drawable.ic_arrow_drop_down_white_24dp);
-
-                    int indexSection = 0, indexSubheader = 0;
-                    for (int type : elementsList) {
-                        switch (type) {
-                            case ELEMENT_TYPE_SECTION:
-                                MaterialSection section = sectionList.get(indexSection);
-                                indexSection++;
-                                LinearLayout.LayoutParams paramSection = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, (int) (48 * density));
-                                sections.addView(section.getView(), paramSection);
-                                break;
-                            case ELEMENT_TYPE_DIVISOR:
-                                View view = new View(MaterialNavigationDrawer.this);
-                                view.setBackgroundColor(Color.parseColor("#e0e0e0"));
-                                // height 1 px
-                                LinearLayout.LayoutParams paramDivisor = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, 1);
-                                paramDivisor.setMargins(0, (int) (8 * density), 0, (int) (8 * density));
-                                sections.addView(view, paramDivisor);
-                                break;
-                            case ELEMENT_TYPE_SUBHEADER:
-                                MaterialSubheader subheader = subheaderList.get(indexSubheader);
-                                indexSubheader++;
-                                sections.addView(subheader.getView());
-                                break;
-                            case ELEMENT_TYPE_BOTTOM_SECTION:
-                                break; // le bottom section vengono gestite dopo l'inserimento degli altri elementi
-                        }
-                    }
-
-                    int width = drawer.getWidth();
-                    int heightCover;
-                    switch (drawerHeaderType) {
-                        default:
-                        case DRAWERHEADER_ACCOUNTS:
-                        case DRAWERHEADER_IMAGE:
-                        case DRAWERHEADER_CUSTOM:
-                            // si fa il rapporto in 16 : 9
-                            heightCover = (9 * width) / 16;
-                            break;
-                        case DRAWERHEADER_NO_HEADER:
-                            // height cover viene usato per prendere l'altezza della statusbar
-                            if (Build.VERSION.SDK_INT < Build.VERSION_CODES.KITKAT || (Build.VERSION.SDK_INT == Build.VERSION_CODES.KITKAT && !kitkatTraslucentStatusbar)) {
-                                heightCover = 0;
-                            } else {
-                                // su kitkat (con il traslucentstatusbar attivo) e su Lollipop e' 25 dp
-                                heightCover = (int) (25 * density);
-                            }
-                            break;
-                    }
-
-                    int heightDrawer = (int) (((8 + 8 + 1) * density) + heightCover + sections.getHeight() + ((density * 48) * bottomSectionList.size()) + (subheaderList.size() * (35 * density)));
-
-                    if (Build.VERSION.SDK_INT < Build.VERSION_CODES.KITKAT || (Build.VERSION.SDK_INT == Build.VERSION_CODES.KITKAT && !kitkatTraslucentStatusbar)) {
-                        heightDrawer += (density * 25);
-                    }
-
-                    View divisor = new View(MaterialNavigationDrawer.this);
-                    divisor.setBackgroundColor(Color.parseColor("#e0e0e0"));
-
-                    // si aggiungono le bottom sections
-                    if (heightDrawer >= getHeight()) {
-
-                        LinearLayout.LayoutParams paramDivisor = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, 1);
-                        paramDivisor.setMargins(0, (int) (8 * density), 0, (int) (8 * density));
-                        sections.addView(divisor, paramDivisor);
-
-                        for (MaterialSection section : bottomSectionList) {
-                            LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, (int) (48 * density));
-                            sections.addView(section.getView(), params);
-                        }
-                    } else {
-                        LinearLayout.LayoutParams paramDivisor = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, 1);
-                        bottomSections.addView(divisor, paramDivisor);
-
-                        for (MaterialSection section : bottomSectionList) {
-                            LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, (int) (48 * density));
-                            bottomSections.addView(section.getView(), params);
-                        }
-                    }
-
-                    accountSwitcher = false;
-                }
-
-            }
+            ////切换用户暂时不需要处理
+//            if (!drawerTouchLocked) {
+//
+//                // si rimuovono le viste
+//                sections.removeAllViews();
+//                bottomSections.removeAllViews();
+//
+//                if (!accountSwitcher) {
+//                    // si cambia l'icona del pulsante
+//                    userButtonSwitcher.setImageResource(R.drawable.ic_arrow_drop_up_white_24dp);
+//
+//                    for (MaterialAccount account : accountManager) {
+//                        // si inseriscono tutti gli account ma non quello attualmente in uso
+//                        if (account.getAccountNumber() != MaterialAccount.FIRST_ACCOUNT) {
+//                            LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, (int) (56 * density));
+//                            sections.addView(account.getSectionView(MaterialNavigationDrawer.this, fontManager.getRobotoMedium(), defaultSectionListener, rippleSupport, account.getAccountNumber()), params);
+//                        }
+//                    }
+//                    for (MaterialSection section : accountSectionList) {
+//                        LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, (int) (48 * density));
+//                        sections.addView(section.getView(), params);
+//                    }
+//
+//                    accountSwitcher = true; // si attiva l'account switcher per annotare che si visualizzano gli account.
+//                } else {
+//                    userButtonSwitcher.setImageResource(R.drawable.ic_arrow_drop_down_white_24dp);
+//
+//                    int indexSection = 0, indexSubheader = 0;
+//                    for (int type : elementsList) {
+//                        switch (type) {
+//                            case ELEMENT_TYPE_SECTION:
+//                                MaterialSection section = sectionList.get(indexSection);
+//                                indexSection++;
+//                                LinearLayout.LayoutParams paramSection = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, (int) (48 * density));
+//                                sections.addView(section.getView(), paramSection);
+//                                break;
+//                            case ELEMENT_TYPE_DIVISOR:
+//                                View view = new View(MaterialNavigationDrawer.this);
+//                                view.setBackgroundColor(Color.parseColor("#e0e0e0"));
+//                                // height 1 px
+//                                LinearLayout.LayoutParams paramDivisor = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, 1);
+//                                paramDivisor.setMargins(0, (int) (8 * density), 0, (int) (8 * density));
+//                                sections.addView(view, paramDivisor);
+//                                break;
+//                            case ELEMENT_TYPE_SUBHEADER:
+//                                MaterialSubheader subheader = subheaderList.get(indexSubheader);
+//                                indexSubheader++;
+//                                sections.addView(subheader.getView());
+//                                break;
+//                            case ELEMENT_TYPE_BOTTOM_SECTION:
+//                                break; // le bottom section vengono gestite dopo l'inserimento degli altri elementi
+//                        }
+//                    }
+//
+//                    int width = drawer.getWidth();
+//                    int heightCover;
+//                    switch (drawerHeaderType) {
+//                        default:
+//                        case DRAWERHEADER_ACCOUNTS:
+//                        case DRAWERHEADER_IMAGE:
+//                        case DRAWERHEADER_CUSTOM:
+//                            // si fa il rapporto in 16 : 9
+//                            heightCover = (9 * width) / 16;
+//                            break;
+//                        case DRAWERHEADER_NO_HEADER:
+//                            // height cover viene usato per prendere l'altezza della statusbar
+//                            if (Build.VERSION.SDK_INT < Build.VERSION_CODES.KITKAT || (Build.VERSION.SDK_INT == Build.VERSION_CODES.KITKAT && !kitkatTraslucentStatusbar)) {
+//                                heightCover = 0;
+//                            } else {
+//                                // su kitkat (con il traslucentstatusbar attivo) e su Lollipop e' 25 dp
+//                                heightCover = (int) (25 * density);
+//                            }
+//                            break;
+//                    }
+//
+//                    int heightDrawer = (int) (((8 + 8 + 1) * density) + heightCover + sections.getHeight() + ((density * 48) * bottomSectionList.size()) + (subheaderList.size() * (35 * density)));
+//
+//                    if (Build.VERSION.SDK_INT < Build.VERSION_CODES.KITKAT || (Build.VERSION.SDK_INT == Build.VERSION_CODES.KITKAT && !kitkatTraslucentStatusbar)) {
+//                        heightDrawer += (density * 25);
+//                    }
+//
+//                    View divisor = new View(MaterialNavigationDrawer.this);
+//                    divisor.setBackgroundColor(Color.parseColor("#e0e0e0"));
+//
+//                    // si aggiungono le bottom sections
+//                    if (heightDrawer >= getHeight()) {
+//
+//                        LinearLayout.LayoutParams paramDivisor = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, 1);
+//                        paramDivisor.setMargins(0, (int) (8 * density), 0, (int) (8 * density));
+//                        sections.addView(divisor, paramDivisor);
+//
+//                        for (MaterialSection section : bottomSectionList) {
+//                            LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, (int) (48 * density));
+//                            sections.addView(section.getView(), params);
+//                        }
+//                    } else {
+//                        LinearLayout.LayoutParams paramDivisor = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, 1);
+//                        bottomSections.addView(divisor, paramDivisor);
+//
+//                        for (MaterialSection section : bottomSectionList) {
+//                            LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, (int) (48 * density));
+//                            bottomSections.addView(section.getView(), params);
+//                        }
+//                    }
+//
+//                    accountSwitcher = false;
+//                }
+//
+//            }
         }
     };
     private MaterialSectionListener defaultSectionListener = new MaterialSectionListener() {
@@ -345,6 +346,9 @@ public abstract class MaterialNavigationDrawer<Fragment> extends ActionBarActivi
     };
     protected MaterialAccountListener accountListener;
     protected DrawerLayout.DrawerListener drawerListener;
+    private View mCommonHeaderHome;
+    public static TextView mCommonHeaderTitle;
+    public static View mCommonHeaderSearch;
 
 
     @SuppressWarnings("unchecked")
@@ -383,7 +387,16 @@ public abstract class MaterialNavigationDrawer<Fragment> extends ActionBarActivi
         // init toolbar & status bar
         statusBar = (ImageView) findViewById(R.id.statusBar);
         toolbar = (Toolbar) findViewById(R.id.toolbar);
+        mCommonHeaderHome=findViewById(R.id.mCommonHeaderHome);
+        mCommonHeaderTitle= (TextView) findViewById(R.id.mCommonHeaderTitle);
+        mCommonHeaderSearch=findViewById(R.id.mCommonHeaderSearch);
+        mCommonHeaderHome.setOnClickListener(new View.OnClickListener(){
 
+            @Override
+            public void onClick(View v) {
+                layout.openDrawer(drawer);
+            }
+        });
         // init drawer components
         layout = (MaterialDrawerLayout) this.findViewById(R.id.drawer_layout);//最外层MaterialDrawer
         content = (RelativeLayout) this.findViewById(R.id.content);//主布局
@@ -479,7 +492,6 @@ public abstract class MaterialNavigationDrawer<Fragment> extends ActionBarActivi
                 }
             }
         }
-
         // INIT ACTION BAR
         this.setSupportActionBar(toolbar);
         actionBar = getSupportActionBar();

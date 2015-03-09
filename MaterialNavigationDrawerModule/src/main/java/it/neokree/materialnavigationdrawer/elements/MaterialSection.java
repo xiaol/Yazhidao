@@ -11,6 +11,7 @@ import android.graphics.Point;
 import android.graphics.Typeface;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
+import android.util.Log;
 import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
@@ -19,6 +20,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import at.markushi.ui.RevealColorView;
+import it.neokree.materialnavigationdrawer.MaterialNavigationDrawer;
 import it.neokree.materialnavigationdrawer.R;
 import it.neokree.materialnavigationdrawer.elements.listeners.MaterialSectionListener;
 
@@ -458,6 +460,14 @@ public class MaterialSection<Fragment> implements View.OnTouchListener {
         // si fa arrivare il click anche allo sviluppatore
         if (this.getTarget() == TARGET_LISTENER && targetListener != null)
             this.targetListener.onClick(this);
+
+        Log.e("title",getTitle());
+        MaterialNavigationDrawer.mCommonHeaderTitle.setText(getTitle());
+        if(getPosition()!=0){
+            MaterialNavigationDrawer.mCommonHeaderSearch.setVisibility(View.GONE);
+        }else{
+            MaterialNavigationDrawer.mCommonHeaderSearch.setVisibility(View.VISIBLE);
+        }
     }
 
     private boolean rippleAnimationSupport() {
