@@ -96,7 +96,7 @@ public class MyRelativeLayout extends RelativeLayout {
         layout.layout(0, 0, width, view_height);
 
         ImageView shadow = (ImageView) this.getChildAt(1);
-        shadow.layout(0, view_height - 2, width, view_height + 10);
+        shadow.layout(0, view_height - 3, width, view_height + 10);
 
         listView = (MyListView) this.getChildAt(2);
 
@@ -113,15 +113,15 @@ public class MyRelativeLayout extends RelativeLayout {
         switch (height) {
 
             case 1920:
-                error = 240;
+                error = 280;
                 break;
 
             case 1800:
-                error = 222;
+                error = 360;
                 break;
 
             case 1776:
-                error = 250;
+                error = 280;
                 break;
 
             case 1280:

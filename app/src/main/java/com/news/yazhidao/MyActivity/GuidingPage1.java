@@ -6,6 +6,7 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
@@ -84,9 +85,10 @@ public class GuidingPage1 extends Activity implements ViewPager.OnPageChangeList
 
             ImageView image = imageViewList.get(position % imageViewList.size());
 
-            image.setOnClickListener(new View.OnClickListener() {
+            image.setOnTouchListener(new View.OnTouchListener() {
+
                 @Override
-                public void onClick(View v) {
+                public boolean onTouch(View v, MotionEvent event) {
                     if (previousEnabledPosition == 1) {
                         SharedPreferences sp = getSharedPreferences("guide", 0);
                         SharedPreferences.Editor editor = sp.edit();
@@ -99,6 +101,8 @@ public class GuidingPage1 extends Activity implements ViewPager.OnPageChangeList
 
                         overridePendingTransition(R.anim.animation_in, R.anim.animation_out);
                     }
+
+                    return false;
                 }
             });
 

@@ -7,8 +7,8 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.widget.LinearLayout;
 
+import com.news.yazhidao.MyFragment.KitkatStatusBar;
 import com.news.yazhidao.R;
-import com.news.yazhidao.pages.UserLoginAty;
 
 /**
  * Created by Berkeley on 2/5/15.
@@ -48,7 +48,7 @@ public class SplashActivity extends Activity {
         Boolean flag = sp.getBoolean("isguide", false);
 
         if (flag) {
-            intent = new Intent(SplashActivity.this, UserLoginAty.class);
+            intent = new Intent(SplashActivity.this, KitkatStatusBar.class);
             startActivity(intent);
             finish();
             overridePendingTransition(R.anim.animation_alpha_in, R.anim.animation_alpha_out);

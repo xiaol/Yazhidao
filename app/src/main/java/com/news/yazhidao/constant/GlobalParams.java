@@ -23,7 +23,9 @@ public class GlobalParams {
     public static boolean DELETE_FLAG = false;
     public static boolean ONE_FLAG = false;
     public static boolean REFRESH_FLAG = false;
+    public static boolean ADD_SUN_FLAG = false;
     public static KitkatStatusBar mainSection = null;
     public static ImageView iv_orbit = null;
     public static int currentPos = 3;
+    public static int previousPos = 0;
 }
