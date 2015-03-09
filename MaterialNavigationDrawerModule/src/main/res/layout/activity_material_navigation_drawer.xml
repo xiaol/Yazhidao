@@ -31,10 +31,10 @@
             android:layout_width="match_parent"
             android:background="#ff7f66"
             android:layout_height="?android:attr/actionBarSize" android:layout_below="@+id/statusBar">
-            <RelativeLayout android:id="@+id/mCommonHeaderHome" android:layout_width="52dp" android:layout_height="52dp" android:gravity="left|center_vertical" android:layout_marginLeft="8dp">
-                <ImageView  android:layout_width="28dp" android:layout_height="22dp" android:layout_marginLeft="8dp"   android:src="@drawable/left_menu_avatar"/>
+            <RelativeLayout android:id="@+id/mCommonHeaderHome" android:layout_width="52dp" android:layout_height="52dp" android:gravity="left|center_vertical" android:layout_marginLeft="12dp">
+                <ImageView  android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginLeft="8dp"   android:src="@drawable/left_menu_avatar"/>
             </RelativeLayout>
-            <TextView android:id="@+id/mCommonHeaderTitle" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="主页" android:layout_centerInParent="true" android:textSize="22sp" android:textColor="@android:color/white"/>
+            <TextView android:id="@+id/mCommonHeaderTitle" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="主页" android:layout_centerInParent="true" android:textSize="20sp" android:textColor="@android:color/white"/>
             <ImageView
                 android:id="@+id/mCommonHeaderSearch"
                 android:layout_width="wrap_content"
