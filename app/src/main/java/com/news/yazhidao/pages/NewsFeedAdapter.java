@@ -268,9 +268,9 @@ public class NewsFeedAdapter extends BaseAdapter {
     private LinearLayout generateNewsCell(final NewsFeed.Element element,View.OnClickListener listener){
         final LinearLayout childView = (LinearLayout) LayoutInflater.from(mContext).inflate(R.layout.aty_news_show_list_cell, null);
         if(DeviceInfoUtil.getScreenWidth()<=480){
-            childView.setLayoutParams(new AbsListView.LayoutParams(DeviceInfoUtil.getScreenWidth(), (int) (DeviceInfoUtil.getScreenHeight() * 0.18)));
+            childView.setLayoutParams(new AbsListView.LayoutParams((int)(DeviceInfoUtil.getScreenWidth() * 0.95), (int) (DeviceInfoUtil.getScreenHeight() * 0.18)));
         }else{
-            childView.setLayoutParams(new AbsListView.LayoutParams(DeviceInfoUtil.getScreenWidth(), (int) (DeviceInfoUtil.getScreenHeight() * 0.16)));
+            childView.setLayoutParams(new AbsListView.LayoutParams((int)(DeviceInfoUtil.getScreenWidth() * 0.95), (int) (DeviceInfoUtil.getScreenHeight() * 0.16)));
         }
         ImageView mCellImage = (ImageView) childView.findViewById(R.id.mCellImage);
         TextView mCellSourceSiteName = (TextView) childView.findViewById(R.id.mCellSourceSiteName);
