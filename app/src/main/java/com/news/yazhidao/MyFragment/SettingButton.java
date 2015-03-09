@@ -30,6 +30,8 @@ public class SettingButton extends Fragment {
             GlobalParams.DELETE_FLAG = true;
         }
 
+        GlobalParams.ADD_SUN_FLAG = false;
+
         iv_push = (ImageView) view.findViewById(R.id.iv_push);
         iv_push.setOnClickListener(new View.OnClickListener() {
             @Override

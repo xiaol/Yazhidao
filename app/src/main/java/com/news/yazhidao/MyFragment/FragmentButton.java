@@ -153,8 +153,10 @@ public class FragmentButton extends Fragment implements View.OnClickListener {
             if (isLogin) {
                 //如果用户在首订的时候登陆了，就进入36°C，否则进入40°C
                 GlobalParams.currentPos = 2;
+                GlobalParams.previousPos = 2;
             } else {
                 GlobalParams.currentPos = 3;
+                GlobalParams.previousPos = 3;
             }
             if(MaterialNavigationDrawer.mCommonHeaderTitle!=null){
                 MaterialNavigationDrawer.mCommonHeaderTitle.setText(getResources().getTextArray(R.array.mFeedChannleNames)[GlobalParams.currentPos]);
@@ -216,15 +218,14 @@ public class FragmentButton extends Fragment implements View.OnClickListener {
 
             case 1776:
 
-                POINT_ONE_X = 0;
+                POINT_ONE_X = 80;
                 POINT_ONE_Y = 370;
-                POINT_TWO_X = 250;
-                POINT_TWO_Y = 300;
-                POINT_THREE_X = 360;
-                POINT_THREE_Y = 160;
-                POINT_FOUR_X = 730;
-                POINT_FOUR_Y = 170;
-                SUN_WIDTH = 180;
+                POINT_TWO_X = 275;
+                POINT_TWO_Y = 305;
+                POINT_THREE_X = 350;
+                POINT_THREE_Y = 170;
+                POINT_FOUR_X = 610;
+                POINT_FOUR_Y = 110;
 
                 break;
 
@@ -245,13 +246,13 @@ public class FragmentButton extends Fragment implements View.OnClickListener {
             case 1184:
 
                 POINT_ONE_X = 60;
-                POINT_ONE_Y = 260;
+                POINT_ONE_Y = 250;
                 POINT_TWO_X = 175;
-                POINT_TWO_Y = 220;
+                POINT_TWO_Y = 215;
                 POINT_THREE_X = 235;
-                POINT_THREE_Y = 125;
+                POINT_THREE_Y = 120;
                 POINT_FOUR_X = 400;
-                POINT_FOUR_Y = 80;
+                POINT_FOUR_Y = 75;
 
                 break;
 
@@ -289,7 +290,9 @@ public class FragmentButton extends Fragment implements View.OnClickListener {
     private void showView() {
 
         //设置全局参数
-        GlobalParams.view = (LinearLayout) View.inflate(getActivity(), R.layout.view_sun, null);
+        if(GlobalParams.view == null) {
+            GlobalParams.view = (LinearLayout) View.inflate(getActivity(), R.layout.view_sun, null);
+        }
 
         TextView iv = (TextView) GlobalParams.view.findViewById(R.id.iv_sun);
         iv.setBackgroundResource(R.drawable.sun);
@@ -403,7 +406,10 @@ public class FragmentButton extends Fragment implements View.OnClickListener {
                         GlobalParams.manager.updateViewLayout(GlobalParams.view, GlobalParams.params);
                         if (NetUtil.checkNetWork(getActivity())) {
                             //有网络的时候
-                            loadNewsData(getActivity(), GlobalParams.currentPos);
+                            if(GlobalParams.currentPos != GlobalParams.previousPos) {
+                                GlobalParams.previousPos = GlobalParams.currentPos;
+                                loadNewsData(getActivity(), GlobalParams.currentPos);
+                            }
                         } else {
                             //没有网络的时候
                             mNewsDetailCilckRefresh.setVisibility(View.VISIBLE);
@@ -454,9 +460,16 @@ public class FragmentButton extends Fragment implements View.OnClickListener {
         GlobalParams.params.format = PixelFormat.TRANSLUCENT;
         GlobalParams.params.type = WindowManager.LayoutParams.TYPE_PRIORITY_PHONE;//
         // 改用电话优先级的窗体类型，这种类型可以相应触摸事件。
-        GlobalParams.manager.addView(GlobalParams.view, GlobalParams.params);
+        if(!GlobalParams.ADD_SUN_FLAG) {
+            GlobalParams.manager.addView(GlobalParams.view, GlobalParams.params);
+            GlobalParams.ADD_SUN_FLAG = true;
+        }
 
-        GlobalParams.DELETE_FLAG = false;
+        if(GlobalParams.DELETE_FLAG) {
+            GlobalParams.manager.addView(GlobalParams.view, GlobalParams.params);
+            GlobalParams.DELETE_FLAG = false;
+        }
+
 
     }
 
@@ -519,17 +532,26 @@ public class FragmentButton extends Fragment implements View.OnClickListener {
     }
 
     @Override
-    public void onDestroy() {
+    public void onStop() {
+
         if (GlobalParams.view != null) {
             GlobalParams.manager.removeView(GlobalParams.view);
             GlobalParams.view = null;
         }
-        super.onDestroy();
+
+        GlobalParams.ADD_SUN_FLAG = false;
+
+        super.onStop();
     }
 
     @Override
     public void onResume() {
         super.onResume();
+
+        if(!GlobalParams.ADD_SUN_FLAG) {
+            initView();
+        }
+
         if (GlobalParams.SUN_FLAG == false) {
             GlobalParams.view.setVisibility(View.GONE);
         }

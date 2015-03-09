@@ -200,16 +200,16 @@ public class NewsFeedAdapter extends BaseAdapter {
 
             case 1920:
 
-                GlobalParams.LISTVIEW_ERROR += 1450;
+                GlobalParams.LISTVIEW_ERROR += 1430;
 
                 break;
 
             case 1800:
-                GlobalParams.LISTVIEW_ERROR += 1200;
+                GlobalParams.LISTVIEW_ERROR += 1390;
                 break;
 
             case 1776://nexus 5
-                GlobalParams.LISTVIEW_ERROR += 1450;
+                GlobalParams.LISTVIEW_ERROR += 1300;
                 break;
 
             case 1280:
@@ -217,7 +217,7 @@ public class NewsFeedAdapter extends BaseAdapter {
                 break;
 
             case 1184: //moto g
-                GlobalParams.LISTVIEW_ERROR += 890;
+                GlobalParams.LISTVIEW_ERROR += 870;
                 break;
 
             case 800:

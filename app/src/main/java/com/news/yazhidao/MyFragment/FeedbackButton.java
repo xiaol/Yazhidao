@@ -30,6 +30,8 @@ public class FeedbackButton extends Fragment {
             GlobalParams.DELETE_FLAG = true;
         }
 
+        GlobalParams.ADD_SUN_FLAG = false;
+
         et_email = (EditText) view.findViewById(R.id.et_email);
 
         int a = DensityUtil.dip2px(getActivity(), 10);

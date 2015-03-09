@@ -25,6 +25,8 @@ public class AboutButton extends Fragment {
             GlobalParams.DELETE_FLAG = true;
         }
 
+        GlobalParams.ADD_SUN_FLAG = false;
+
         return view;
 
     }

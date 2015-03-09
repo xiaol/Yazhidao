@@ -60,8 +60,16 @@ public class KitkatStatusBar extends MaterialNavigationDrawer {
                 if(isLogin){
                     //弹框 确认是否注销
                     showLogoutDialog();
+
+                    if(GlobalParams.view != null) {
+                        GlobalParams.manager.removeView(GlobalParams.view);
+                        GlobalParams.ADD_SUN_FLAG = false;
+                    }
+
                 }else{
                     UmengShareHelper.oAuthSina(KitkatStatusBar.this,null);
+
+                    GlobalParams.ADD_SUN_FLAG = false;
                 }
 
             }
@@ -75,11 +83,21 @@ public class KitkatStatusBar extends MaterialNavigationDrawer {
                 UmengShareHelper.logout(KitkatStatusBar.this);
                 setSinaUserLogout();
                 dialog.dismiss();
+
+                if (GlobalParams.view != null) {
+                    GlobalParams.manager.addView(GlobalParams.view, GlobalParams.params);
+                    GlobalParams.ADD_SUN_FLAG = true;
+                }
             }
         }).setNegative("取消", new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 dialog.dismiss();
+
+                if (GlobalParams.view != null) {
+                    GlobalParams.manager.addView(GlobalParams.view, GlobalParams.params);
+                    GlobalParams.ADD_SUN_FLAG = true;
+                }
             }
         }).show();
         dialog.setCancelable(false);
