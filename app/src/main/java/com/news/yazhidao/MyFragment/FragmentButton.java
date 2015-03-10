@@ -37,6 +37,8 @@ import com.umeng.socialize.bean.SHARE_MEDIA;
 
 import java.util.HashMap;
 
+import it.neokree.materialnavigationdrawer.MaterialNavigationDrawer;
+
 
 /**
  * Created by berkley on 31/12/14.
@@ -156,6 +158,9 @@ public class FragmentButton extends Fragment implements View.OnClickListener {
                 GlobalParams.currentPos = 3;
                 GlobalParams.previousPos = 3;
             }
+            if(MaterialNavigationDrawer.mCommonHeaderTitle!=null){
+                MaterialNavigationDrawer.mCommonHeaderTitle.setText(getResources().getTextArray(R.array.mFeedChannleNames)[GlobalParams.currentPos]);
+            }
             loadNewsData(getActivity(), GlobalParams.currentPos);
 
         } else {
@@ -226,15 +231,36 @@ public class FragmentButton extends Fragment implements View.OnClickListener {
 
 
             case 1280:
+                if(width == 720) {
+                    POINT_ONE_X = 60;
+                    POINT_ONE_Y = 260;
+                    POINT_TWO_X = 180;
+                    POINT_TWO_Y = 210;
+                    POINT_THREE_X = 240;
+                    POINT_THREE_Y = 120;
+                    POINT_FOUR_X = 400;
+                    POINT_FOUR_Y = 80;
+                }else if(width == 800){//1280*800
 
-                POINT_ONE_X = 60;
-                POINT_ONE_Y = 260;
-                POINT_TWO_X = 180;
-                POINT_TWO_Y = 230;
-                POINT_THREE_X = 240;
-                POINT_THREE_Y = 130;
-                POINT_FOUR_X = 400;
-                POINT_FOUR_Y = 80;
+                    POINT_ONE_X = 90;
+                    POINT_ONE_Y = 260;
+                    POINT_TWO_X = 205;
+                    POINT_TWO_Y = 225;
+                    POINT_THREE_X = 255;
+                    POINT_THREE_Y = 130;
+                    POINT_FOUR_X = 440;
+                    POINT_FOUR_Y = 80;
+                }else{
+
+                    POINT_ONE_X = 60;
+                    POINT_ONE_Y = 260;
+                    POINT_TWO_X = 180;
+                    POINT_TWO_Y = 210;
+                    POINT_THREE_X = 240;
+                    POINT_THREE_Y = 120;
+                    POINT_FOUR_X = 400;
+                    POINT_FOUR_Y = 80;
+                }
 
                 break;
 
@@ -268,13 +294,13 @@ public class FragmentButton extends Fragment implements View.OnClickListener {
             case 800:
 
                 POINT_ONE_X = 30;
-                POINT_ONE_Y = 190;
-                POINT_TWO_X = 110;
-                POINT_TWO_Y = 155;
+                POINT_ONE_Y = 170;
+                POINT_TWO_X = 115;
+                POINT_TWO_Y = 150;
                 POINT_THREE_X = 160;
-                POINT_THREE_Y = 90;
-                POINT_FOUR_X = 300;
-                POINT_FOUR_Y = 50;
+                POINT_THREE_Y = 70;
+                POINT_FOUR_X = 260;
+                POINT_FOUR_Y = 40;
 
                 break;
 
@@ -356,8 +382,9 @@ public class FragmentButton extends Fragment implements View.OnClickListener {
                             GlobalParams.params.x = (int) (POINT_ONE_X);
                             GlobalParams.params.y = (int) (POINT_ONE_Y);
 
-                            if (GlobalParams.bar != null) {
-                                GlobalParams.bar.setTitle("你未见的时代痛楚");
+                            //太阳变动位置时，修改自定义actionbar的title
+                            if(MaterialNavigationDrawer.mCommonHeaderTitle!=null){
+                                MaterialNavigationDrawer.mCommonHeaderTitle.setText(getResources().getTextArray(R.array.mFeedChannleNames)[0]);
                             }
                             iv_section.setBackgroundResource(R.drawable.section11);
                             GlobalParams.currentPos = 0;
@@ -366,8 +393,8 @@ public class FragmentButton extends Fragment implements View.OnClickListener {
                             GlobalParams.params.x = (int) (POINT_TWO_X);
                             GlobalParams.params.y = (int) (POINT_TWO_Y);
 
-                            if (GlobalParams.bar != null) {
-                                GlobalParams.bar.setTitle("你不知道的冷新闻");
+                            if(MaterialNavigationDrawer.mCommonHeaderTitle!=null){
+                                MaterialNavigationDrawer.mCommonHeaderTitle.setText(getResources().getTextArray(R.array.mFeedChannleNames)[1]);
                             }
                             iv_section.setBackgroundResource(R.drawable.section22);
                             GlobalParams.currentPos = 1;
@@ -376,8 +403,8 @@ public class FragmentButton extends Fragment implements View.OnClickListener {
                             GlobalParams.params.x = (int) (POINT_THREE_X);
                             GlobalParams.params.y = (int) (POINT_THREE_Y);
 
-                            if (GlobalParams.bar != null) {
-                                GlobalParams.bar.setTitle("同步你的关注热度");
+                            if(MaterialNavigationDrawer.mCommonHeaderTitle!=null){
+                                MaterialNavigationDrawer.mCommonHeaderTitle.setText(getResources().getTextArray(R.array.mFeedChannleNames)[2]);
                             }
 
                             iv_section.setBackgroundResource(R.drawable.section33);
@@ -388,10 +415,9 @@ public class FragmentButton extends Fragment implements View.OnClickListener {
                             GlobalParams.params.x = (int) (POINT_FOUR_X);
                             GlobalParams.params.y = (int) (POINT_FOUR_Y);
 
-                            if (GlobalParams.bar != null) {
-                                GlobalParams.bar.setTitle("触摸时下热点所在");
+                            if(MaterialNavigationDrawer.mCommonHeaderTitle!=null){
+                                MaterialNavigationDrawer.mCommonHeaderTitle.setText(getResources().getTextArray(R.array.mFeedChannleNames)[3]);
                             }
-
                             iv_section.setBackgroundResource(R.drawable.section44);
 
                             GlobalParams.currentPos = 3;

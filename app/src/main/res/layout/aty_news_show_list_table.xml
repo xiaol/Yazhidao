@@ -72,7 +72,7 @@
             android:text="燕郊至北京动车今首发 早班侧最受欢迎早班侧最受欢迎"
             android:textStyle="bold"
             android:textColor="@color/white"
-            android:textSize="24sp" />
+            android:textSize="22sp" />
     </RelativeLayout>
 
     <ImageView
@@ -100,8 +100,8 @@
         android:layout_width="match_parent"
         android:layout_height="4dp"
         android:layout_alignParentBottom="true"
+        android:src="@drawable/news_list_table_shadow"
         android:scaleType="fitXY"
-        android:alpha="0.8"
-        android:src="@drawable/news_list_table_shadow" />
+        />
 
 </LinearLayout>

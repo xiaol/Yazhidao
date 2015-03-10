@@ -125,11 +125,17 @@ public class MyRelativeLayout extends RelativeLayout {
                 break;
 
             case 1280:
-                error = 190;
+                if(width == 720) {
+                    error = 170;
+                }else if(width == 800){
+                    error = 270;
+                }else{
+                    error = 220;
+                }
                 break;
 
             case 1184:
-                error = 190;
+                error = 160;
                 break;
 
             case 800:
