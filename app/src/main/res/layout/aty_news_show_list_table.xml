@@ -3,7 +3,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="@drawable/list_table_bg"
+    android:background="@drawable/list_table_bg_now"
     android:orientation="vertical">
 
     <RelativeLayout
@@ -102,6 +102,7 @@
         android:layout_alignParentBottom="true"
         android:src="@drawable/news_list_table_shadow"
         android:scaleType="fitXY"
+        android:visibility="gone"
         />
 
 </LinearLayout>

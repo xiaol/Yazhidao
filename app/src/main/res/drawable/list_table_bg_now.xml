@@ -7,10 +7,10 @@
             android:dither="true"
             android:shape="rectangle" >
             <corners android:radius="2dp" />
-            <gradient android:startColor="#000000" android:endColor="#ffffff" android:angle="270"  android:type="sweep" android:centerColor="#55000000" android:centerX="320" android:centerY="200"/>
+            <solid android:color="#32000000"/>
         </shape>
     </item>
-    <item android:bottom="6dp">
+    <item android:bottom="3dp">
         <shape
             android:dither="true"
             android:shape="rectangle" >

@@ -23,6 +23,11 @@ android {
         release {
         }
     }
+    sourceSets{
+        main{
+            jniLibs.srcDir('libs/jniLibs')
+        }
+    }
 }
 
 dependencies {
