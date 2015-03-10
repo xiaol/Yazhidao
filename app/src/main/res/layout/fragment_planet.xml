@@ -1,6 +1,8 @@
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="@color/news_list_bg"
+    >
 
 
     <com.news.yazhidao.UI.MyRelativeLayout
@@ -9,11 +11,22 @@
         android:layout_height="match_parent"
         >
 
+        <ImageView
+            android:id="@+id/iv_shadow"
+            android:layout_width="match_parent"
+            android:layout_height="5dp"
+            android:scaleType="fitXY"
+            android:src="@drawable/shadow_head" />
+
         <FrameLayout
             android:id="@+id/fl_animation_view"
             android:layout_width="match_parent"
             android:layout_height="240dp">
-
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="4dp"
+                android:scaleType="fitXY"
+                android:src="@drawable/shadow_head" />
             <ImageView
                 android:id="@+id/iv_section"
                 android:layout_width="match_parent"
@@ -32,18 +45,11 @@
         </FrameLayout>
 
 
-        <ImageView
-            android:id="@+id/iv_shadow"
-            android:layout_below="@id/fl_animation_view"
-            android:layout_width="match_parent"
-            android:layout_height="2dp"
-            android:background="@drawable/shadow_head"
-            />
 
 
         <com.news.yazhidao.UI.MyListView
             android:id="@+id/mNewsShowList"
-            android:layout_below="@+id/iv_section"
+            android:layout_below="@id/fl_animation_view"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:background="@color/news_list_bg"

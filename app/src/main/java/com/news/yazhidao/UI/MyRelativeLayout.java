@@ -89,14 +89,14 @@ public class MyRelativeLayout extends RelativeLayout {
 
         setError();
 
-        FrameLayout layout = (FrameLayout) this.getChildAt(0);
+        FrameLayout layout = (FrameLayout) this.getChildAt(1);
         iv_section = (ImageView)layout.findViewById(R.id.iv_section);
 
         view_height = SECTION_VIEW_HEIGHT * width / STANDARD_WIDTH;
         layout.layout(0, 0, width, view_height);
 
-        ImageView shadow = (ImageView) this.getChildAt(1);
-        shadow.layout(0, view_height - 3, width, view_height + 10);
+        View shadow =  this.getChildAt(0);
+        shadow.layout(0, view_height- DensityUtil.dip2px(context,2.5f), width, view_height+ DensityUtil.dip2px(context,4.5f));
 
         listView = (MyListView) this.getChildAt(2);
 

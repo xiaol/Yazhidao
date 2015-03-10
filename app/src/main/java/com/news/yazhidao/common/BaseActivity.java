@@ -29,7 +29,7 @@ public class BaseActivity extends Activity {
     protected void onPause() {
         super.onPause();
         TCAgent.onPause(this);
-        MobclickAgent.onResume(this);
+        MobclickAgent.onPause(this);
     }
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
