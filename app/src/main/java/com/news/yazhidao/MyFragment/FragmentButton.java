@@ -231,15 +231,36 @@ public class FragmentButton extends Fragment implements View.OnClickListener {
 
 
             case 1280:
+                if(width == 720) {
+                    POINT_ONE_X = 60;
+                    POINT_ONE_Y = 260;
+                    POINT_TWO_X = 180;
+                    POINT_TWO_Y = 210;
+                    POINT_THREE_X = 240;
+                    POINT_THREE_Y = 120;
+                    POINT_FOUR_X = 400;
+                    POINT_FOUR_Y = 80;
+                }else if(width == 800){//1280*800
 
-                POINT_ONE_X = 60;
-                POINT_ONE_Y = 260;
-                POINT_TWO_X = 180;
-                POINT_TWO_Y = 230;
-                POINT_THREE_X = 240;
-                POINT_THREE_Y = 130;
-                POINT_FOUR_X = 400;
-                POINT_FOUR_Y = 80;
+                    POINT_ONE_X = 90;
+                    POINT_ONE_Y = 260;
+                    POINT_TWO_X = 205;
+                    POINT_TWO_Y = 225;
+                    POINT_THREE_X = 255;
+                    POINT_THREE_Y = 130;
+                    POINT_FOUR_X = 440;
+                    POINT_FOUR_Y = 80;
+                }else{
+
+                    POINT_ONE_X = 60;
+                    POINT_ONE_Y = 260;
+                    POINT_TWO_X = 180;
+                    POINT_TWO_Y = 210;
+                    POINT_THREE_X = 240;
+                    POINT_THREE_Y = 120;
+                    POINT_FOUR_X = 400;
+                    POINT_FOUR_Y = 80;
+                }
 
                 break;
 
@@ -273,13 +294,13 @@ public class FragmentButton extends Fragment implements View.OnClickListener {
             case 800:
 
                 POINT_ONE_X = 30;
-                POINT_ONE_Y = 190;
-                POINT_TWO_X = 110;
-                POINT_TWO_Y = 155;
+                POINT_ONE_Y = 170;
+                POINT_TWO_X = 115;
+                POINT_TWO_Y = 150;
                 POINT_THREE_X = 160;
-                POINT_THREE_Y = 90;
-                POINT_FOUR_X = 300;
-                POINT_FOUR_Y = 50;
+                POINT_THREE_Y = 70;
+                POINT_FOUR_X = 260;
+                POINT_FOUR_Y = 40;
 
                 break;
 

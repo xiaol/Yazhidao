@@ -13,9 +13,9 @@
 
     <!--新闻对应的4个大频道-->
     <array name="mFeedChannleNames">
-        <item>你未见的时代痛楚</item>
+        <item>你未见的时代冰点</item>
         <item>你不知道的冷新闻</item>
         <item>同步你的关注热度</item>
-        <item>触摸时下热点所在</item>
+        <item>触摸时下热点</item>
     </array>
 </resources>

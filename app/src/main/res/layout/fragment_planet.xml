@@ -6,7 +6,8 @@
     <com.news.yazhidao.UI.MyRelativeLayout
         android:id="@+id/rl_content"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        >
 
         <FrameLayout
             android:id="@+id/fl_animation_view"
@@ -47,8 +48,9 @@
             android:layout_height="match_parent"
             android:background="@color/news_list_bg"
             android:dividerHeight="10dp"
+            android:divider="#f3f3fa"
             android:clipToPadding="false"
-            android:paddingTop="10dp"
+            android:padding="10dp"
             />
 
     </com.news.yazhidao.UI.MyRelativeLayout>
