@@ -33,6 +33,7 @@ import com.news.yazhidao.pages.NewsFeedAdapter;
 import com.news.yazhidao.utils.DeviceInfoUtil;
 import com.news.yazhidao.utils.NetUtil;
 import com.news.yazhidao.utils.helper.UmengShareHelper;
+import com.umeng.analytics.MobclickAgent;
 import com.umeng.socialize.bean.SHARE_MEDIA;
 
 import java.util.HashMap;
@@ -376,7 +377,7 @@ public class FragmentButton extends Fragment implements View.OnClickListener {
                         // editor.putInt("paramsx", params.x);
                         // editor.putInt("paramsy", params.y);
                         // editor.commit();
-
+                        MyRelativeLayout.mTips.setVisibility(View.GONE);
                         if (startX > 0 && startX <= width * SECTION_ONE / STANDARD_WIDTH) {
                             //view.scrollTo(50, 320);
                             GlobalParams.params.x = (int) (POINT_ONE_X);
@@ -388,7 +389,7 @@ public class FragmentButton extends Fragment implements View.OnClickListener {
                             }
                             iv_section.setBackgroundResource(R.drawable.section11);
                             GlobalParams.currentPos = 0;
-
+                            MobclickAgent.onEvent(getActivity(), "sun_positon_1");
                         } else if (startX > width * SECTION_ONE / STANDARD_WIDTH && startX <= width * SECTION_TWO / STANDARD_WIDTH) {
                             GlobalParams.params.x = (int) (POINT_TWO_X);
                             GlobalParams.params.y = (int) (POINT_TWO_Y);
@@ -398,7 +399,7 @@ public class FragmentButton extends Fragment implements View.OnClickListener {
                             }
                             iv_section.setBackgroundResource(R.drawable.section22);
                             GlobalParams.currentPos = 1;
-
+                            MobclickAgent.onEvent(getActivity(), "sun_positon_2");
                         } else if (startX > width * SECTION_TWO / STANDARD_WIDTH && startX <= width * SECTION_THREE / STANDARD_WIDTH) {
                             GlobalParams.params.x = (int) (POINT_THREE_X);
                             GlobalParams.params.y = (int) (POINT_THREE_Y);
@@ -408,7 +409,7 @@ public class FragmentButton extends Fragment implements View.OnClickListener {
                             }
 
                             iv_section.setBackgroundResource(R.drawable.section33);
-
+                            MobclickAgent.onEvent(getActivity(), "sun_positon_3");
                             GlobalParams.currentPos = 2;
 
                         } else if (startX > width * SECTION_THREE / STANDARD_WIDTH && startX <= width) {
@@ -421,7 +422,7 @@ public class FragmentButton extends Fragment implements View.OnClickListener {
                             iv_section.setBackgroundResource(R.drawable.section44);
 
                             GlobalParams.currentPos = 3;
-
+                            MobclickAgent.onEvent(getActivity(), "sun_positon_4");
                         }
 
                         GlobalParams.manager.updateViewLayout(GlobalParams.view, GlobalParams.params);

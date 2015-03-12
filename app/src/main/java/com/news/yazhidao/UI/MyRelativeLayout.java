@@ -5,6 +5,7 @@ import android.util.AttributeSet;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewConfiguration;
+import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.view.animation.AlphaAnimation;
 import android.view.animation.Animation;
@@ -53,7 +54,7 @@ public class MyRelativeLayout extends RelativeLayout {
     private int currentScreen = MAIN_SCREEN;
     private boolean flag = false;
     private int view_height = 0;
-
+    public static View mTips;
     public MyRelativeLayout(Context context) {
         super(context);
         this.context = context;
@@ -94,7 +95,11 @@ public class MyRelativeLayout extends RelativeLayout {
 
         view_height = SECTION_VIEW_HEIGHT * width / STANDARD_WIDTH;
         layout.layout(0, 0, width, view_height);
-
+        mTips = layout.getChildAt(2);
+        FrameLayout.LayoutParams params = new FrameLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+        params.leftMargin= (int) (width*.60f);
+        params.topMargin= (int) (view_height*.33f);
+        mTips.setLayoutParams(params);
         View shadow =  this.getChildAt(0);
         shadow.layout(0, view_height- DensityUtil.dip2px(context,2.5f), width, view_height+ DensityUtil.dip2px(context,4.5f));
 

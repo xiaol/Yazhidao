@@ -23,11 +23,6 @@
             android:layout_width="match_parent"
             android:layout_height="240dp">
             <ImageView
-                android:layout_width="match_parent"
-                android:layout_height="4dp"
-                android:scaleType="fitXY"
-                android:src="@drawable/shadow_head" />
-            <ImageView
                 android:id="@+id/iv_section"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
@@ -41,7 +36,14 @@
                 android:layout_gravity="center"
                 android:background="@drawable/orbit"
                 />
-
+           <TextView
+               android:id="@+id/mTips"
+               android:layout_width="wrap_content"
+               android:layout_height="wrap_content"
+               android:text="拖拽太阳切换频道"
+               android:textColor="#869ec2"
+               android:textSize="16sp"
+               />
         </FrameLayout>
 
 

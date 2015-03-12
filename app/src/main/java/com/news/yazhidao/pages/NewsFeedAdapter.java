@@ -357,7 +357,7 @@ public class NewsFeedAdapter extends BaseAdapter {
             ImageLoaderHelper.getImageLoader(mContext).displayImage(element.imgUrl, mCellImage, ImageLoaderHelper.getOption());
         }
         mCellSourceSiteName.setText(element.sourceSiteName);
-        mCellTitle.setText(element.title);
+        mCellTitle.setText(TextUtil.trimBlankSpace(element.title));
         mCellTemperature.setText(TextUtil.convertTemp(mNewsFeed.root_alias));
         childView.setOnClickListener(listener);
         return childView;

@@ -203,7 +203,7 @@ public class NewsDetailAdapter extends BaseAdapter {
                 final TextView mCellPraiseTv= (TextView) relateViewItem.findViewById(R.id.mCellPraiseTv);
                 final View mCellImageWrapper=  relateViewItem.findViewById(R.id.mCellImageWrapper);
 
-                mCellTitle.setText(mElementArr.get(index).title);
+                mCellTitle.setText(TextUtil.trimBlankSpace(mElementArr.get(index).title));
                 mCellTemperature.setText(convertClassToTemp(mElementArr.get(index).RootClass));
                 mCellSourceSiteName.setText(mElementArr.get(index).sourceSiteName);
                 ImageLoaderHelper.dispalyImage(mContext, mElementArr.get(index).imgUrl, mCellImage);

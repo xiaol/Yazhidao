@@ -27,4 +27,13 @@ public class TextUtil {
         }
         return 0;
     }
+    public static String trimBlankSpace(String data){
+        if(data.contains("  ")){
+        int index=data.indexOf("  ");
+        StringBuilder before=new StringBuilder(data.replace("  ","").substring(0,index));
+        StringBuilder after=new StringBuilder(data.replace("  ","").substring(index));
+        return before+"  "+after;
+        }
+        return data;
+    }
 }
