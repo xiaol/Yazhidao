@@ -1,0 +1,159 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <RelativeLayout
+        android:id="@+id/rl_push"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="15dp"
+        android:padding="15dip">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="推送要闻"
+            android:textSize="15sp"
+            />
+
+
+        <ImageView
+            android:id="@+id/iv_push"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/btn_setting_switch_close"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="15dip" />
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/rl_fontsize"
+        android:layout_below="@+id/rl_push"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="15dp"
+        android:padding="15dip">
+
+        <TextView
+            android:id="@+id/tv_fontsize"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="15sp"
+            android:text="字体大小" />
+
+
+        <ImageView
+            android:id="@+id/iv_font"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/btn_arrow_toward_right"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="15dip" />
+
+        <TextView
+            android:layout_toLeftOf="@+id/iv_font"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="15sp"
+            android:text="正常大小"/>
+
+    </RelativeLayout>
+
+
+    <RelativeLayout
+        android:id="@+id/rl_wifi"
+        android:layout_below="@+id/rl_fontsize"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="15dp"
+        android:padding="15dip">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="仅WIFI网络下载图片"
+            android:textSize="15sp"
+            />
+
+
+        <ImageView
+            android:id="@+id/iv_wifi"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/btn_setting_switch_open"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="15dip" />
+
+    </RelativeLayout>
+
+
+    <RelativeLayout
+        android:id="@+id/rl_cache"
+        android:layout_below="@+id/rl_wifi"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="15dp"
+        android:padding="15dip">
+
+        <TextView
+            android:id="@+id/tv_cache"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="15sp"
+            android:text="清理缓存" />
+
+
+        <ImageView
+            android:id="@+id/iv_cache"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/btn_arrow_toward_right"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="15dip" />
+
+        <TextView
+            android:layout_toLeftOf="@+id/iv_cache"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="15sp"
+            android:text="0.7M"/>
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/rl_refresh"
+        android:layout_below="@+id/rl_cache"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="15dp"
+        android:padding="15dip">
+
+        <TextView
+            android:id="@+id/tv_refresh"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="15sp"
+            android:text="检查更新" />
+
+
+        <ImageView
+            android:id="@+id/iv_refresh"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/btn_arrow_toward_right"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="15dip" />
+
+        <TextView
+            android:layout_toLeftOf="@+id/iv_refresh"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="5dip"
+            android:textSize="15sp"
+            android:text="v1.0"/>
+
+    </RelativeLayout>
+
+</RelativeLayout>

@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#EFEFEF">
+
+        <TextView
+            android:id="@+id/tv_description"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="20dip"
+            android:text="快来定制你的"
+            android:textColor="#A5341F"
+            android:textSize="25dip" />
+
+        <TextView
+            android:id="@+id/tv_description2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/tv_description"
+            android:textColor="#A5341F"
+            android:layout_centerHorizontal="true"
+            android:text="36°专属频道"
+            android:textSize="25dip" />
+
+        <GridView
+            android:id="@+id/gv_channels"
+            android:layout_below="@id/tv_description2"
+            android:layout_width="match_parent"
+            android:layout_height="357dp"
+            android:layout_marginTop="30dip"
+            android:columnWidth="150dp"
+            android:numColumns="2"
+            android:verticalSpacing="10dp"
+            android:horizontalSpacing="10dp"
+            android:gravity="center"
+            android:layout_margin="20dp"
+            android:stretchMode="columnWidth" />
+
+        <LinearLayout
+            android:layout_below="@+id/gv_channels"
+            android:id="@+id/ll_config"
+            android:layout_width="match_parent"
+            android:layout_height="130dp"
+            android:background="@drawable/btn_sign_confirm"
+            android:layout_alignParentBottom="true"
+            android:orientation="horizontal" />
+
+
+    </RelativeLayout>
+</ScrollView>

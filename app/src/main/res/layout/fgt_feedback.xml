@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <TextView
+        android:id="@+id/tv_description"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="欢迎提需求和建议，我们的进步离不开您的反馈"
+        android:textSize="14sp"
+        android:layout_marginLeft="15dip"
+        android:layout_marginTop="15dip"
+        android:textColor="#000000" />
+
+    <EditText
+        android:id="@+id/et_email"
+        android:layout_below="@+id/tv_description"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="15dip"
+        android:layout_marginRight="15dip"
+        android:layout_marginTop="15dip"
+        android:gravity="top"
+        android:minLines="1"
+        android:paddingLeft="11dip"
+        android:paddingTop="9dip"
+        android:textSize="15sp"
+        android:background="@drawable/bg_feedback_contact_way"
+        android:hint="联系方式（email或者QQ号）"
+        android:textColorHint="#B0B0B0" />
+
+    <EditText
+        android:id="@+id/et_content"
+        android:layout_below="@+id/et_email"
+        android:layout_width="match_parent"
+        android:layout_marginLeft="15dip"
+        android:padding="5dp"
+        android:layout_marginTop="15dip"
+        android:layout_marginRight="15dp"
+        android:layout_height="wrap_content"
+        android:hint="反馈内容"
+        android:inputType="textMultiLine"
+        android:gravity="left|top"
+        android:background="@drawable/bg_feedback_contact_way"
+        android:minLines="6"
+        android:textColorHint="#B0B0B0" />
+
+    <TextView
+        android:layout_below="@+id/et_content"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:layout_marginTop="50dp"
+        android:background="@drawable/btn_leftmenu_feedback_commit"
+        android:layout_marginLeft="15dp"
+        android:layout_marginRight="15dp"
+        android:id="@+id/tv_commit" />
+
+</RelativeLayout>

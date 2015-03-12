@@ -3,7 +3,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="@drawable/list_table_bg_now"
+    android:background="@drawable/bg_feedstream_list_table"
     android:orientation="vertical">
 
     <RelativeLayout
@@ -32,7 +32,7 @@
                 android:layout_width="16dp"
                 android:layout_height="13dp"
                 android:layout_gravity="center"
-                android:src="@drawable/news_list_table_more" />
+                android:src="@drawable/ic_news_list_table_more" />
 
         </FrameLayout>
     </RelativeLayout>
@@ -43,7 +43,7 @@
         android:layout_marginBottom="10dp"
         android:layout_marginLeft="10dp"
         android:layout_marginRight="10dp"
-        android:src="@drawable/list_table_devider" />
+        android:src="@drawable/di_feedsteam_list_table" />
 
     <RelativeLayout
         android:id="@+id/mTableHeaderWrapper"
@@ -65,7 +65,7 @@
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
             android:gravity="center_vertical"
-            android:background="@drawable/news_list_table_main_title_bg"
+            android:background="@drawable/bg_news_list_table_main_title"
             android:ellipsize="end"
             android:lines="1"
             android:paddingLeft="10dp"
@@ -80,7 +80,7 @@
         android:layout_width="match_parent"
         android:layout_height="1px"
         android:layout_marginTop="10dp"
-        android:src="@drawable/list_table_devider" />
+        android:src="@drawable/di_feedsteam_list_table" />
     <LinearLayout android:id="@+id/mTableCellWrapper" android:layout_width="match_parent" android:layout_height="match_parent" android:orientation="vertical">
     </LinearLayout>
     <RelativeLayout
@@ -93,16 +93,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
-            android:src="@drawable/news_list_table_pull_down" />
+            android:src="@drawable/ic_news_list_table_pull_down" />
     </RelativeLayout>
 
-    <ImageView
-        android:layout_width="match_parent"
-        android:layout_height="4dp"
-        android:layout_alignParentBottom="true"
-        android:src="@drawable/news_list_table_shadow"
-        android:scaleType="fitXY"
-        android:visibility="gone"
-        />
 
 </LinearLayout>

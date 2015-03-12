@@ -18,7 +18,7 @@
             android:layout_gravity="center_vertical"
             android:layout_marginLeft="10dp"
             android:layout_marginRight="3dp"
-            android:src="@drawable/news_detail_relate" />
+            android:src="@drawable/ic_news_detail_relate" />
 
         <TextView
             android:layout_width="wrap_content"

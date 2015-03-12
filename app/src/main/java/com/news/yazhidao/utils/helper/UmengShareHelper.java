@@ -9,7 +9,7 @@ import android.text.TextUtils;
 import android.widget.Toast;
 
 import com.google.gson.reflect.TypeToken;
-import com.news.yazhidao.MyFragment.KitkatStatusBar;
+import com.news.yazhidao.pages.HomeAty;
 import com.news.yazhidao.R;
 import com.news.yazhidao.constant.CommonConstant;
 import com.news.yazhidao.constant.HttpConstant;
@@ -100,9 +100,9 @@ public class UmengShareHelper {
                             @Override
                             public void success(User user) {
 
-                                Logger.i(TAG, "login success " + user);
+                                Logger.i(TAG, "ic_guide_page3_login success " + user);
                                 if (user != null) {
-                                    Logger.i(TAG, "login success " + user.getSinaToken());
+                                    Logger.i(TAG, "ic_guide_page3_login success " + user.getSinaToken());
                                 }
                                 if (news != null) {
                                     shareToPlatform(mContext, news, SHARE_MEDIA.SINA);
@@ -113,7 +113,7 @@ public class UmengShareHelper {
                                     if(!isFirstLogin){
                                         mContext.sendBroadcast(new Intent(UserLoginAty.ACTION_USER_LOGIN));
                                     }else{
-                                        mContext.sendBroadcast(new Intent(KitkatStatusBar.ACTION_USER_LOGIN));
+                                        mContext.sendBroadcast(new Intent(HomeAty.ACTION_USER_LOGIN));
                                     }
 //                                    if(!TextUtils.isEmpty(isShareSinaId)||!isFirstLogin){
 //                                        mContext.sendBroadcast(new Intent(KitkatStatusBar.ACTION_USER_LOGIN));
@@ -125,13 +125,13 @@ public class UmengShareHelper {
 //                                    SettingHelper.save(CommonConstant.UserInfoConstant.SETTING_FILE,CommonConstant.UserInfoConstant.KEY_USER_LOGIN_SINA,user.getSinaId());
                                 }
                                 //TODO 保存用户信息并修改用户登陆的头像信息等
-                                UserDataManager.saveUser(user);
+                                UserDataHelper.saveUser(user);
                                 mProgressBar.dismiss();
                             }
 
                             @Override
                             public void failed(MyAppException exception) {
-                                Logger.e(TAG, "login failed " + exception.getMessage());
+                                Logger.e(TAG, "ic_guide_page3_login failed " + exception.getMessage());
                                 mProgressBar.dismiss();
                             }
                         }.setReturnType(new TypeToken<User>() {

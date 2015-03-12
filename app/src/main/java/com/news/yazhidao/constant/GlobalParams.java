@@ -5,7 +5,7 @@ import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 
-import com.news.yazhidao.MyFragment.KitkatStatusBar;
+import com.news.yazhidao.pages.HomeAty;
 
 import it.neokree.materialnavigationdrawer.elements.MaterialSection;
 
@@ -24,7 +24,7 @@ public class GlobalParams {
     public static boolean ONE_FLAG = false;
     public static boolean REFRESH_FLAG = false;
     public static boolean ADD_SUN_FLAG = false;
-    public static KitkatStatusBar mainSection = null;
+    public static HomeAty mainSection = null;
     public static ImageView iv_orbit = null;
     public static int currentPos = 3;
     public static int previousPos = 0;

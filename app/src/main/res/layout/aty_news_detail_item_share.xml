@@ -34,7 +34,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="bottom"
             android:layout_marginRight="5dp"
-            android:src="@drawable/news_list_table_detail_unpraised" />
+            android:src="@drawable/ic_news_list_table_detail_unpraised" />
 
         <TextView
             android:id="@+id/mNewsDetailPraiseTv"
@@ -60,7 +60,7 @@
             android:layout_height="20dp"
             android:layout_gravity="bottom"
             android:layout_marginLeft="18dp"
-            android:src="@drawable/news_detail_share" />
+            android:src="@drawable/ic_news_detail_share" />
 
     </FrameLayout>
 </RelativeLayout>

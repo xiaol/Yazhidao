@@ -78,7 +78,7 @@ activity#com.news.yazhidao.MyActivity.Settings
 ADDED from AndroidManifest.xml:26:9
 	android:name
 		ADDED from AndroidManifest.xml:26:19
-activity#com.news.yazhidao.pages.NewsDetailAty
+activity#com.news.yazhidao.pages.feed.NewsDetailAty
 ADDED from AndroidManifest.xml:27:9
 	android:screenOrientation
 		ADDED from AndroidManifest.xml:29:13
@@ -86,7 +86,7 @@ ADDED from AndroidManifest.xml:27:9
 		ADDED from AndroidManifest.xml:30:13
 	android:name
 		ADDED from AndroidManifest.xml:28:13
-activity#com.news.yazhidao.MyActivity.SignActivity
+activity#com.news.yazhidao.pages.SignActivity
 ADDED from AndroidManifest.xml:32:9
 	android:screenOrientation
 		ADDED from AndroidManifest.xml:34:13

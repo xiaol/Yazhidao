@@ -8,8 +8,6 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 
-import com.news.yazhidao.MyActivity.SignActivity;
-import com.news.yazhidao.MyFragment.KitkatStatusBar;
 import com.news.yazhidao.R;
 import com.news.yazhidao.common.BaseActivity;
 import com.news.yazhidao.constant.CommonConstant;
@@ -32,7 +30,7 @@ public class UserLoginAty extends BaseActivity implements View.OnClickListener {
         public void onReceive(Context context, Intent intent) {
             if (ACTION_USER_LOGIN.equals(intent.getAction())) {
                 UserLoginAty.this.finish();
-                startActivity(new Intent(UserLoginAty.this, SignActivity.class));
+                startActivity(new Intent(UserLoginAty.this, SignAty.class));
             }
         }
     }
@@ -85,13 +83,13 @@ public class UserLoginAty extends BaseActivity implements View.OnClickListener {
             boolean isLogin = UmengShareHelper.isAuthenticated(this, SHARE_MEDIA.SINA);
             if(isLogin){
                 UserLoginAty.this.finish();
-                startActivity(new Intent(UserLoginAty.this, SignActivity.class));
+                startActivity(new Intent(UserLoginAty.this, SignAty.class));
             }else{
                 UmengShareHelper.oAuthSina(this,null);
             }
         }else{
             UserLoginAty.this.finish();
-            startActivity(new Intent(this, KitkatStatusBar.class));
+            startActivity(new Intent(this, HomeAty.class));
         }
     }
 }

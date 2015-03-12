@@ -15,12 +15,12 @@
                 >
         </ListView>
         <FrameLayout android:id="@+id/mNewsDetailCilckRefresh" android:visibility="gone" android:layout_height="match_parent" android:layout_width="match_parent">
-            <ImageView android:layout_width="wrap_content" android:layout_height="wrap_content" android:src="@drawable/news_detail_empty" android:layout_gravity="center"/>
+            <ImageView android:layout_width="wrap_content" android:layout_height="wrap_content" android:src="@drawable/ic_news_detail_empty" android:layout_gravity="center"/>
         </FrameLayout>
         <LinearLayout android:id="@+id/mNewsDetailLoadingWrapper" android:layout_width="match_parent"
                       android:layout_height="match_parent" android:orientation="vertical"
                       android:layout_gravity="center" android:gravity="center" >
-            <ImageView android:id="@+id/mNewsLoadingImg" android:layout_width="80dp" android:layout_height="80dp"  android:background="@drawable/news_progress_animation_list"  />
+            <ImageView android:id="@+id/mNewsLoadingImg" android:layout_width="80dp" android:layout_height="80dp"  android:background="@drawable/list_news_progress_animation"  />
             <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="玩命加载中..."
                       android:textColor="@color/black" />
         </LinearLayout>
