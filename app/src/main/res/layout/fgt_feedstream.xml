@@ -1,68 +1,16 @@
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/news_list_bg"
-    >
+    android:background="@color/news_list_bg">
 
-
-    <com.news.yazhidao.widget.FeedStreamLayout
-        android:id="@+id/rl_content"
+    <com.news.yazhidao.widget.FeedStreamListView
+        android:id="@+id/mNewsShowList"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        >
-
-        <ImageView
-            android:id="@+id/iv_shadow"
-            android:layout_width="match_parent"
-            android:layout_height="5dp"
-            android:scaleType="fitXY"
-            android:src="@drawable/ic_animation_shadow_head" />
-
-        <FrameLayout
-            android:id="@+id/fl_animation_view"
-            android:layout_width="match_parent"
-            android:layout_height="240dp">
-            <ImageView
-                android:id="@+id/iv_section"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:background="@drawable/ic_feed_animation_scene44" />
-
-            <ImageView
-                android:id="@+id/iv_orbit"
-                android:layout_width="200dp"
-                android:layout_height="113dip"
-                android:layout_marginBottom="30dp"
-                android:layout_gravity="center"
-                android:background="@drawable/ic_feed_animation_orbit"
-                />
-           <TextView
-               android:id="@+id/mTips"
-               android:layout_width="wrap_content"
-               android:layout_height="wrap_content"
-               android:text="拖拽太阳切换频道"
-               android:textColor="#869ec2"
-               android:textSize="16sp"
-               />
-        </FrameLayout>
-
-
-
-
-        <com.news.yazhidao.widget.FeedStreamListView
-            android:id="@+id/mNewsShowList"
-            android:layout_below="@id/fl_animation_view"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:background="@color/news_list_bg"
-            android:dividerHeight="10dp"
-            android:divider="#f3f3fa"
-            android:clipToPadding="false"
-            android:padding="10dp"
-            />
-
-    </com.news.yazhidao.widget.FeedStreamLayout>
-
+        android:background="@color/news_list_bg"
+        android:dividerHeight="10dp"
+        android:divider="#f3f3fa"
+        android:clipToPadding="false" />
 
     <FrameLayout
         android:id="@+id/mNewsDetailCilckRefresh"

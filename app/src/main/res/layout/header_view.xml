@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/rl_content"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+
+    <FrameLayout
+        android:id="@+id/fl_animation_view"
+        android:layout_width="match_parent"
+        android:layout_height="240dp">
+
+        <ImageView
+            android:id="@+id/iv_section"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@drawable/ic_feed_animation_scene44" />
+
+        <ImageView
+            android:id="@+id/iv_orbit"
+            android:layout_width="200dp"
+            android:layout_height="113dip"
+            android:layout_gravity="center"
+            android:layout_marginBottom="30dp"
+            android:background="@drawable/ic_feed_animation_orbit" />
+
+        <TextView
+            android:id="@+id/mTips"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="拖拽太阳切换频道"
+            android:textColor="#869ec2"
+            android:visibility="gone"
+            android:textSize="16sp" />
+
+    </FrameLayout>
+
+    <ImageView
+        android:id="@+id/iv_shadow"
+        android:layout_below="@+id/fl_animation_view"
+        android:layout_width="match_parent"
+        android:layout_height="5dp"
+        android:scaleType="fitXY"
+        android:src="@drawable/ic_animation_shadow_head" />
+
+</RelativeLayout>
+

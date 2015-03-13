@@ -28,4 +28,6 @@ public class GlobalParams {
     public static ImageView iv_orbit = null;
     public static int currentPos = 3;
     public static int previousPos = 0;
+    public static int mInitPos;
+
 }
