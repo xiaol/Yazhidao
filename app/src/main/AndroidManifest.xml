@@ -114,6 +114,9 @@
         <activity
             android:name=".pages.SignAty"
             android:screenOrientation="portrait"></activity>
+        <activity
+            android:name=".pages.GuideAty"
+            android:screenOrientation="portrait"></activity>
     </application>
 
 </manifest>

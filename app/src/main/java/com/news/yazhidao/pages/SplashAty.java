@@ -52,7 +52,7 @@ public class SplashAty extends Activity {
             finish();
             overridePendingTransition(R.anim.animation_alpha_in, R.anim.animation_alpha_out);
         } else {
-            intent = new Intent(SplashAty.this, GuidePageAty.class);
+            intent = new Intent(SplashAty.this, GuideAty.class);
             startActivity(intent);
             finish();
             overridePendingTransition(R.anim.animation_alpha_in, R.anim.animation_alpha_out);
