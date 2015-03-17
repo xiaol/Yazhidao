@@ -9,11 +9,19 @@
         <item name="android:windowNoTitle">true</item>
     </style>
 
+    <style name="AnimationAlpha">
+
+        <!-- PopupWindow左右弹出的效果 -->
+        <item name="android:windowEnterAnimation">@anim/animation_alpha_in</item>
+        <item name="android:windowExitAnimation">@anim/animation_alpha_out</item>
+    </style>
+
+
     <!-- Custom Drawer Header -->
     <style name="CustomHeaderLight" parent="MaterialNavigationDrawerTheme.Light.DarkActionBar">
         <item name="colorPrimary">#8bc34a</item>
         <item name="colorPrimaryDark">#558b2f</item>
-        <item name="colorAccent">#FFFFFF</item>
+        <item name="colorAccent">#FFFFFF</item>;
         <item name="drawerType">2</item>
     </style>
     <!-- Light Themes-->
