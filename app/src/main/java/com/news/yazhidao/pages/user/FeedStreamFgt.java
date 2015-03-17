@@ -83,6 +83,7 @@ public class FeedStreamFgt extends Fragment implements View.OnClickListener {
     private View mNewsDetailCilckRefresh;
     private AnimationDrawable mAniNewsLoading;
     private RelativeLayout header_view;
+    private AbsListView.LayoutParams params;
     private TextView mTips;
 
     @Override
@@ -131,17 +132,20 @@ public class FeedStreamFgt extends Fragment implements View.OnClickListener {
         width = GlobalParams.manager.getDefaultDisplay().getWidth();
         height = GlobalParams.manager.getDefaultDisplay().getHeight();
 
+        params = new AbsListView.LayoutParams((int)(width * 0.97), AbsListView.LayoutParams.WRAP_CONTENT);
+
         //设置当前页面
         view = View.inflate(this.getActivity(), R.layout.fgt_feedstream, null);
         header_view = (RelativeLayout) View.inflate(this.getActivity(), R.layout.header_view, null);
+        header_view.setLayoutParams(params);
 
         iv_section = (ImageView) header_view.findViewById(R.id.iv_section);
         GlobalParams.iv_orbit = (ImageView) header_view.findViewById(R.id.iv_orbit);
         mTips = (TextView) header_view.findViewById(R.id.mTips);
-        RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-        params.leftMargin= (int) (width*.60f);
-        params.topMargin= (int) (iv_section.getMeasuredHeight()*.33f);
-        mTips.setLayoutParams(params);
+        RelativeLayout.LayoutParams params_tip = new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+        params_tip.leftMargin= (int) (width*.60f);
+        params_tip.topMargin= (int) (iv_section.getMeasuredHeight()*.33f);
+        mTips.setLayoutParams(params_tip);
 
         mNewsShowList = (FeedStreamListView) view.findViewById(R.id.mNewsShowList);
         mNewsShowList.setDividerHeight((int) (30 * 1.0 / 1080 * DeviceInfoUtil.getScreenHeight()));
@@ -157,9 +161,10 @@ public class FeedStreamFgt extends Fragment implements View.OnClickListener {
                     int firstVisiblePosition = mNewsShowList.getFirstVisiblePosition();
                     if(firstVisiblePosition == 0) {
                         int top = mNewsShowList.getChildAt(firstVisiblePosition).getTop();
-                        if(top <= 0 && top >= -110){
+                        if(top >= -110){
                             GlobalParams.view.setVisibility(View.VISIBLE);
                             GlobalParams.SUN_FLAG =true;
+                            GlobalParams.context.setGlobalFlag(true);
                         }
                     }
                 }
@@ -355,7 +360,7 @@ public class FeedStreamFgt extends Fragment implements View.OnClickListener {
         ((HomeAty) getActivity()).setGlobalView(GlobalParams.view);
         GlobalParams.mainSection = (HomeAty) getActivity();
         ((HomeAty) getActivity()).setGlobalFlag(true);
-
+        GlobalParams.context = (HomeAty) getActivity();
 
         flag = true;
         iv_section.setBackgroundResource(R.drawable.ic_feed_animation_scene44);

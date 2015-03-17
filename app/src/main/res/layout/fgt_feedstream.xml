@@ -8,7 +8,9 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@color/news_list_bg"
+        android:scrollbars="none"
         android:dividerHeight="10dp"
+        android:padding="5dp"
         android:divider="#f3f3fa"
         android:clipToPadding="false" />
 

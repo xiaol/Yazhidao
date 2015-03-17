@@ -8,12 +8,15 @@ import android.view.ViewConfiguration;
 import android.widget.ListView;
 
 import com.news.yazhidao.constant.GlobalParams;
+import com.news.yazhidao.pages.HomeAty;
 import com.news.yazhidao.pages.user.FeedStreamFgt;
 
 public class FeedStreamListView extends ListView {
 
     private int mMostRecentY;
     private int mTouchSlop;
+    private Context context;
+
 
 	public FeedStreamListView(Context context, AttributeSet attrs, int defStyle) {
 		super(context, attrs, defStyle);
@@ -22,6 +25,7 @@ public class FeedStreamListView extends ListView {
 
 	public FeedStreamListView(Context context, AttributeSet attrs) {
 		super(context, attrs);
+        this.context = context;
 		// TODO Auto-generated constructor stub
         mTouchSlop = ViewConfiguration.get(context).getScaledTouchSlop();
 	}
@@ -49,6 +53,8 @@ public class FeedStreamListView extends ListView {
                         GlobalParams.view.setVisibility(View.GONE);
                         GlobalParams.SUN_FLAG = false;
 
+                        GlobalParams.context.setGlobalFlag(false);
+
                     }else if(GlobalParams.params.y > GlobalParams.mInitPos){
                         switch (GlobalParams.currentPos){
                             case 0:
@@ -72,6 +78,8 @@ public class FeedStreamListView extends ListView {
 
                         GlobalParams.view.setVisibility(View.VISIBLE);
                         GlobalParams.SUN_FLAG = true;
+
+                        GlobalParams.context.setGlobalFlag(true);
 //                        GlobalParams.view.updateViewLayout(GlobalParams.view,GlobalParams.params);
                     }
 

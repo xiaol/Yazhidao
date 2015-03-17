@@ -45,7 +45,7 @@ public class NewsFeedAdapter extends BaseAdapter {
     private int width;
     private int height;
     private WindowManager manager;
-
+    private ViewGroup.LayoutParams params;
 
     public NewsFeedAdapter(Context mContext, NewsFeed mNewsFeed) {
         this.mContext = mContext;
@@ -58,6 +58,7 @@ public class NewsFeedAdapter extends BaseAdapter {
         manager = (WindowManager) mContext.getSystemService(Context.WINDOW_SERVICE);
         width = manager.getDefaultDisplay().getWidth();
         height = manager.getDefaultDisplay().getHeight();
+
 
         //Toast.makeText(mContext,"当前屏幕的高度是" + height + ",当前屏幕的宽度是：" + width,Toast.LENGTH_LONG).show();
     }
@@ -123,6 +124,7 @@ public class NewsFeedAdapter extends BaseAdapter {
             holder = (ViewHolder) convertView.getTag();
         }
         final LinearLayout layout = (LinearLayout) convertView;
+
         final ArrayList<NewsFeed.Element> elementList = mChannelsArr.get(position).elementList;
         //判断当前的view是否已经添加过两个view
         if (!mCacheAddedView.contains(layout.hashCode())) {
@@ -186,9 +188,6 @@ public class NewsFeedAdapter extends BaseAdapter {
                 holder.mTablePullDown.setVisibility(View.GONE);
 
                 setListViewHeight();
-
-
-
             }
         });
         return finalLayout;

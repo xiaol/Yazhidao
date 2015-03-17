@@ -182,6 +182,10 @@ public class HomeAty extends MaterialNavigationDrawer {
         MobclickAgent.onPause(this);
     }
 
+    public Context getContext(){
+        return HomeAty.this;
+    }
+
     @Override
     protected void onDestroy() {
         super.onDestroy();
