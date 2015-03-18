@@ -2407,7 +2407,7 @@ public class StaggeredGridView extends ViewGroup {
 
         // If we don't have any extra space, it will return one of the static state arrays,
         // and clearing the enabled state on those arrays is a bad thing!  If we specify
-        // we need extra space, it will create+copy into a new array that safely mutable.
+        // we need extra space, it will insert+copy into a new array that safely mutable.
         int[] state = super.onCreateDrawableState(extraSpace + 1);
         int enabledPos = -1;
         for (int i = state.length - 1; i >= 0; i--) {

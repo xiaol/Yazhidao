@@ -7,21 +7,23 @@ import java.util.ArrayList;
  * Created by fengjigang on 15/1/16.
  */
 public class NewsFeed {
-        public ArrayList<Channel> channels;
-        public String rc;
-        public String root_alias;
-        public String root_id;
-        public String root_name;
+    public ArrayList<Channel> channels;
+    public String rc;
+    public String root_alias;
+    public String root_id;
+    public String root_name;
 
-    public class Channel {
+    public static class Channel {
         public String channelAlias;
-        public int channelId;
+        public String channelId;
         public String channelName;
         public ArrayList<Element> elementList;
         public String lastUpdateTime;
     }
 
     public static class Element implements Serializable {
+        public int favorNum;
+        public int downNum;
         public String RootClass;
         public String RootName;
         public String channelName;

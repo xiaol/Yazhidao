@@ -18,16 +18,16 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import com.news.yazhidao.constant.GlobalParams;
 import com.news.yazhidao.R;
 import com.news.yazhidao.constant.CommonConstant;
+import com.news.yazhidao.constant.GlobalParams;
 import com.news.yazhidao.entity.NewsFeed;
 import com.news.yazhidao.net.request.UserPraiseNewsRequest;
 import com.news.yazhidao.utils.DeviceInfoUtil;
-import com.news.yazhidao.utils.helper.ImageLoaderHelper;
 import com.news.yazhidao.utils.Logger;
 import com.news.yazhidao.utils.TextUtil;
 import com.news.yazhidao.utils.ToastUtil;
+import com.news.yazhidao.utils.helper.ImageLoaderHelper;
 
 import java.util.ArrayList;
 import java.util.TreeSet;
@@ -47,26 +47,25 @@ public class NewsFeedAdapter extends BaseAdapter {
     private WindowManager manager;
 
 
-    public NewsFeedAdapter(Context mContext, NewsFeed mNewsFeed) {
+    public NewsFeedAdapter(Context mContext, final NewsFeed mNewsFeed) {
         this.mContext = mContext;
         this.mNewsFeed = mNewsFeed;
         this.mChannelsArr = new ArrayList<NewsFeed.Channel>();
         this.mCacheAddedView = new TreeSet<Integer>();
-        this.animation= AnimationUtils.loadAnimation(mContext, R.anim.news_praise_plus_one);
+        this.animation = AnimationUtils.loadAnimation(mContext, R.anim.news_praise_plus_one);
         handle(mNewsFeed);
 
         manager = (WindowManager) mContext.getSystemService(Context.WINDOW_SERVICE);
         width = manager.getDefaultDisplay().getWidth();
         height = manager.getDefaultDisplay().getHeight();
 
-        //Toast.makeText(mContext,"当前屏幕的高度是" + height + ",当前屏幕的宽度是：" + width,Toast.LENGTH_LONG).show();
     }
 
     private void handle(NewsFeed mNewsFeed) {
         ArrayList<NewsFeed.Channel> channels;
-        if(mNewsFeed.channels==null){
-            channels=new ArrayList<NewsFeed.Channel>();
-        }else {
+        if (mNewsFeed.channels == null) {
+            channels = new ArrayList<NewsFeed.Channel>();
+        } else {
             channels = mNewsFeed.channels;
         }
         if (channels != null) {
@@ -97,30 +96,36 @@ public class NewsFeedAdapter extends BaseAdapter {
     public View getView(final int position, View convertView, ViewGroup parent) {
         Logger.i(">>>", "getView " + position + " parent=" + parent);
 
-        if(mChannelsArr.size() == 1){
+        if (mChannelsArr.size() == 1) {
             GlobalParams.ONE_FLAG = true;
-        }else{
+        } else {
             GlobalParams.ONE_FLAG = false;
         }
 
         final ViewHolder holder;
         if (convertView == null) {
-            Logger.i(">>>","not reuse the convertView");
+            Logger.i(">>>", "not reuse the convertView");
             convertView = LayoutInflater.from(mContext).inflate(R.layout.aty_news_show_list_table, null);
             holder = new ViewHolder();
             holder.mTableChannelName = (TextView) convertView.findViewById(R.id.mTableChannelName);
             holder.mTableHeaderImg = (ImageView) convertView.findViewById(R.id.mTableHeaderImg);
-            holder.mTableHeaderImg.setLayoutParams(new RelativeLayout.LayoutParams((int) (DeviceInfoUtil.getScreenWidth()*0.96), (int) (DeviceInfoUtil.getScreenWidth()*0.95*0.555)));
+            holder.mTableHeaderImg.setLayoutParams(new RelativeLayout.LayoutParams((int) (DeviceInfoUtil.getScreenWidth() * 0.96), (int) (DeviceInfoUtil.getScreenWidth() * 0.95 * 0.555)));
             holder.mTableHeaderTitle = (TextView) convertView.findViewById(R.id.mTableHeaderTitle);
             holder.mTablePullDown = (RelativeLayout) convertView.findViewById(R.id.mTablePullDown);
             holder.mTableSetting = (FrameLayout) convertView.findViewById(R.id.mTableSetting);
             holder.mTableHeaderWrapper = (RelativeLayout) convertView.findViewById(R.id.mTableHeaderWrapper);
-            holder.mTableChannelNameWrapper =  convertView.findViewById(R.id.mTableChannelNameWrapper);
-            holder.mTableChannelNameWrapper.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, (int) (DeviceInfoUtil.getScreenHeight()*0.062)));
+            holder.mTableChannelNameWrapper = convertView.findViewById(R.id.mTableChannelNameWrapper);
+            holder.mTableChannelNameWrapper.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, (int) (DeviceInfoUtil.getScreenHeight() * 0.062)));
             convertView.setTag(holder);
         } else {
-            Logger.i(">>>","reused the convertView");
+            Logger.i(">>>", "reused the convertView");
             holder = (ViewHolder) convertView.getTag();
+        }
+        if(!holder.isPullDown){
+
+            holder.mTablePullDown.setVisibility(View.VISIBLE);
+        }else{
+            holder.mTablePullDown.setVisibility(View.GONE);
         }
         final LinearLayout layout = (LinearLayout) convertView;
         final ArrayList<NewsFeed.Element> elementList = mChannelsArr.get(position).elementList;
@@ -129,11 +134,11 @@ public class NewsFeedAdapter extends BaseAdapter {
             for (int index = 1; index <= 3; index++) {
                 NewsFeed.Element element = elementList.get(index);
                 final int finalIndex = index;
-                View childView=generateNewsCell(element,new View.OnClickListener() {
+                View childView = generateNewsCell(element, new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        Logger.i(TAG,"open news >> " + elementList.get(finalIndex).title);
-                        startNewsDetailPage(mChannelsArr.get(position).channelName,elementList.get(finalIndex));
+                        Logger.i(TAG, "open news >> " + elementList.get(finalIndex).title);
+                        startNewsDetailPage(mChannelsArr.get(position).channelName, elementList.get(finalIndex));
                     }
                 });
                 layout.addView(childView, layout.getChildCount() - 2);
@@ -149,13 +154,13 @@ public class NewsFeedAdapter extends BaseAdapter {
         holder.mTableSetting.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Logger.i(TAG,"onclik position " + position);
+                Logger.i(TAG, "onclik position " + position);
             }
         });
         holder.mTableHeaderWrapper.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Logger.i(TAG,"open news " + elementList.get(0).title);
+                Logger.i(TAG, "open news " + elementList.get(0).title);
                 startNewsDetailPage(mChannelsArr.get(position).channelName, elementList.get(0));
             }
         });
@@ -164,29 +169,29 @@ public class NewsFeedAdapter extends BaseAdapter {
         holder.mTablePullDown.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                holder.isPullDown=true;
                 if (elementList != null) {
                     for (int index = 4; index < elementList.size(); index++) {
                         NewsFeed.Element element = elementList.get(index);
                         final int finalIndex = index;
-                        LinearLayout childView=generateNewsCell(element,new View.OnClickListener() {
+                        LinearLayout childView = generateNewsCell(element, new View.OnClickListener() {
                             @Override
                             public void onClick(View v) {
-                                Logger.i(TAG,"open news >> " + elementList.get(finalIndex).title);
+                                Logger.i(TAG, "open news >> " + elementList.get(finalIndex).title);
                                 startNewsDetailPage(mChannelsArr.get(position).channelName, elementList.get(finalIndex));
                             }
                         });
                         //剔除卡片中最后一个item下面的线
-                        if(index==elementList.size()-1){
-                            childView.removeViewAt(childView.getChildCount()-1);
+                        if (index == elementList.size() - 1) {
+                            childView.removeViewAt(childView.getChildCount() - 1);
                         }
                         layout.addView(childView, layout.getChildCount() - 2);
                     }
                 }
-                Logger.i(TAG,"onclick pull down ");
+                Logger.i(TAG, "onclick pull down ");
                 holder.mTablePullDown.setVisibility(View.GONE);
 
                 setListViewHeight();
-
 
 
             }
@@ -246,31 +251,35 @@ public class NewsFeedAdapter extends BaseAdapter {
         public FrameLayout mTableSetting;
         public RelativeLayout mTableHeaderWrapper;
         public View mTableChannelNameWrapper;
+        public boolean isPullDown=false;
     }
 
     /**
      * 打开新闻详情页
+     *
      * @param channelName
      * @param element
      */
-    private void startNewsDetailPage(String channelName, NewsFeed.Element element){
-        Intent newsDetail=new Intent(mContext,NewsDetailAty.class);
-        newsDetail.putExtra(CommonConstant.KEY_NEWS_DETAIL,element);
-        newsDetail.putExtra(CommonConstant.KEY_NEWS_TITLE,channelName);
+    private void startNewsDetailPage(String channelName, NewsFeed.Element element) {
+        Intent newsDetail = new Intent(mContext, NewsDetailAty.class);
+        newsDetail.putExtra(CommonConstant.KEY_NEWS_DETAIL, element);
+        newsDetail.putExtra(CommonConstant.KEY_NEWS_TITLE, channelName);
         mContext.startActivity(newsDetail);
     }
+
     /**
      * 生成一个NewsCell 对象
+     *
      * @param element
      * @param listener
      * @return
      */
-    private LinearLayout generateNewsCell(final NewsFeed.Element element,View.OnClickListener listener){
+    private LinearLayout generateNewsCell(final NewsFeed.Element element, View.OnClickListener listener) {
         final LinearLayout childView = (LinearLayout) LayoutInflater.from(mContext).inflate(R.layout.aty_news_show_list_cell, null);
-        if(DeviceInfoUtil.getScreenWidth()<=480){
-            childView.setLayoutParams(new AbsListView.LayoutParams((int)(DeviceInfoUtil.getScreenWidth() * 0.95), (int) (DeviceInfoUtil.getScreenHeight() * 0.18)));
-        }else{
-            childView.setLayoutParams(new AbsListView.LayoutParams((int)(DeviceInfoUtil.getScreenWidth() * 0.95), (int) (DeviceInfoUtil.getScreenHeight() * 0.16)));
+        if (DeviceInfoUtil.getScreenWidth() <= 480) {
+            childView.setLayoutParams(new AbsListView.LayoutParams((int) (DeviceInfoUtil.getScreenWidth() * 0.95), (int) (DeviceInfoUtil.getScreenHeight() * 0.18)));
+        } else {
+            childView.setLayoutParams(new AbsListView.LayoutParams((int) (DeviceInfoUtil.getScreenWidth() * 0.95), (int) (DeviceInfoUtil.getScreenHeight() * 0.16)));
         }
         ImageView mCellImage = (ImageView) childView.findViewById(R.id.mCellImage);
         TextView mCellSourceSiteName = (TextView) childView.findViewById(R.id.mCellSourceSiteName);
@@ -328,7 +337,7 @@ public class NewsFeedAdapter extends BaseAdapter {
                 }
             }
         });
-        if(TextUtils.isEmpty(element.imgUrl)){
+        if (TextUtils.isEmpty(element.imgUrl)) {
             //不要删除，以后适配要用
 //            int screenWidth = DeviceInfoUtil.getScreenWidth();
 //            Paint mPaint=new Paint();
@@ -353,7 +362,7 @@ public class NewsFeedAdapter extends BaseAdapter {
 //                    childView.setLayoutParams(new AbsListView.LayoutParams(DeviceInfoUtil.getScreenWidth(), (int) (DeviceInfoUtil.getScreenHeight() * 0.15)));
 //                }
 //            }
-        }else{
+        } else {
             ImageLoaderHelper.getImageLoader(mContext).displayImage(element.imgUrl, mCellImage, ImageLoaderHelper.getOption());
         }
         mCellSourceSiteName.setText(element.sourceSiteName);

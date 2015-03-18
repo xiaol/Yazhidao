@@ -148,7 +148,7 @@ public class HomeAty extends MaterialNavigationDrawer {
         setProfileListener(listener);
         userphoto.setOnClickListener(listener);
 
-        //create sections
+        //insert sections
         GlobalParams.bar = this.getSupportActionBar();
 
         GlobalParams.section = newSection("主页", R.drawable.ic_slidemenu_homepage, new FeedStreamFgt()).setSectionColor(Color.parseColor("#FF7F66"));
@@ -159,7 +159,7 @@ public class HomeAty extends MaterialNavigationDrawer {
         this.addSection(newSection("意见反馈", R.drawable.ic_slidemenu_feedback, new FeedbackFgt()).setSectionColor(Color.parseColor("#FF7F66")));
         //this.addSection(newSection("我的36°", R.drawable.my36, new FeedbackButton()).setSectionColor(Color.parseColor("#FF7F66")));
 
-        // create bottom section
+        // insert bottom section
         //this.addBottomSection(newSection("Bottom Section",R.drawable.ic_settings_black_24dp,new Intent(this,Settings.class)));
 
         this.disableLearningPattern();

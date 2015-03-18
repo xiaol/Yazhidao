@@ -7,7 +7,6 @@ import android.graphics.drawable.AnimationDrawable;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
@@ -21,10 +20,9 @@ import android.widget.Toast;
 
 import com.google.gson.reflect.TypeToken;
 import com.news.yazhidao.R;
-import com.news.yazhidao.widget.FeedStreamListView;
-import com.news.yazhidao.widget.FeedStreamLayout;
 import com.news.yazhidao.constant.GlobalParams;
 import com.news.yazhidao.constant.HttpConstant;
+import com.news.yazhidao.database.DBHelper;
 import com.news.yazhidao.entity.NewsFeed;
 import com.news.yazhidao.net.JsonCallback;
 import com.news.yazhidao.net.MyAppException;
@@ -32,8 +30,11 @@ import com.news.yazhidao.net.NetworkRequest;
 import com.news.yazhidao.pages.HomeAty;
 import com.news.yazhidao.pages.feed.NewsFeedAdapter;
 import com.news.yazhidao.utils.DeviceInfoUtil;
+import com.news.yazhidao.utils.Logger;
 import com.news.yazhidao.utils.NetUtil;
 import com.news.yazhidao.utils.helper.UmengShareHelper;
+import com.news.yazhidao.widget.FeedStreamLayout;
+import com.news.yazhidao.widget.FeedStreamListView;
 import com.umeng.analytics.MobclickAgent;
 import com.umeng.socialize.bean.SHARE_MEDIA;
 
@@ -496,7 +497,7 @@ public class FeedStreamFgt extends Fragment implements View.OnClickListener {
 
     }
 
-    private void loadNewsData(final Context mContext, int newsModulePos) {
+    private void loadNewsData(final Context mContext, final int newsModulePos) {
 
         GlobalParams.LISTVIEW_HEIGHT = 0;
         GlobalParams.LISTVIEW_ERROR = 0;
@@ -509,11 +510,25 @@ public class FeedStreamFgt extends Fragment implements View.OnClickListener {
         params.put("uuid", DeviceInfoUtil.getUUID());
         request.getParams = params;
         request.setCallback(new JsonCallback<NewsFeed>() {
+            @Override
+            public NewsFeed preRequest() {
+                Long start=System.currentTimeMillis();
+                NewsFeed _NewsFeed = DBHelper.queryByRootId(newsModulePos);
+                Logger.e("consume time db query",System.currentTimeMillis()-start+"");
+                return _NewsFeed;
+            }
+
+            @Override
+            public NewsFeed postRequest(NewsFeed newsFeed) {
+                Long start=System.currentTimeMillis();
+                DBHelper.insert(newsFeed);
+                Logger.e("consume time db insert",System.currentTimeMillis()-start+"");
+                return super.postRequest(newsFeed);
+            }
 
             @Override
             public void success(NewsFeed result) {
-                Log.i(">>>" + TAG, result.toString());
-
+                Logger.i(">>>" + TAG, result.toString());
                 if (result != null) {
                     mNewsFeed = new NewsFeed();
                     mNewsFeedAdapter = new NewsFeedAdapter(mContext, mNewsFeed);
@@ -547,7 +562,7 @@ public class FeedStreamFgt extends Fragment implements View.OnClickListener {
             }
 
             public void failed(MyAppException exception) {
-                Log.i(">>>" + TAG, exception.getMessage());
+                Logger.i(">>>" + TAG, exception.getMessage());
             }
         }.setReturnType(new TypeToken<NewsFeed>() {
         }.getType()));
