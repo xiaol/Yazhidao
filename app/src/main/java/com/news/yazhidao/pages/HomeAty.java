@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.view.KeyEvent;
 import android.view.View;
 
 import com.news.yazhidao.pages.user.AboutFgt;
@@ -15,6 +16,7 @@ import com.news.yazhidao.pages.user.SettingFgt;
 import com.news.yazhidao.constant.GlobalParams;
 import com.news.yazhidao.R;
 import com.news.yazhidao.entity.User;
+import com.news.yazhidao.utils.ToastUtil;
 import com.news.yazhidao.utils.helper.DrawableHelper;
 import com.news.yazhidao.utils.helper.UmengShareHelper;
 import com.news.yazhidao.utils.helper.UserDataHelper;
@@ -37,6 +39,7 @@ public class HomeAty extends MaterialNavigationDrawer {
     private String username;
     private String profile;
     InputStream stream = null;
+    private long mLastPressedBackKeyTime;
     private BroRecUserLogin mBroRecUserLogin=new BroRecUserLogin();
 
     private class BroRecUserLogin extends BroadcastReceiver {
@@ -173,6 +176,22 @@ public class HomeAty extends MaterialNavigationDrawer {
         super.onResume();
         TCAgent.onResume(this);
         MobclickAgent.onResume(this);
+    }
+
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+
+        long pressedBackKeyTime = System.currentTimeMillis();
+        if ((pressedBackKeyTime - mLastPressedBackKeyTime) < 2000) {
+            finish();
+        } else {
+           ToastUtil.showToastWithIcon(getString(R.string.press_back_again_exit), R.drawable.release_time_logo);// (this, getString(R.string.press_back_again_exit));
+            //ToastUtil.toastLong(R.string.press_back_again_exit);
+        }
+        mLastPressedBackKeyTime = pressedBackKeyTime;
+
+
+        return true;
     }
 
     @Override

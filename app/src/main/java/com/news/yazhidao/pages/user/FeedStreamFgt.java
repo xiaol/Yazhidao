@@ -52,6 +52,7 @@ import it.neokree.materialnavigationdrawer.MaterialNavigationDrawer;
 
 /**
  * Created by berkley on 31/12/14.
+ * feed流主fragment
  */
 public class FeedStreamFgt extends Fragment implements View.OnClickListener {
     private static int STANDARD_WIDTH = 720;
@@ -252,13 +253,13 @@ public class FeedStreamFgt extends Fragment implements View.OnClickListener {
 
             case 1800:
 
-                POINT_ONE_X = -20;
-                POINT_ONE_Y = 340;
-                POINT_TWO_X = 250;
-                POINT_TWO_Y = 270;
+                POINT_ONE_X = 130;
+                POINT_ONE_Y = 300;
+                POINT_TWO_X = 280;
+                POINT_TWO_Y = 240;
                 POINT_THREE_X = 350;
                 POINT_THREE_Y = 130;
-                POINT_FOUR_X = 800;
+                POINT_FOUR_X = 550;
                 POINT_FOUR_Y = 70;
 
                 break;
@@ -609,7 +610,7 @@ public class FeedStreamFgt extends Fragment implements View.OnClickListener {
                         int height = metric.heightPixels; // 屏幕高度（像素）
                         GlobalParams.popup.setWidth(Integer.parseInt(new DecimalFormat("0").format(width)));
                         GlobalParams.popup.setHeight(Integer.parseInt(new DecimalFormat("0").format(height)));
-                        ColorDrawable dw = new ColorDrawable(0xb0000000);
+                        ColorDrawable dw = new ColorDrawable(0xd0000000);
                         //设置SelectPicPopupWindow弹出窗体的背景
                         GlobalParams.popup.setBackgroundDrawable(dw);
                         GlobalParams.popup.showAtLocation(view, Gravity.CENTER, 0, 0);
