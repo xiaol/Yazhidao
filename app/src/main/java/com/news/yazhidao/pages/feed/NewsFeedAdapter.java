@@ -45,9 +45,9 @@ public class NewsFeedAdapter extends BaseAdapter {
     private int width;
     private int height;
     private WindowManager manager;
+    private ViewGroup.LayoutParams params;
 
-
-    public NewsFeedAdapter(Context mContext, final NewsFeed mNewsFeed) {
+    public NewsFeedAdapter(Context mContext, NewsFeed mNewsFeed) {
         this.mContext = mContext;
         this.mNewsFeed = mNewsFeed;
         this.mChannelsArr = new ArrayList<NewsFeed.Channel>();
@@ -121,13 +121,8 @@ public class NewsFeedAdapter extends BaseAdapter {
             Logger.i(">>>", "reused the convertView");
             holder = (ViewHolder) convertView.getTag();
         }
-        if(!holder.isPullDown){
-
-            holder.mTablePullDown.setVisibility(View.VISIBLE);
-        }else{
-            holder.mTablePullDown.setVisibility(View.GONE);
-        }
         final LinearLayout layout = (LinearLayout) convertView;
+
         final ArrayList<NewsFeed.Element> elementList = mChannelsArr.get(position).elementList;
         //判断当前的view是否已经添加过两个view
         if (!mCacheAddedView.contains(layout.hashCode())) {
@@ -192,8 +187,6 @@ public class NewsFeedAdapter extends BaseAdapter {
                 holder.mTablePullDown.setVisibility(View.GONE);
 
                 setListViewHeight();
-
-
             }
         });
         return finalLayout;

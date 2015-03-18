@@ -94,6 +94,24 @@ public class DBHelper {
         }
     }
 
+    /**
+     * 判断该root_id 是否缓存到数据库中
+     * @param pRoot_id
+     * @return
+     */
+    public static boolean queryRootIsCache(int pRoot_id){
+        try {
+            return getDao(NewsRoot.class).queryForId(pRoot_id)!=null;
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
+    /**
+     * 根据 root_id 查询其对应的所有新闻
+     * @param pRoot_id
+     * @return
+     */
     public static NewsFeed queryByRootId(int pRoot_id) {
         //创建一个NewsFeed对象
         NewsFeed _NewsFeed = new NewsFeed();
