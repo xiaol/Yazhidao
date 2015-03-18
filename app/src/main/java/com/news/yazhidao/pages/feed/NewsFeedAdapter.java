@@ -186,54 +186,10 @@ public class NewsFeedAdapter extends BaseAdapter {
                 Logger.i(TAG, "onclick pull down ");
                 holder.mTablePullDown.setVisibility(View.GONE);
 
-                setListViewHeight();
             }
         });
         return finalLayout;
     }
-
-    private void setListViewHeight() {
-
-        switch (height) {
-
-            case 1920:
-
-                GlobalParams.LISTVIEW_ERROR += 1430;
-
-                break;
-
-            case 1800:
-                GlobalParams.LISTVIEW_ERROR += 1390;
-                break;
-
-            case 1776://nexus 5
-                GlobalParams.LISTVIEW_ERROR += 1300;
-                break;
-
-            case 1280:
-                GlobalParams.LISTVIEW_ERROR += 950;
-                break;
-
-            case 1184: //moto g
-                GlobalParams.LISTVIEW_ERROR += 870;
-                break;
-
-            case 800:
-                GlobalParams.LISTVIEW_ERROR += 570;
-                break;
-
-            case 854:
-                GlobalParams.LISTVIEW_ERROR += 570;
-                break;
-
-            default:
-                GlobalParams.LISTVIEW_ERROR += 950;
-                break;
-        }
-
-
-    }
-
 
     static class ViewHolder {
 

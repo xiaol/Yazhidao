@@ -10,8 +10,8 @@
     <string name="app_not_available">Sorry, there\'s no web browser available</string>
     <string name="mCellTitle">北京"单独二孩"申请3万,41岁以上人群41岁以上人群</string>
     <string name="news_detail_origin_and_time">来源：%1$s&#160;&#160; %2$s</string>
+    <string name="press_back_again_exit">再按一次退出应用</string>
     <string name="network_break_prompt">网络不给力</string>
-
     <!--新闻对应的4个大频道-->
     <array name="mFeedChannleNames">
         <item>你未见的时代冰点</item>

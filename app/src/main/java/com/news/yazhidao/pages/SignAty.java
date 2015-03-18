@@ -112,7 +112,11 @@ public class SignAty extends Activity {
             Bitmap bitmap = BitmapFactory.decodeResource(getResources(), ids[i]);
             image.setBitmap(bitmap);
             image.setName(names[i]);
-            image.setSelected(false);
+            if("涨姿势".equals(names[i]) || "懂生活".equals(names[i])){
+                image.setSelected(true);
+            }else {
+                image.setSelected(false);
+            }
 
             imageList.add(image);
         }

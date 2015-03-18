@@ -33,6 +33,7 @@
                 android:layout_width="16dp"
                 android:layout_height="13dp"
                 android:layout_gravity="center"
+                android:visibility="gone"
                 android:src="@drawable/ic_news_list_table_more" />
 
         </FrameLayout>
