@@ -29,7 +29,7 @@ public abstract class AbstractCallBack<T> implements com.news.yazhidao.net.ICall
     public T postRequest(T t) {
         return t;
     }
-
+    protected void asyncPostRequest(T t){}
     public int retryCount() {
         return 0;
     }

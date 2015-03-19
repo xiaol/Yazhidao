@@ -576,11 +576,10 @@ public class FeedStreamFgt extends Fragment implements View.OnClickListener {
             }
 
             @Override
-            public NewsFeed postRequest(NewsFeed newsFeed) {
+            protected void asyncPostRequest(NewsFeed newsFeed) {
                 Long start = System.currentTimeMillis();
                 DBHelper.insert(newsFeed);
                 Logger.e("consume time db insert", System.currentTimeMillis() - start + "");
-                return super.postRequest(newsFeed);
             }
 
             @Override

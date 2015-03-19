@@ -51,6 +51,14 @@ public class NetworkRequestTask extends AsyncTask<String, Integer, Object> {
                 } else {
                     result= request.callback.handle(response);
                 }
+                final Object finalResult = result;
+                new Thread(new Runnable() {
+                    @Override
+                    public void run() {
+                        //用于从网络获取到数据后，异步存储
+                        request.callback.asyncPostRequest(finalResult);
+                    }
+                }).start();
                 return request.callback.postRequest(result);
             } else {
                 return null;
