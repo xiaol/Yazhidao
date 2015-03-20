@@ -9,7 +9,6 @@ import android.text.TextUtils;
 import android.widget.Toast;
 
 import com.google.gson.reflect.TypeToken;
-import com.news.yazhidao.pages.HomeAty;
 import com.news.yazhidao.R;
 import com.news.yazhidao.constant.CommonConstant;
 import com.news.yazhidao.constant.HttpConstant;
@@ -18,7 +17,8 @@ import com.news.yazhidao.entity.User;
 import com.news.yazhidao.net.MyAppException;
 import com.news.yazhidao.net.NetworkRequest;
 import com.news.yazhidao.net.UserLoginCallBack;
-import com.news.yazhidao.pages.UserLoginAty;
+import com.news.yazhidao.pages.GuideAty;
+import com.news.yazhidao.pages.HomeAty;
 import com.news.yazhidao.utils.DeviceInfoUtil;
 import com.news.yazhidao.utils.Logger;
 import com.news.yazhidao.widget.ProgressDialogImpl;
@@ -58,9 +58,9 @@ public class UmengShareHelper {
     private static Handler mHandler = new Handler();
     private static ProgressDialogImpl mProgressBar;
 
-    public static void oAuthSina(final Context mContext, final NewsFeed.Element news) {
-        mController.getConfig().setSsoHandler(new SinaSsoHandler());
-        mController.doOauthVerify(mContext, SHARE_MEDIA.SINA, new SocializeListeners.UMAuthListener() {
+    public static void oAuthSina(final Context mContext, final NewsFeed.Element news,final SHARE_MEDIA platformName) {
+        configPlatforms((Activity)mContext,null);
+        mController.doOauthVerify(mContext, platformName, new SocializeListeners.UMAuthListener() {
             @Override
             public void onStart(SHARE_MEDIA platform) {
                 Toast.makeText(mContext, "授权开始", Toast.LENGTH_SHORT).show();
@@ -77,7 +77,7 @@ public class UmengShareHelper {
 
                     @Override
                     public void onStart() {
-                        mProgressBar= ProgressDialogImpl.show((Activity)mContext);
+//                        mProgressBar= ProgressDialogImpl.show((Activity)mContext);
                     }
 
                     @Override
@@ -86,13 +86,28 @@ public class UmengShareHelper {
                         Logger.i("auth "+platform,"key:"+entry.getKey()+",value="+entry.getValue());
                         }
                         HashMap<String, Object> params = new HashMap<String, Object>();
-                        params.put("uuid", DeviceInfoUtil.getUUID());
-                        params.put("sinaId", String.valueOf(value.get("uid")));
-                        params.put("sinaToken", String.valueOf(value.get("access_token")));
-                        params.put("sinaProfileImageUrl", value.get("profile_image_url"));
-                        params.put("gender", value.get("gender"));
-                        params.put("screenName", value.get("screen_name"));
-                        Logger.i("sina auth", value.toString());
+                        if(platform==SHARE_MEDIA.SINA) {
+                            params.put("uuid", DeviceInfoUtil.getUUID());
+                            params.put("id", String.valueOf(value.get("uid")));
+                            params.put("token", String.valueOf(value.get("access_token")));
+                            params.put("profileImageUrl", value.get("profile_image_url"));
+                            params.put("gender", value.get("gender"));
+                            params.put("screenName", value.get("screen_name"));
+                            params.put("type", platform.name());
+                            Logger.i("sina auth", value.toString());
+                        }else if(platform == SHARE_MEDIA.WEIXIN){
+                            params.put("uuid", DeviceInfoUtil.getUUID());
+                            params.put("gender", String.valueOf(value.get("sex")));
+                            params.put("screenName", value.get("nickname"));
+                            params.put("id", String.valueOf(value.get("unionid")));
+//                            params.put("province", value.get("province"));
+                            params.put("token",String.valueOf(value.get("openid")));
+//                            params.put("language",value.get("language"));
+                            params.put("profileImageUrl",value.get("headimgurl"));
+                            params.put("type", platform.name());
+//                            params.put("country", value.get("country"));
+//                            params.put("city",value.get("city"));
+                        }
                         NetworkRequest request = new NetworkRequest(HttpConstant.URL_USER_LOGIN, NetworkRequest.RequestMethod.GET);
                         request.getParams = params;
                         request.setCallback(new UserLoginCallBack<User>() {
@@ -102,16 +117,16 @@ public class UmengShareHelper {
 
                                 Logger.i(TAG, "ic_guide_page3_login success " + user);
                                 if (user != null) {
-                                    Logger.i(TAG, "ic_guide_page3_login success " + user.getSinaToken());
+                                    Logger.i(TAG, "ic_guide_page3_login success " + user.getToken());
                                 }
                                 if (news != null) {
-                                    shareToPlatform(mContext, news, SHARE_MEDIA.SINA);
+                                    shareToPlatform(mContext, news, platformName);
                                 } else {
                                     //说明在首定的时候没有登录
                                     String isShareSinaId=SettingHelper.get(CommonConstant.UserInfoConstant.SETTING_FILE,CommonConstant.UserInfoConstant.KEY_USER_LOGIN_SINA);
                                     boolean isFirstLogin=SettingHelper.getBoolean(CommonConstant.UserInfoConstant.SETTING_FILE,CommonConstant.UserInfoConstant.KEY_USER_FIRST_LOGIN_SINA);
                                     if(!isFirstLogin){
-                                        mContext.sendBroadcast(new Intent(UserLoginAty.ACTION_USER_LOGIN));
+                                        mContext.sendBroadcast(new Intent(GuideAty.ACTION_USER_LOGIN));
                                     }else{
                                         mContext.sendBroadcast(new Intent(HomeAty.ACTION_USER_LOGIN));
                                     }
@@ -126,13 +141,13 @@ public class UmengShareHelper {
                                 }
                                 //TODO 保存用户信息并修改用户登陆的头像信息等
                                 UserDataHelper.saveUser(user);
-                                mProgressBar.dismiss();
+//                                mProgressBar.dismiss();
                             }
 
                             @Override
                             public void failed(MyAppException exception) {
                                 Logger.e(TAG, "ic_guide_page3_login failed " + exception.getMessage());
-                                mProgressBar.dismiss();
+//                                mProgressBar.dismiss();
                             }
                         }.setReturnType(new TypeToken<User>() {
                         }.getType()));
@@ -186,7 +201,7 @@ public class UmengShareHelper {
     public static void shareSina(Context mContext, NewsFeed.Element news) {
         if (!isAuthenticated(mContext, SHARE_MEDIA.SINA)) {
             Toast.makeText(mContext, "新浪还未授权", Toast.LENGTH_SHORT).show();
-            oAuthSina(mContext, news);
+            oAuthSina(mContext, news,SHARE_MEDIA.SINA);
         } else {
             shareToPlatform(mContext, news, SHARE_MEDIA.SINA);
         }
@@ -234,7 +249,12 @@ public class UmengShareHelper {
             }
         }
         if (platform == SHARE_MEDIA.WEIXIN) {
-            return true;
+            String set = SettingHelper.get(CommonConstant.UserInfoConstant.SETTING_FILE, CommonConstant.UserInfoConstant.KEY_USER_ID);
+            if (OauthHelper.isAuthenticated(context, SHARE_MEDIA.WEIXIN) && set != null && !TextUtils.isEmpty(set)) {
+                return true;
+            } else {
+                return false;
+            }
         }
         if (platform == SHARE_MEDIA.WEIXIN_CIRCLE) {
             return true;
@@ -267,10 +287,9 @@ public class UmengShareHelper {
         RenrenSsoHandler renrenSsoHandler = new RenrenSsoHandler(mActivity,
                 "475057", "3bcdcc9fd39243caa4a383fbcd52386a",
                 "123b54fad3ce42ba816e5686f01bb62a");
-
         mController.getConfig().setSsoHandler(renrenSsoHandler);
         // 添加QQ、QZone平台
-        addQQQZonePlatform(mActivity, news);
+//        addQQQZonePlatform(mActivity, news);
 
         // 添加微信、微信朋友圈平台
         addWXPlatform(mActivity);

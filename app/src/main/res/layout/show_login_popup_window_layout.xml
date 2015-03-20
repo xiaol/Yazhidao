@@ -1,0 +1,149 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center"
+    android:clipChildren="false">
+
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_centerInParent="true">
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/login_bg"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:clipChildren="false"
+        android:clipToPadding="false">
+
+        <ImageView
+            android:id="@+id/login_sheet_bg"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/login_sheet_bg"
+            android:layout_centerInParent="true"
+            android:clipToPadding="false"
+
+            />
+
+        <com.news.yazhidao.widget.TextViewExtend
+            app:customFont="FZLTXHK.TTF"
+            android:id="@+id/login_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/new_gray"
+            android:textSize="@dimen/textsize_twenty"
+            android:text="@string/app_name"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="@dimen/common_padding_fifteen"
+            android:gravity="center"
+            android:background="@color/transparency" />
+
+
+        <com.news.yazhidao.widget.TextViewExtend
+            android:id="@+id/login_select"
+            app:customFont="FZLTXHK.TTF"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/bg_gray"
+            android:textSize="@dimen/textsize_fourteen"
+            android:text="登录"
+            android:layout_centerHorizontal="true"
+            android:layout_below="@id/login_title"
+            android:layout_marginTop="@dimen/common_padding_thirty_five"
+            android:gravity="center" />
+
+
+        <RelativeLayout
+            android:id="@+id/btn_login"
+            android:layout_width="@dimen/simple_button_width"
+            android:layout_height="@dimen/simple_button_height"
+            android:layout_alignTop="@id/login_select"
+            android:layout_marginTop="@dimen/common_padding_fourty"
+            android:layout_centerHorizontal="true"
+            android:background="@drawable/login_popup_button_bg">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_alignParentLeft="true"
+                android:layout_marginLeft="@dimen/common_padding_thirty" />
+
+            <com.news.yazhidao.widget.TextViewExtend
+                app:customFont="FZLTXHK.TTF"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/new_gray"
+                android:textSize="@dimen/textsize_twenty"
+                android:text="新浪"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="@dimen/common_padding_fifteen"
+                android:gravity="center"
+                android:layout_centerInParent="true" />
+        </RelativeLayout>
+
+
+        <RelativeLayout
+            android:id="@+id/btn_WXlogin"
+            android:layout_width="@dimen/simple_button_width"
+            android:layout_height="@dimen/simple_button_height"
+            android:layout_below="@id/btn_login"
+            android:layout_marginTop="@dimen/common_padding_twenty"
+            android:layout_centerHorizontal="true"
+            android:background="@drawable/login_popup_button_bg">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_alignParentLeft="true"
+                android:layout_marginLeft="@dimen/common_padding_thirty" />
+
+            <com.news.yazhidao.widget.TextViewExtend
+                app:customFont="FZLTXHK.TTF"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/new_gray"
+                android:textSize="@dimen/textsize_twenty"
+                android:text="微信"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="@dimen/common_padding_fifteen"
+                android:gravity="center"
+                android:layout_centerInParent="true" />
+        </RelativeLayout>
+
+
+        <com.news.yazhidao.widget.TextViewExtend
+            app:customFont="FZLTXHK.TTF"
+            android:id="@+id/btn_term_of_service"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/new_light_gray"
+            android:textSize="@dimen/textsize_fourteen"
+            android:text="服务条款"
+            android:layout_alignRight="@id/btn_WXlogin"
+            android:layout_below="@id/btn_WXlogin"
+            android:layout_marginTop="@dimen/common_padding_ten"
+            android:gravity="center" />
+
+        <ImageView
+            android:id="@+id/btn_cancel"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:clipChildren="false"
+            android:scaleType="center"
+            android:layout_gravity="center"
+            android:src="@drawable/guanbi_03"
+            android:layout_alignRight="@id/login_sheet_bg"
+            android:background="@drawable/black_round"
+            android:layout_marginRight="-20dp"
+            android:layout_marginTop="-20dp" />
+    </RelativeLayout>
+
+</RelativeLayout>

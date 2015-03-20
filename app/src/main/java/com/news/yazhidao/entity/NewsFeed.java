@@ -7,13 +7,13 @@ import java.util.ArrayList;
  * Created by fengjigang on 15/1/16.
  */
 public class NewsFeed {
-        public ArrayList<Channel> channels;
-        public String rc;
-        public String root_alias;
-        public String root_id;
-        public String root_name;
+    public ArrayList<Channel> channels;
+    public String rc;
+    public String root_alias;
+    public String root_id;
+    public String root_name;
 
-    public class Channel {
+    public static class Channel {
         public String channelAlias;
         public int channelId;
         public String channelName;
@@ -38,4 +38,5 @@ public class NewsFeed {
             return id + "," + channelName + "," + imgUrl + "," + sourceSiteName + "," + sourceUrl + "," + title + "," + updateTime;
         }
     }
+
 }

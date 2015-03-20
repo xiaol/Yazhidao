@@ -1,8 +1,9 @@
 package com.news.yazhidao.pages;
 
-import android.app.Activity;
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
+import android.content.IntentFilter;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.support.v4.view.PagerAdapter;
@@ -11,8 +12,14 @@ import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.Toast;
+
 import com.news.yazhidao.R;
+import com.news.yazhidao.common.BaseActivity;
+import com.news.yazhidao.constant.CommonConstant;
 import com.news.yazhidao.utils.CreateShut;
+import com.news.yazhidao.utils.DeviceInfoUtil;
+import com.news.yazhidao.utils.helper.SettingHelper;
 import com.news.yazhidao.utils.helper.UmengShareHelper;
 import com.news.yazhidao.widget.RoundedImageView;
 import com.news.yazhidao.widget.TextViewExtend;
@@ -22,7 +29,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 //第一次运行的引导页代码
-public class GuideAty extends Activity implements ViewPager.OnPageChangeListener,
+public class GuideAty extends BaseActivity implements ViewPager.OnPageChangeListener,
         View.OnClickListener {
 
     private ViewPager m_pViewPager;
@@ -32,11 +39,24 @@ public class GuideAty extends Activity implements ViewPager.OnPageChangeListener
     private ArrayList<View> m_pViews;
     private RoundedImageView[] m_pIndicators = null;
     private int[] m_pImages;
+    private boolean m_pbIsHaveWeiXin;
+    public static final String ACTION_USER_LOGIN="com.news.yazhidao.ACTION_USER_LOGIN";
+    private BroRecUserLogin mBroRecUserLogin=new BroRecUserLogin();
 
+    private class BroRecUserLogin extends BroadcastReceiver {
+
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            if (ACTION_USER_LOGIN.equals(intent.getAction())) {
+                GuideAty.this.finish();
+                startActivity(new Intent(GuideAty.this, SignAty.class));
+            }
+        }
+    }
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_welcome);
+        setContentView(R.layout.aty_guide);
         initVars();
         findViews();
         setListener();
@@ -48,11 +68,12 @@ public class GuideAty extends Activity implements ViewPager.OnPageChangeListener
         // 设置引导图片
         //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!  仅需在这设置图片 指示器和page自动添加
         m_pImages = new int[]{R.drawable.ic_guide_page1, R.drawable.ic_guide_page2,
-                R.drawable.ic_guide_page3, R.drawable.ic_guide_page3};
+                R.drawable.ic_guide_page3};
         m_pViews = new ArrayList<View>();
-                m_pIndicators = new RoundedImageView[m_pImages.length]; // 定义指示器数组大小
         m_pIndicators = new RoundedImageView[m_pImages.length]; // 定义指示器数组大小
         m_pIndicators = new RoundedImageView[m_pImages.length]; // 定义指示器数组大小
+        m_pIndicators = new RoundedImageView[m_pImages.length]; // 定义指示器数组大小
+        m_pbIsHaveWeiXin = DeviceInfoUtil.isHaveWeixin(this);
     }
 
     // 初始化视图
@@ -62,7 +83,7 @@ public class GuideAty extends Activity implements ViewPager.OnPageChangeListener
         m_pIndicatorLayout = (LinearLayout) findViewById(R.id.indicator);
         m_tvMain = (TextViewExtend) findViewById(R.id.main_textview);
         m_tvSina = (TextViewExtend) findViewById(R.id.login_sina_textView);
-        m_tvQQ = (TextViewExtend) findViewById(R.id.login_qq_textView);
+//        m_tvQQ = (TextViewExtend) findViewById(R.id.login_qq_textView);
         m_tvWeiXin = (TextViewExtend) findViewById(R.id.login_weixin_textView);
         for (int i = 0; i < m_pImages.length; i++) {
             // 循环加入图片
@@ -86,12 +107,12 @@ public class GuideAty extends Activity implements ViewPager.OnPageChangeListener
             m_pIndicators[i].setLayoutParams(lp);
             m_pIndicators[i].setBorderColor(getResources().getColor(R.color.news_list_table_channelname));
             if (i == 0) {/**/
-//                m_pIndicators[i].setBorderColor(getResources().getColor(R.color.new_yellow));
-                ColorDrawable dw = new ColorDrawable(getResources().getColor(R.color.white));
+                m_pIndicators[i].setBorderColor(getResources().getColor(R.color.news_list_table_channelname));
+                ColorDrawable dw = new ColorDrawable(getResources().getColor(R.color.news_list_table_channelname));
                 m_pIndicators[i].setImageDrawable(dw);
             } else {
-//                m_pIndicators[i].setBorderColor(getResources().getColor(R.color.new_yellow));
-                ColorDrawable dw = new ColorDrawable(getResources().getColor(R.color.news_list_table_channelname));
+                m_pIndicators[i].setBorderColor(getResources().getColor(R.color.news_list_table_channelname));
+                ColorDrawable dw = new ColorDrawable(getResources().getColor(R.color.white));
                 m_pIndicators[i].setImageDrawable(dw);
             }
 
@@ -104,7 +125,7 @@ public class GuideAty extends Activity implements ViewPager.OnPageChangeListener
         m_pViewPager.setOnPageChangeListener(this);
         m_tvMain.setOnClickListener(this);
         m_tvSina.setOnClickListener(this);
-        m_tvQQ.setOnClickListener(this);
+//        m_tvQQ.setOnClickListener(this);
         m_tvWeiXin.setOnClickListener(this);
     }
 
@@ -112,10 +133,10 @@ public class GuideAty extends Activity implements ViewPager.OnPageChangeListener
     @Override
     public void onClick(View v) {
         Intent intent;
-        SharedPreferences sp = getSharedPreferences("guide", 0);
-        SharedPreferences.Editor editor = sp.edit();
-        editor.putBoolean("isguide", true);
-        editor.commit();
+//        SharedPreferences sp = getSharedPreferences("guide", 0);
+//        SharedPreferences.Editor editor = sp.edit();
+//        editor.putBoolean("isguide", true);
+//        editor.commit();
         switch (v.getId()) {
             case R.id.main_textview:
                 intent = new Intent(GuideAty.this, HomeAty.class);
@@ -125,19 +146,53 @@ public class GuideAty extends Activity implements ViewPager.OnPageChangeListener
                 break;
             case R.id.login_sina_textView:
                 boolean isLogin = UmengShareHelper.isAuthenticated(this, SHARE_MEDIA.SINA);
-                if(isLogin){
+                if (isLogin) {
                     this.finish();
                     startActivity(new Intent(GuideAty.this, SignAty.class));
-                }else{
-                    UmengShareHelper.oAuthSina(this,null);
+                } else {
+                    UmengShareHelper.oAuthSina(this, null, SHARE_MEDIA.SINA);
                 }
                 overridePendingTransition(R.anim.animation_in, R.anim.animation_out);
                 break;
-            case R.id.login_qq_textView:
-                break;
+//            case R.id.login_qq_textView:
+//                LoginPopupWindow m_pPopWindow = new LoginPopupWindow(this);
+////                m_pPopWindow.setAnimationStyle(R.style.AnimationAlpha);
+//                m_pPopWindow.showAtLocation(getWindow().getDecorView(), Gravity.CENTER
+//                        | Gravity.CENTER, 0, 0);
+//                if (m_pbIsHaveWeiXin) {
+////                UmengShareHelper.oAuthSina(this,null,SHARE_MEDIA.QQ);
+//                } else {
+//                    Toast.makeText(this, "还没有安装QQ", Toast.LENGTH_SHORT).show();
+//                }
+//                break;
             case R.id.login_weixin_textView:
+                if (m_pbIsHaveWeiXin) {
+                    UmengShareHelper.oAuthSina(this, null, SHARE_MEDIA.WEIXIN);
+                } else {
+                    Toast.makeText(this, "还没有安装微信", Toast.LENGTH_SHORT).show();
+                }
                 break;
         }
+    }
+
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        IntentFilter filter=new IntentFilter();
+        filter.addAction(ACTION_USER_LOGIN);
+        registerReceiver(mBroRecUserLogin,filter);
+    }
+    @Override
+    public void finish() {
+        super.finish();
+        SettingHelper.save(CommonConstant.UserInfoConstant.SETTING_FILE, CommonConstant.UserInfoConstant.KEY_USER_FIRST_LOGIN_SINA, true);
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        unregisterReceiver(mBroRecUserLogin);
     }
 
     @Override
@@ -159,25 +214,25 @@ public class GuideAty extends Activity implements ViewPager.OnPageChangeListener
         if (arg0 == m_pIndicators.length - 1) {
             m_tvMain.setVisibility(View.VISIBLE);
             m_tvSina.setVisibility(View.VISIBLE);
-            m_tvQQ.setVisibility(View.VISIBLE);
+//            m_tvQQ.setVisibility(View.VISIBLE);
             m_tvWeiXin.setVisibility(View.VISIBLE);
         } else {
             m_tvMain.setVisibility(View.INVISIBLE);
             m_tvSina.setVisibility(View.INVISIBLE);
-            m_tvQQ.setVisibility(View.INVISIBLE);
+//            m_tvQQ.setVisibility(View.INVISIBLE);
             m_tvWeiXin.setVisibility(View.INVISIBLE);
         }
         // 更改指示器图片
         for (int i = 0; i < m_pIndicators.length; i++) {
             if (arg0 != i) {
                 Log.i("---", "LightGray" + i);
-//                m_pIndicators[i].setBorderColor(getResources().getColor(R.color.LightGray));
-                ColorDrawable dw1 = new ColorDrawable(getResources().getColor(R.color.news_list_table_channelname));
+                m_pIndicators[i].setBorderColor(getResources().getColor(R.color.news_list_table_channelname));
+                ColorDrawable dw1 = new ColorDrawable(getResources().getColor(R.color.white));
                 m_pIndicators[i].setImageDrawable(dw1);
             } else {
                 Log.i("---", "BGBlue" + i);
-//                m_pIndicators[i].setBorderColor(getResources().getColor(R.color.new_yellow));
-                ColorDrawable dw = new ColorDrawable(getResources().getColor(R.color.white));
+                m_pIndicators[i].setBorderColor(getResources().getColor(R.color.news_list_table_channelname));
+                ColorDrawable dw = new ColorDrawable(getResources().getColor(R.color.news_list_table_channelname));
                 m_pIndicators[i].setImageDrawable(dw);
             }
         }
@@ -214,5 +269,7 @@ public class GuideAty extends Activity implements ViewPager.OnPageChangeListener
             return views.get(position);
         }
     }
+
+
 }
 

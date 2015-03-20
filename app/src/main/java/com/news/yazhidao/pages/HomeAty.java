@@ -8,13 +8,13 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.view.View;
 
+import com.news.yazhidao.R;
+import com.news.yazhidao.constant.GlobalParams;
+import com.news.yazhidao.entity.User;
 import com.news.yazhidao.pages.user.AboutFgt;
 import com.news.yazhidao.pages.user.FeedStreamFgt;
 import com.news.yazhidao.pages.user.FeedbackFgt;
 import com.news.yazhidao.pages.user.SettingFgt;
-import com.news.yazhidao.constant.GlobalParams;
-import com.news.yazhidao.R;
-import com.news.yazhidao.entity.User;
 import com.news.yazhidao.utils.helper.DrawableHelper;
 import com.news.yazhidao.utils.helper.UmengShareHelper;
 import com.news.yazhidao.utils.helper.UserDataHelper;
@@ -73,7 +73,7 @@ public class HomeAty extends MaterialNavigationDrawer {
                     }
 
                 }else{
-                    UmengShareHelper.oAuthSina(HomeAty.this,null);
+                    UmengShareHelper.oAuthSina(HomeAty.this,null,SHARE_MEDIA.SINA);
 
                     GlobalParams.ADD_SUN_FLAG = false;
                 }
@@ -117,7 +117,7 @@ public class HomeAty extends MaterialNavigationDrawer {
     private void setSinaUserLogin() {
         account.setTitle(UserDataHelper.readUser().getScreenName());
         notifyAccountDataChanged();
-        String profile= UserDataHelper.readUser().getSinaProfileImageUrl();
+        String profile= UserDataHelper.readUser().getProfileImageUrl();
         if(profile != null && profile.length() > 0) {
             DrawableHelper.displayImage2Circle(getApplicationContext(), userphoto, profile);
         }
@@ -134,7 +134,7 @@ public class HomeAty extends MaterialNavigationDrawer {
             if(username == null){
                 username = "立即登录";
             }
-            profile = user.getSinaProfileImageUrl();
+            profile = user.getProfileImageUrl();
         }
 
         // add accounts

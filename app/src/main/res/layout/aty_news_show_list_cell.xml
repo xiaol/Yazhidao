@@ -5,15 +5,16 @@
     android:orientation="vertical">
 
     <LinearLayout
+        android:layout_weight="9"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:layout_margin="10dp"
         android:background="#33ffffff"
         android:orientation="horizontal">
 
         <RelativeLayout
             android:layout_width="0dp"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:layout_weight="9">
 
             <TextView
@@ -89,7 +90,7 @@
         <RelativeLayout
             android:id="@+id/mCellImageWrapper"
             android:layout_width="0dp"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:layout_marginLeft="16dp"
             android:layout_weight="5">
 
@@ -115,7 +116,20 @@
 
         </RelativeLayout>
     </LinearLayout>
+    <RelativeLayout
+        android:layout_weight="9"
+        android:visibility="gone"
+        android:id="@+id/mTablePullDown"
+        android:layout_width="match_parent"
+        android:layout_height="38dp"
+        android:orientation="vertical">
 
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:src="@drawable/ic_news_list_table_pull_down" />
+    </RelativeLayout>
     <ImageView
         android:layout_width="match_parent"
         android:layout_height="1px"
