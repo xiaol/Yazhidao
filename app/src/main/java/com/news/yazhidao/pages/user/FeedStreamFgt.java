@@ -367,7 +367,7 @@ public class FeedStreamFgt extends Fragment implements View.OnClickListener {
 
         ((HomeAty) getActivity()).setGlobalView(GlobalParams.view);
         GlobalParams.mainSection = (HomeAty) getActivity();
-        ((HomeAty) getActivity()).setGlobalFlag(true);
+        //((HomeAty) getActivity()).setGlobalFlag(true);
         GlobalParams.context = (HomeAty) getActivity();
 
         flag = true;
