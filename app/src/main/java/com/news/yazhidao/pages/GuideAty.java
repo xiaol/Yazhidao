@@ -71,8 +71,6 @@ public class GuideAty extends BaseActivity implements ViewPager.OnPageChangeList
                 R.drawable.ic_guide_page3};
         m_pViews = new ArrayList<View>();
         m_pIndicators = new RoundedImageView[m_pImages.length]; // 定义指示器数组大小
-        m_pIndicators = new RoundedImageView[m_pImages.length]; // 定义指示器数组大小
-        m_pIndicators = new RoundedImageView[m_pImages.length]; // 定义指示器数组大小
         m_pbIsHaveWeiXin = DeviceInfoUtil.isHaveWeixin(this);
     }
 
@@ -133,10 +131,7 @@ public class GuideAty extends BaseActivity implements ViewPager.OnPageChangeList
     @Override
     public void onClick(View v) {
         Intent intent;
-//        SharedPreferences sp = getSharedPreferences("guide", 0);
-//        SharedPreferences.Editor editor = sp.edit();
-//        editor.putBoolean("isguide", true);
-//        editor.commit();
+        SettingHelper.save(CommonConstant.UserInfoConstant.SETTING_FILE,CommonConstant.KEY_APP_GUIDE_VERSION,DeviceInfoUtil.getApkVersionCode(this));
         switch (v.getId()) {
             case R.id.main_textview:
                 intent = new Intent(GuideAty.this, HomeAty.class);

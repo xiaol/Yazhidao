@@ -1,7 +1,6 @@
 package com.news.yazhidao.widget;
 
 import android.content.Context;
-import android.content.Intent;
 import android.graphics.Paint;
 import android.graphics.drawable.ColorDrawable;
 import android.view.LayoutInflater;
@@ -16,7 +15,7 @@ import android.widget.RelativeLayout;
 import android.widget.Toast;
 
 import com.news.yazhidao.R;
-import com.news.yazhidao.pages.SignAty;
+import com.news.yazhidao.utils.DeviceInfoUtil;
 import com.news.yazhidao.utils.helper.UmengShareHelper;
 import com.umeng.socialize.bean.SHARE_MEDIA;
 
@@ -31,6 +30,7 @@ public class LoginPopupWindow extends PopupWindow {
     RelativeLayout m_pbtnLogin, m_pbtnWXLogin;
     private TextViewExtend m_pbtnTermOfService;
     ImageView m_pbtnCancel;
+    private boolean m_pbIsHaveWeiXin;
 
     public LoginPopupWindow(Context context) {
         super(context);
@@ -38,6 +38,7 @@ public class LoginPopupWindow extends PopupWindow {
         LayoutInflater inflater = (LayoutInflater) context
                 .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         mMenuView = inflater.inflate(R.layout.show_login_popup_window_layout, null);
+        m_pbIsHaveWeiXin = DeviceInfoUtil.isHaveWeixin(m_pContext);
         findViews();
         setListener();
     }
@@ -94,20 +95,14 @@ public class LoginPopupWindow extends PopupWindow {
         m_pbtnLogin.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
-                boolean isLogin = UmengShareHelper.isAuthenticated(m_pContext, SHARE_MEDIA.SINA);
-                if (isLogin) {
-                    m_pContext.startActivity(new Intent(m_pContext, SignAty.class));
-                } else {
-                    UmengShareHelper.oAuthSina(m_pContext, null, SHARE_MEDIA.SINA);
-                }
+                UmengShareHelper.oAuthSina(m_pContext, null, SHARE_MEDIA.SINA);
                 dismiss();
             }
         });
         m_pbtnWXLogin.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
-                boolean isLogin = UmengShareHelper.isAuthenticated(m_pContext, SHARE_MEDIA.WEIXIN);
-                if (isLogin) {
+                if (m_pbIsHaveWeiXin) {
                     UmengShareHelper.oAuthSina(m_pContext, null, SHARE_MEDIA.WEIXIN);
                 } else {
                     Toast.makeText(m_pContext, "还没有安装微信", Toast.LENGTH_SHORT).show();
