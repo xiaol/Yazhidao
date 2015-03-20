@@ -2,29 +2,32 @@ package com.news.yazhidao.pages.user;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.graphics.PixelFormat;
 import android.graphics.drawable.AnimationDrawable;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.util.Log;
+import android.util.DisplayMetrics;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
+import android.widget.AbsListView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.PopupWindow;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.google.gson.reflect.TypeToken;
 import com.news.yazhidao.R;
-import com.news.yazhidao.widget.FeedStreamListView;
-import com.news.yazhidao.widget.FeedStreamLayout;
 import com.news.yazhidao.constant.GlobalParams;
 import com.news.yazhidao.constant.HttpConstant;
+import com.news.yazhidao.database.DBHelper;
 import com.news.yazhidao.entity.NewsFeed;
 import com.news.yazhidao.net.JsonCallback;
 import com.news.yazhidao.net.MyAppException;
@@ -32,11 +35,16 @@ import com.news.yazhidao.net.NetworkRequest;
 import com.news.yazhidao.pages.HomeAty;
 import com.news.yazhidao.pages.feed.NewsFeedAdapter;
 import com.news.yazhidao.utils.DeviceInfoUtil;
+import com.news.yazhidao.utils.Logger;
 import com.news.yazhidao.utils.NetUtil;
+import com.news.yazhidao.utils.ToastUtil;
 import com.news.yazhidao.utils.helper.UmengShareHelper;
+import com.news.yazhidao.widget.FeedStreamLayout;
+import com.news.yazhidao.widget.FeedStreamListView;
 import com.umeng.analytics.MobclickAgent;
 import com.umeng.socialize.bean.SHARE_MEDIA;
 
+import java.text.DecimalFormat;
 import java.util.HashMap;
 
 import it.neokree.materialnavigationdrawer.MaterialNavigationDrawer;
@@ -44,17 +52,18 @@ import it.neokree.materialnavigationdrawer.MaterialNavigationDrawer;
 
 /**
  * Created by berkley on 31/12/14.
+ * feed流主fragment
  */
 public class FeedStreamFgt extends Fragment implements View.OnClickListener {
     private static int STANDARD_WIDTH = 720;
-    private static int POINT_ONE_X = 55;
-    private static int POINT_ONE_Y = 300;
-    private static int POINT_TWO_X = 220;
-    private static int POINT_TWO_Y = 250;
-    private static int POINT_THREE_X = 290;
-    private static int POINT_THREE_Y = 150;
-    private static int POINT_FOUR_X = 480;
-    private static int POINT_FOUR_Y = 105;
+    public static int POINT_ONE_X = 55;
+    public static int POINT_ONE_Y = 300;
+    public static int POINT_TWO_X = 220;
+    public static int POINT_TWO_Y = 250;
+    public static int POINT_THREE_X = 290;
+    public static int POINT_THREE_Y = 150;
+    public static int POINT_FOUR_X = 480;
+    public static int POINT_FOUR_Y = 105;
     private static int SECTION_ONE = 260;
     private static int SECTION_TWO = 380;
     private static int SECTION_THREE = 480;
@@ -80,6 +89,11 @@ public class FeedStreamFgt extends Fragment implements View.OnClickListener {
     private ImageView mNewsLoadingImg;
     private View mNewsDetailCilckRefresh;
     private AnimationDrawable mAniNewsLoading;
+    private RelativeLayout header_view;
+    private AbsListView.LayoutParams params;
+    private TextView mTips;
+    private SharedPreferences sp;
+    private Boolean first_flag;
 
     @Override
     public void onClick(View v) {
@@ -88,10 +102,9 @@ public class FeedStreamFgt extends Fragment implements View.OnClickListener {
             case R.id.mNewsDetailCilckRefresh:
 
                 if (NetUtil.checkNetWork(getActivity())) {
-
+                    GlobalParams.view.setVisibility(View.GONE);
                     //有网络的时候
                     mNewsDetailCilckRefresh.setVisibility(View.GONE);
-                    rl_content.setVisibility(View.GONE);
                     mNewsDetailLoadingWrapper.setVisibility(View.VISIBLE);
 
                     loadNewsData(getActivity(), GlobalParams.currentPos);
@@ -99,10 +112,9 @@ public class FeedStreamFgt extends Fragment implements View.OnClickListener {
                 } else {
                     //没有网络的时候
                     mNewsDetailCilckRefresh.setVisibility(View.VISIBLE);
-                    rl_content.setVisibility(View.GONE);
                     mNewsDetailLoadingWrapper.setVisibility(View.GONE);
-
-                    Toast.makeText(getActivity(), "网络异常，请检查您的网络....", Toast.LENGTH_LONG).show();
+                    ToastUtil.toastShort(R.string.network_break_prompt);
+                    mNewsShowList.setAdapter(null);
                 }
 
         }
@@ -129,14 +141,54 @@ public class FeedStreamFgt extends Fragment implements View.OnClickListener {
         width = GlobalParams.manager.getDefaultDisplay().getWidth();
         height = GlobalParams.manager.getDefaultDisplay().getHeight();
 
+        sp = getActivity().getSharedPreferences("first", Activity.MODE_PRIVATE);
+        first_flag = sp.getBoolean("first_flag", false);
+
+        params = new AbsListView.LayoutParams((int) (width * 0.97), AbsListView.LayoutParams.WRAP_CONTENT);
+
         //设置当前页面
         view = View.inflate(this.getActivity(), R.layout.fgt_feedstream, null);
+        header_view = (RelativeLayout) View.inflate(this.getActivity(), R.layout.header_view, null);
+        header_view.setLayoutParams(params);
 
-        rl_content = (FeedStreamLayout) view.findViewById(R.id.rl_content);
-        iv_section = (ImageView) view.findViewById(R.id.iv_section);
-        GlobalParams.iv_orbit = (ImageView) view.findViewById(R.id.iv_orbit);
+        iv_section = (ImageView) header_view.findViewById(R.id.iv_section);
+        GlobalParams.iv_orbit = (ImageView) header_view.findViewById(R.id.iv_orbit);
+        mTips = (TextView) header_view.findViewById(R.id.mTips);
+        RelativeLayout.LayoutParams params_tip = new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+        params_tip.leftMargin = (int) (width * .60f);
+        params_tip.topMargin = (int) (iv_section.getMeasuredHeight() * .33f);
+        mTips.setLayoutParams(params_tip);
+
         mNewsShowList = (FeedStreamListView) view.findViewById(R.id.mNewsShowList);
-        mNewsShowList.setDividerHeight((int)(30*1.0/1080*DeviceInfoUtil.getScreenHeight()));
+        mNewsShowList.setDividerHeight((int) (30 * 1.0 / 1080 * DeviceInfoUtil.getScreenHeight()));
+//        RelativeLayout.LayoutParams params1 = new RelativeLayout.LayoutParams(width, ViewGroup.LayoutParams.WRAP_CONTENT);
+//        header_view.setLayoutParams(params1);
+        mNewsShowList.addHeaderView(header_view);
+        mNewsShowList.setAdapter(null);//显示headerview
+
+        mNewsShowList.setOnScrollListener(new AbsListView.OnScrollListener() {
+            @Override
+            public void onScrollStateChanged(AbsListView view, int scrollState) {
+                if (scrollState == 0) {
+                    //当屏幕停止滚动时为0；当屏幕滚动且用户使用的触碰或手指还在屏幕上时为1；
+                    //由于用户的操作，屏幕产生惯性滑动时为2
+                    int firstVisiblePosition = mNewsShowList.getFirstVisiblePosition();
+                    if (firstVisiblePosition == 0) {
+                        int top = mNewsShowList.getChildAt(firstVisiblePosition).getTop();
+                        if (top >= -110) {
+                            GlobalParams.view.setVisibility(View.VISIBLE);
+                            GlobalParams.SUN_FLAG = true;
+                            GlobalParams.context.setGlobalFlag(true);
+                        }
+                    }
+                }
+            }
+
+            @Override
+            public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount) {
+
+            }
+        });
         mNewsLoadingImg = (ImageView) view.findViewById(R.id.mNewsLoadingImg);
         mNewsLoadingImg.setImageResource(R.drawable.list_news_progress_animation);
         mAniNewsLoading = (AnimationDrawable) mNewsLoadingImg.getDrawable();
@@ -145,11 +197,10 @@ public class FeedStreamFgt extends Fragment implements View.OnClickListener {
         mNewsDetailCilckRefresh = view.findViewById(R.id.mNewsDetailCilckRefresh);
         mNewsDetailCilckRefresh.setOnClickListener(this);
 
-        if (NetUtil.checkNetWork(getActivity())) {
 
+        if (NetUtil.checkNetWork(getActivity())) {
             //有网络的时候
             mNewsDetailCilckRefresh.setVisibility(View.GONE);
-            rl_content.setVisibility(View.GONE);
             mNewsDetailLoadingWrapper.setVisibility(View.VISIBLE);
             boolean isLogin = UmengShareHelper.isAuthenticated(getActivity(), SHARE_MEDIA.SINA);
             if (isLogin) {
@@ -160,26 +211,20 @@ public class FeedStreamFgt extends Fragment implements View.OnClickListener {
                 GlobalParams.currentPos = 3;
                 GlobalParams.previousPos = 3;
             }
-            if(MaterialNavigationDrawer.mCommonHeaderTitle!=null){
+            if (MaterialNavigationDrawer.mCommonHeaderTitle != null) {
                 MaterialNavigationDrawer.mCommonHeaderTitle.setText(getResources().getTextArray(R.array.mFeedChannleNames)[GlobalParams.currentPos]);
             }
             loadNewsData(getActivity(), GlobalParams.currentPos);
-
+        } else if (DBHelper.queryRootIsCache(GlobalParams.currentPos)) {
+            loadNewsData(getActivity(), GlobalParams.currentPos);
         } else {
             //没有网络的时候
             mNewsDetailCilckRefresh.setVisibility(View.VISIBLE);
-            rl_content.setVisibility(View.GONE);
             mNewsDetailLoadingWrapper.setVisibility(View.GONE);
-
-            Toast.makeText(getActivity(), "网络异常，请检查您的网络....", Toast.LENGTH_LONG).show();
+            ToastUtil.toastShort(R.string.network_break_prompt);
+            mNewsShowList.setAdapter(null);
         }
-
-
-        //mNewsDetailCilckRefresh.setTag(mNewsEle.sourceUrl);
-
-
         return view;
-
     }
 
     private void initView() {
@@ -206,13 +251,13 @@ public class FeedStreamFgt extends Fragment implements View.OnClickListener {
 
             case 1800:
 
-                POINT_ONE_X = -20;
-                POINT_ONE_Y = 340;
-                POINT_TWO_X = 250;
-                POINT_TWO_Y = 270;
+                POINT_ONE_X = 130;
+                POINT_ONE_Y = 300;
+                POINT_TWO_X = 280;
+                POINT_TWO_Y = 240;
                 POINT_THREE_X = 350;
                 POINT_THREE_Y = 130;
-                POINT_FOUR_X = 800;
+                POINT_FOUR_X = 550;
                 POINT_FOUR_Y = 70;
 
                 break;
@@ -233,7 +278,7 @@ public class FeedStreamFgt extends Fragment implements View.OnClickListener {
 
 
             case 1280:
-                if(width == 720) {
+                if (width == 720) {
                     POINT_ONE_X = 60;
                     POINT_ONE_Y = 260;
                     POINT_TWO_X = 180;
@@ -242,7 +287,7 @@ public class FeedStreamFgt extends Fragment implements View.OnClickListener {
                     POINT_THREE_Y = 120;
                     POINT_FOUR_X = 400;
                     POINT_FOUR_Y = 80;
-                }else if(width == 800){//1280*800
+                } else if (width == 800) {//1280*800
 
                     POINT_ONE_X = 90;
                     POINT_ONE_Y = 260;
@@ -252,7 +297,7 @@ public class FeedStreamFgt extends Fragment implements View.OnClickListener {
                     POINT_THREE_Y = 130;
                     POINT_FOUR_X = 440;
                     POINT_FOUR_Y = 80;
-                }else{
+                } else {
 
                     POINT_ONE_X = 60;
                     POINT_ONE_Y = 260;
@@ -312,18 +357,18 @@ public class FeedStreamFgt extends Fragment implements View.OnClickListener {
 
     private void showView() {
 
-        //设置全局参数
-        if(GlobalParams.view == null) {
-            GlobalParams.view = (LinearLayout) View.inflate(getActivity(), R.layout.feedstream_sun, null);
+//设置全局参数
+        if (GlobalParams.view == null) {
+            GlobalParams.view = (LinearLayout) View.inflate(getActivity(), R.layout.view_sun, null);
         }
 
         TextView iv = (TextView) GlobalParams.view.findViewById(R.id.iv_sun);
-        iv.setBackgroundResource(R.drawable.ic_feedstream_sun);
+        iv.setBackgroundResource(R.drawable.sun);
 
         ((HomeAty) getActivity()).setGlobalView(GlobalParams.view);
         GlobalParams.mainSection = (HomeAty) getActivity();
-        ((HomeAty) getActivity()).setGlobalFlag(true);
-
+        //((HomeAty) getActivity()).setGlobalFlag(true);
+        GlobalParams.context = (HomeAty) getActivity();
 
         flag = true;
         iv_section.setBackgroundResource(R.drawable.ic_feed_animation_scene44);
@@ -336,6 +381,9 @@ public class FeedStreamFgt extends Fragment implements View.OnClickListener {
 
             @Override
             public boolean onTouch(View v, MotionEvent event) {
+
+                first_flag = sp.getBoolean("first_flag", false);
+
                 switch (event.getAction()) {
                     case MotionEvent.ACTION_DOWN:// 手指按下屏幕 第一次接触屏幕
                         startX = (int) event.getRawX();
@@ -374,18 +422,16 @@ public class FeedStreamFgt extends Fragment implements View.OnClickListener {
                         break;
 
                     case MotionEvent.ACTION_UP:// 手指离开屏幕一瞬间对应的动作
-                        // Editor editor = sp.edit();
-                        // editor.putInt("paramsx", params.x);
-                        // editor.putInt("paramsy", params.y);
-                        // editor.commit();
-                        FeedStreamLayout.mTips.setVisibility(View.GONE);
+                        mTips.setVisibility(View.GONE);
                         if (startX > 0 && startX <= width * SECTION_ONE / STANDARD_WIDTH) {
                             //view.scrollTo(50, 320);
                             GlobalParams.params.x = (int) (POINT_ONE_X);
                             GlobalParams.params.y = (int) (POINT_ONE_Y);
 
+                            GlobalParams.mInitPos = GlobalParams.params.y;
+
                             //太阳变动位置时，修改自定义actionbar的title
-                            if(MaterialNavigationDrawer.mCommonHeaderTitle!=null){
+                            if (MaterialNavigationDrawer.mCommonHeaderTitle != null) {
                                 MaterialNavigationDrawer.mCommonHeaderTitle.setText(getResources().getTextArray(R.array.mFeedChannleNames)[0]);
                             }
                             iv_section.setBackgroundResource(R.drawable.ic_feed_animation_scene1);
@@ -395,7 +441,9 @@ public class FeedStreamFgt extends Fragment implements View.OnClickListener {
                             GlobalParams.params.x = (int) (POINT_TWO_X);
                             GlobalParams.params.y = (int) (POINT_TWO_Y);
 
-                            if(MaterialNavigationDrawer.mCommonHeaderTitle!=null){
+                            GlobalParams.mInitPos = GlobalParams.params.y;
+
+                            if (MaterialNavigationDrawer.mCommonHeaderTitle != null) {
                                 MaterialNavigationDrawer.mCommonHeaderTitle.setText(getResources().getTextArray(R.array.mFeedChannleNames)[1]);
                             }
                             iv_section.setBackgroundResource(R.drawable.ic_feed_animation_scene2);
@@ -405,7 +453,9 @@ public class FeedStreamFgt extends Fragment implements View.OnClickListener {
                             GlobalParams.params.x = (int) (POINT_THREE_X);
                             GlobalParams.params.y = (int) (POINT_THREE_Y);
 
-                            if(MaterialNavigationDrawer.mCommonHeaderTitle!=null){
+                            GlobalParams.mInitPos = GlobalParams.params.y;
+
+                            if (MaterialNavigationDrawer.mCommonHeaderTitle != null) {
                                 MaterialNavigationDrawer.mCommonHeaderTitle.setText(getResources().getTextArray(R.array.mFeedChannleNames)[2]);
                             }
 
@@ -417,7 +467,9 @@ public class FeedStreamFgt extends Fragment implements View.OnClickListener {
                             GlobalParams.params.x = (int) (POINT_FOUR_X);
                             GlobalParams.params.y = (int) (POINT_FOUR_Y);
 
-                            if(MaterialNavigationDrawer.mCommonHeaderTitle!=null){
+                            GlobalParams.mInitPos = GlobalParams.params.y;
+
+                            if (MaterialNavigationDrawer.mCommonHeaderTitle != null) {
                                 MaterialNavigationDrawer.mCommonHeaderTitle.setText(getResources().getTextArray(R.array.mFeedChannleNames)[3]);
                             }
                             iv_section.setBackgroundResource(R.drawable.ic_feed_animation_scene44);
@@ -427,19 +479,26 @@ public class FeedStreamFgt extends Fragment implements View.OnClickListener {
                         }
 
                         GlobalParams.manager.updateViewLayout(GlobalParams.view, GlobalParams.params);
+
+                        //popupwindow消失
+                        if (GlobalParams.popup != null && GlobalParams.popup.isShowing()) {
+                            GlobalParams.popup.dismiss();
+                        }
+
                         if (NetUtil.checkNetWork(getActivity())) {
                             //有网络的时候
-                            if(GlobalParams.currentPos != GlobalParams.previousPos) {
+                            if (GlobalParams.currentPos != GlobalParams.previousPos) {
                                 GlobalParams.previousPos = GlobalParams.currentPos;
                                 loadNewsData(getActivity(), GlobalParams.currentPos);
                             }
+                        } else if (DBHelper.queryRootIsCache(GlobalParams.currentPos)) {
+                            loadNewsData(getActivity(), GlobalParams.currentPos);
                         } else {
                             //没有网络的时候
                             mNewsDetailCilckRefresh.setVisibility(View.VISIBLE);
-                            rl_content.setVisibility(View.GONE);
                             mNewsDetailLoadingWrapper.setVisibility(View.GONE);
-                            Toast.makeText(getActivity(), "网络异常，请检查您的网络....", Toast.LENGTH_LONG).show();
-                            GlobalParams.view.setVisibility(View.GONE);
+                            ToastUtil.toastShort(R.string.network_break_prompt);
+                            mNewsShowList.setAdapter(null);
                         }
 
                         break;
@@ -470,7 +529,7 @@ public class FeedStreamFgt extends Fragment implements View.OnClickListener {
             GlobalParams.params.y = POINT_FOUR_Y;
         }
 
-
+        GlobalParams.mInitPos = GlobalParams.params.y;
         // 土司的宽高
         GlobalParams.params.height = (int) (SUN_WIDTH * width / STANDARD_WIDTH);
         //GlobalParams.params.height = 270;
@@ -483,20 +542,19 @@ public class FeedStreamFgt extends Fragment implements View.OnClickListener {
         GlobalParams.params.format = PixelFormat.TRANSLUCENT;
         GlobalParams.params.type = WindowManager.LayoutParams.TYPE_PRIORITY_PHONE;//
         // 改用电话优先级的窗体类型，这种类型可以相应触摸事件。
-        if(!GlobalParams.ADD_SUN_FLAG) {
+        if (!GlobalParams.ADD_SUN_FLAG) {
             GlobalParams.manager.addView(GlobalParams.view, GlobalParams.params);
             GlobalParams.ADD_SUN_FLAG = true;
         }
 
-        if(GlobalParams.DELETE_FLAG) {
+        if (GlobalParams.DELETE_FLAG) {
             GlobalParams.manager.addView(GlobalParams.view, GlobalParams.params);
             GlobalParams.DELETE_FLAG = false;
         }
 
-
     }
 
-    private void loadNewsData(final Context mContext, int newsModulePos) {
+    private void loadNewsData(final Context mContext, final int newsModulePos) {
 
         GlobalParams.LISTVIEW_HEIGHT = 0;
         GlobalParams.LISTVIEW_ERROR = 0;
@@ -509,11 +567,24 @@ public class FeedStreamFgt extends Fragment implements View.OnClickListener {
         params.put("uuid", DeviceInfoUtil.getUUID());
         request.getParams = params;
         request.setCallback(new JsonCallback<NewsFeed>() {
+            @Override
+            public NewsFeed preRequest() {
+                Long start = System.currentTimeMillis();
+                NewsFeed _NewsFeed = DBHelper.queryByRootId(newsModulePos);
+                Logger.e("consume time db query", System.currentTimeMillis() - start + "");
+                return _NewsFeed;
+            }
+
+            @Override
+            protected void asyncPostRequest(NewsFeed newsFeed) {
+                Long start = System.currentTimeMillis();
+                DBHelper.insert(newsFeed);
+                Logger.e("consume time db insert", System.currentTimeMillis() - start + "");
+            }
 
             @Override
             public void success(NewsFeed result) {
-                Log.i(">>>" + TAG, result.toString());
-
+                Logger.i(">>>" + TAG, result.toString());
                 if (result != null) {
                     mNewsFeed = new NewsFeed();
                     mNewsFeedAdapter = new NewsFeedAdapter(mContext, mNewsFeed);
@@ -526,8 +597,7 @@ public class FeedStreamFgt extends Fragment implements View.OnClickListener {
                     mNewsDetailLoadingWrapper.setVisibility(View.GONE);
                     mAniNewsLoading.stop();
                     mNewsDetailCilckRefresh.setVisibility(View.GONE);
-                    rl_content.setVisibility(View.VISIBLE);
-
+                    GlobalParams.view.setVisibility(View.VISIBLE);
                     GlobalParams.iv_orbit.setVisibility(View.GONE);
 
                     if (GlobalParams.view == null) {
@@ -540,14 +610,37 @@ public class FeedStreamFgt extends Fragment implements View.OnClickListener {
 
                     GlobalParams.REFRESH_FLAG = false;
 
+                    if (!first_flag) {
+                        if (GlobalParams.popup == null) {
+                            GlobalParams.popup = new PopupWindow(getActivity());
+                        }
+                        View popView = LayoutInflater.from(getActivity()).inflate(R.layout.dialog_mask, null);
+                        GlobalParams.popup.setContentView(popView);
+                        GlobalParams.popup.setFocusable(true);
+                        DisplayMetrics metric = new DisplayMetrics();
+                        GlobalParams.manager.getDefaultDisplay().getMetrics(metric);
+                        int width = metric.widthPixels; // 屏幕宽度（像素）
+                        int height = metric.heightPixels; // 屏幕高度（像素）
+                        GlobalParams.popup.setWidth(Integer.parseInt(new DecimalFormat("0").format(width)));
+                        GlobalParams.popup.setHeight(Integer.parseInt(new DecimalFormat("0").format(height)));
+                        ColorDrawable dw = new ColorDrawable(0xd0000000);
+                        //设置SelectPicPopupWindow弹出窗体的背景
+                        GlobalParams.popup.setBackgroundDrawable(dw);
+                        GlobalParams.popup.showAtLocation(view, Gravity.CENTER, 0, 0);
+
+                        SharedPreferences.Editor editor = sp.edit();
+                        editor.putBoolean("first_flag", true);
+                        editor.commit();
+                    }
+
                 } else {
-                    Toast.makeText(mContext, "网络异常，请查看网络...", Toast.LENGTH_SHORT).show();
+                    ToastUtil.toastShort(R.string.network_break_prompt);
                 }
 
             }
 
             public void failed(MyAppException exception) {
-                Log.i(">>>" + TAG, exception.getMessage());
+                Logger.i(">>>" + TAG, exception.getMessage());
             }
         }.setReturnType(new TypeToken<NewsFeed>() {
         }.getType()));
@@ -571,7 +664,7 @@ public class FeedStreamFgt extends Fragment implements View.OnClickListener {
     public void onResume() {
         super.onResume();
 
-        if(!GlobalParams.ADD_SUN_FLAG) {
+        if (!GlobalParams.ADD_SUN_FLAG) {
             initView();
         }
 

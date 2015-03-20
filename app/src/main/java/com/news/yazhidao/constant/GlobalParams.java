@@ -1,9 +1,11 @@
 package com.news.yazhidao.constant;
 
+import android.content.Context;
 import android.support.v4.app.Fragment;
 import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.PopupWindow;
 
 import com.news.yazhidao.pages.HomeAty;
 
@@ -17,6 +19,7 @@ public class GlobalParams {
     public static WindowManager.LayoutParams params;
     public static int LISTVIEW_HEIGHT = 0;
     public static int LISTVIEW_ERROR = 0;
+    public static HomeAty context;
     public static MaterialSection<Fragment> section;
     public static android.support.v7.app.ActionBar bar;
     public static boolean SUN_FLAG = true;
@@ -28,4 +31,7 @@ public class GlobalParams {
     public static ImageView iv_orbit = null;
     public static int currentPos = 3;
     public static int previousPos = 0;
+    public static int mInitPos;
+    public static PopupWindow popup;
+
 }

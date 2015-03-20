@@ -615,7 +615,7 @@ public abstract class PullToRefreshBase<T extends View> extends LinearLayout imp
 	 * Be sure to set the ID of the view in this method, especially if you're
 	 * using a ListActivity or ListFragment.
 	 * 
-	 * @param context Context to create view with
+	 * @param context Context to insert view with
 	 * @param attrs AttributeSet from wrapped class. Means that anything you
 	 *            include in the XML input_bar_view declaration will be routed to the
 	 *            created View
@@ -1104,7 +1104,7 @@ public abstract class PullToRefreshBase<T extends View> extends LinearLayout imp
 		mRefreshableView = createRefreshableView(context, attrs);
 		addRefreshableView(context, mRefreshableView);
 
-		// We need to create now layouts now
+		// We need to insert now layouts now
 		mHeaderLayout = createLoadingLayout(context, Mode.PULL_FROM_START, a);
 		mFooterLayout = createLoadingLayout(context, Mode.PULL_FROM_END, a);
 

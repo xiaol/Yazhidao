@@ -7,12 +7,11 @@
         <item name="windowActionBar">false</item>
         <item name="android:windowNoTitle">true</item>
     </style>
-
     <!-- Custom Drawer Header -->
     <style name="CustomHeaderLight" parent="MaterialNavigationDrawerTheme.Light.DarkActionBar">
         <item name="colorPrimary">#8bc34a</item>
         <item name="colorPrimaryDark">#558b2f</item>
-        <item name="colorAccent">#FFFFFF</item>
+        <item name="colorAccent">#FFFFFF</item>;
         <item name="drawerType">2</item>
     </style>
     <!-- Light Themes-->

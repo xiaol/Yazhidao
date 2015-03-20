@@ -123,7 +123,6 @@ public class NewsDetailAty extends BaseActivity implements View.OnClickListener 
         mNewsDetailHeaderTitle.setText(mNewsEle.title);
         int textSize=24;
         int textSpace = DeviceInfoUtil.getScreenWidth()-DensityUtil.dip2px(this, 15);
-        Logger.e("xxx",textSpace+"textSpace");
         Paint mPaint=new Paint();
         mPaint.setTextSize(TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_SP, textSize, this.getResources().getDisplayMetrics()));
         float length = mPaint.measureText(mNewsEle.title);
@@ -131,11 +130,9 @@ public class NewsDetailAty extends BaseActivity implements View.OnClickListener 
             mNewsDetailHeaderTitle.setLines(1);
             mNewsDetailHeaderTitleNoImg.setLines(1);
         }else{
-            Logger.e("xxx",length+"outer");
             while (textSpace*2<length+50){
                 mPaint.setTextSize(TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_SP, --textSize, this.getResources().getDisplayMetrics()));
                 length=mPaint.measureText(mNewsEle.title);
-                Logger.e("xxx",length+"inner  "+mNewsEle.title.replace("  ",""));
             }
             mNewsDetailHeaderTitle.setTextSize(TypedValue.COMPLEX_UNIT_SP,textSize);
             mNewsDetailHeaderTitleNoImg.setTextSize(TypedValue.COMPLEX_UNIT_SP,textSize);

@@ -15,13 +15,15 @@ public class NewsFeed {
 
     public static class Channel {
         public String channelAlias;
-        public int channelId;
+        public String channelId;
         public String channelName;
         public ArrayList<Element> elementList;
         public String lastUpdateTime;
     }
 
     public static class Element implements Serializable {
+        public int favorNum;
+        public int downNum;
         public String RootClass;
         public String RootName;
         public String channelName;
