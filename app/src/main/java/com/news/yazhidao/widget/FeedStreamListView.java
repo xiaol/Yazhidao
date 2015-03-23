@@ -56,30 +56,32 @@ public class FeedStreamListView extends ListView {
                         GlobalParams.context.setGlobalFlag(false);
 
                     }else if(GlobalParams.params.y > GlobalParams.mInitPos){
-                        switch (GlobalParams.currentPos){
-                            case 0:
-                                GlobalParams.params.y = FeedStreamFgt.POINT_ONE_Y;
-                                break;
+                        if(GlobalParams.SUN_FLAG) {
+                            switch (GlobalParams.currentPos) {
+                                case 0:
+                                    GlobalParams.params.y = FeedStreamFgt.POINT_ONE_Y;
+                                    break;
 
-                            case 1:
-                                GlobalParams.params.y = FeedStreamFgt.POINT_TWO_Y;
-                                break;
+                                case 1:
+                                    GlobalParams.params.y = FeedStreamFgt.POINT_TWO_Y;
+                                    break;
 
-                            case 2:
-                                GlobalParams.params.y = FeedStreamFgt.POINT_THREE_Y;
+                                case 2:
+                                    GlobalParams.params.y = FeedStreamFgt.POINT_THREE_Y;
 
-                                break;
+                                    break;
 
-                            case 3:
-                                GlobalParams.params.y = FeedStreamFgt.POINT_FOUR_Y;
-                                break;
+                                case 3:
+                                    GlobalParams.params.y = FeedStreamFgt.POINT_FOUR_Y;
+                                    break;
+                            }
+
+
+                            GlobalParams.view.setVisibility(View.VISIBLE);
+                            GlobalParams.SUN_FLAG = true;
+
+                            GlobalParams.context.setGlobalFlag(true);
                         }
-
-
-                        GlobalParams.view.setVisibility(View.VISIBLE);
-                        GlobalParams.SUN_FLAG = true;
-
-                        GlobalParams.context.setGlobalFlag(true);
 //                        GlobalParams.view.updateViewLayout(GlobalParams.view,GlobalParams.params);
                     }
 

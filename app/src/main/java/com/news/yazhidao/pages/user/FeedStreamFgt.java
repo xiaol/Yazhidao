@@ -179,6 +179,10 @@ public class FeedStreamFgt extends Fragment implements View.OnClickListener {
                             GlobalParams.view.setVisibility(View.VISIBLE);
                             GlobalParams.SUN_FLAG = true;
                             GlobalParams.context.setGlobalFlag(true);
+                        }else{
+                            GlobalParams.view.setVisibility(View.GONE);
+                            GlobalParams.SUN_FLAG =false;
+                            GlobalParams.context.setGlobalFlag(false);
                         }
                     }
                 }
