@@ -2,12 +2,14 @@ package com.news.yazhidao.pages;
 
 import android.app.Activity;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
 import android.widget.LinearLayout;
 
 import com.news.yazhidao.R;
+import com.news.yazhidao.constant.CommonConstant;
+import com.news.yazhidao.utils.DeviceInfoUtil;
+import com.news.yazhidao.utils.helper.SettingHelper;
 
 /**
  * Created by Berkeley on 2/5/15.
@@ -43,10 +45,8 @@ public class SplashAty extends Activity {
     }
 
     protected void loadMainUI() {
-        SharedPreferences sp = getSharedPreferences("guide", 0);
-        Boolean flag = sp.getBoolean("isguide", false);
-
-        if (flag) {
+        long _GuideVersion=SettingHelper.getLong(CommonConstant.UserInfoConstant.SETTING_FILE,CommonConstant.KEY_APP_GUIDE_VERSION);
+        if (_GuideVersion!=0&&_GuideVersion>= DeviceInfoUtil.getApkVersionCode(this)) {
             intent = new Intent(SplashAty.this, HomeAty.class);
             startActivity(intent);
             finish();

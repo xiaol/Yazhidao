@@ -40,4 +40,5 @@ public class NewsFeed {
             return id + "," + channelName + "," + imgUrl + "," + sourceSiteName + "," + sourceUrl + "," + title + "," + updateTime;
         }
     }
+
 }

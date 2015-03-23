@@ -11,12 +11,15 @@ import java.util.ArrayList;
  */
 public class User implements Serializable{
     private String uuid;
-    private String sinaId;
-    private String sinaToken;
+    private String id;
+    private String token;
+    private String profileImageUrl;
     private String gender;
     private String createTime;
     private String screenName;
+    private String type;
     private ArrayList<String> subscribedTags;
+
 
     public ArrayList<String> getSubscribedTags() {
         return subscribedTags;
@@ -24,6 +27,46 @@ public class User implements Serializable{
 
     public void setSubscribedTags(ArrayList<String> subscribedTags) {
         this.subscribedTags = subscribedTags;
+    }
+
+    public String getUuid() {
+        return uuid;
+    }
+
+    public void setUuid(String uuid) {
+        this.uuid = uuid;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    public String getToken() {
+        return token;
+    }
+
+    public void setToken(String token) {
+        this.token = token;
+    }
+
+    public String getProfileImageUrl() {
+        return profileImageUrl;
+    }
+
+    public void setProfileImageUrl(String profileImageUrl) {
+        this.profileImageUrl = profileImageUrl;
+    }
+
+    public String getGender() {
+        return gender;
+    }
+
+    public void setGender(String gender) {
+        this.gender = gender;
     }
 
     public String getCreateTime() {
@@ -42,54 +85,21 @@ public class User implements Serializable{
         this.screenName = screenName;
     }
 
-    private String sinaProfileImageUrl;
-
-    public String getUuid() {
-        return uuid;
+    public String getType() {
+        return type;
     }
 
-    public void setUuid(String uuid) {
-        this.uuid = uuid;
+    public void setType(String type) {
+        this.type = type;
     }
 
-    public String getSinaId() {
-        return sinaId;
-    }
-
-    public void setSinaId(String sinaId) {
-        this.sinaId = sinaId;
-    }
-
-    public String getSinaToken() {
-        return sinaToken;
-    }
-
-    public void setSinaToken(String sinaToken) {
-        this.sinaToken = sinaToken;
-    }
-
-    public String getGender() {
-        return gender;
-    }
-
-    public void setGender(String gender) {
-        this.gender = gender;
-    }
-
-    public String getSinaProfileImageUrl() {
-        return sinaProfileImageUrl;
-    }
-
-    public void setSinaProfileImageUrl(String sinaProfileImageUrl) {
-        this.sinaProfileImageUrl = sinaProfileImageUrl;
-    }
     public String toJsonString(){
         return GsonUtil.serialized(this);
     }
 
     @Override
     public String toString() {
-        return "uuid="+uuid+",sinaId="+sinaId+",sinaToken="+sinaToken+",screenName="+screenName;
+        return "uuid="+uuid+",id="+id+",token="+token+",screenName="+screenName;
     }
 
     public static User parseUser(String userStr) {

@@ -55,10 +55,10 @@ public class SignAty extends Activity {
         user = UserDataHelper.readUser();
         if (user != null) {
             uuid = user.getUuid();
-            sinaId = user.getSinaId();
-            sinaToken = user.getSinaToken();
+            sinaId = user.getId();
+            sinaToken = user.getToken();
             screenName = user.getScreenName();
-            sinaProfileImageUrl = user.getSinaProfileImageUrl();
+            sinaProfileImageUrl = user.getProfileImageUrl();
         }
 
         gv_channels = (GridView) findViewById(R.id.gv_channels);
@@ -154,7 +154,6 @@ public class SignAty extends Activity {
             } else {
                 holder = (ViewHolderGridView) convertView.getTag();
             }
-
             Image image = imageList.get(position);
             holder.iv_image.setImageBitmap(image.getBitmap());
 

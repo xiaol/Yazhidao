@@ -652,17 +652,28 @@ public class FeedStreamFgt extends Fragment implements View.OnClickListener {
     }
 
     @Override
-    public void onStop() {
-
+    public void onPause() {
+        super.onPause();
         if (GlobalParams.view != null) {
             GlobalParams.manager.removeView(GlobalParams.view);
             GlobalParams.view = null;
         }
 
         GlobalParams.ADD_SUN_FLAG = false;
-
-        super.onStop();
     }
+
+//    @Override
+//    public void onStop() {
+//
+//        if (GlobalParams.view != null) {
+//            GlobalParams.manager.removeView(GlobalParams.view);
+//            GlobalParams.view = null;
+//        }
+//
+//        GlobalParams.ADD_SUN_FLAG = false;
+//
+//        super.onStop();
+//    }
 
     @Override
     public void onResume() {

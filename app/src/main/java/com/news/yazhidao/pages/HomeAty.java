@@ -6,21 +6,23 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.view.Gravity;
 import android.view.KeyEvent;
 import android.view.View;
 
+import com.news.yazhidao.R;
+import com.news.yazhidao.constant.GlobalParams;
+import com.news.yazhidao.entity.User;
 import com.news.yazhidao.pages.user.AboutFgt;
 import com.news.yazhidao.pages.user.FeedStreamFgt;
 import com.news.yazhidao.pages.user.FeedbackFgt;
 import com.news.yazhidao.pages.user.SettingFgt;
-import com.news.yazhidao.constant.GlobalParams;
-import com.news.yazhidao.R;
-import com.news.yazhidao.entity.User;
 import com.news.yazhidao.utils.ToastUtil;
 import com.news.yazhidao.utils.helper.DrawableHelper;
 import com.news.yazhidao.utils.helper.UmengShareHelper;
 import com.news.yazhidao.utils.helper.UserDataHelper;
 import com.news.yazhidao.widget.AlertDialogImpl;
+import com.news.yazhidao.widget.LoginPopupWindow;
 import com.tendcloud.tenddata.TCAgent;
 import com.umeng.analytics.MobclickAgent;
 import com.umeng.socialize.bean.SHARE_MEDIA;
@@ -34,23 +36,24 @@ import it.neokree.materialnavigationdrawer.elements.MaterialAccount;
  * Created by berkley on 20/01/15.
  */
 public class HomeAty extends MaterialNavigationDrawer {
-    public static final String ACTION_USER_LOGIN="com.news.yazhidao.ACTION_USER_LOGIN_IN_HOME";
+    public static final String ACTION_USER_LOGIN = "com.news.yazhidao.ACTION_USER_LOGIN_IN_HOME";
     private MaterialAccount account;
     private String username;
     private String profile;
     InputStream stream = null;
     private long mLastPressedBackKeyTime;
-    private BroRecUserLogin mBroRecUserLogin=new BroRecUserLogin();
+    private BroRecUserLogin mBroRecUserLogin = new BroRecUserLogin();
 
     private class BroRecUserLogin extends BroadcastReceiver {
 
         @Override
         public void onReceive(Context context, Intent intent) {
-            if(ACTION_USER_LOGIN.equals(intent.getAction())){
+            if (ACTION_USER_LOGIN.equals(intent.getAction())) {
                 setSinaUserLogin();
             }
         }
     }
+
     protected View.OnClickListener listener = new View.OnClickListener() {
 
         @Override
@@ -66,18 +69,18 @@ public class HomeAty extends MaterialNavigationDrawer {
                 layout.closeDrawer(drawer);
 
                 boolean isLogin = UmengShareHelper.isAuthenticated(getApplicationContext(), SHARE_MEDIA.SINA);
-                if(isLogin){
+                if (isLogin) {
                     //弹框 确认是否注销
                     showLogoutDialog();
-
-                    if(GlobalParams.view != null) {
+                    if (GlobalParams.view != null) {
                         GlobalParams.manager.removeView(GlobalParams.view);
                         GlobalParams.ADD_SUN_FLAG = false;
                     }
 
-                }else{
-                    UmengShareHelper.oAuthSina(HomeAty.this,null);
-
+                } else {
+                    LoginPopupWindow m_pPopWindow = new LoginPopupWindow(HomeAty.this);
+                    m_pPopWindow.showAtLocation(getWindow().getDecorView(), Gravity.CENTER
+                            | Gravity.CENTER, 0, 0);
                     GlobalParams.ADD_SUN_FLAG = false;
                 }
 
@@ -85,8 +88,9 @@ public class HomeAty extends MaterialNavigationDrawer {
         }
     };
     AlertDialogImpl dialog;
+
     private void showLogoutDialog() {
-        dialog=new AlertDialogImpl.Builder(this).setTitle("退出登录").setMessage("确定要退出登陆吗？").setPositive("确定", new View.OnClickListener() {
+        dialog = new AlertDialogImpl.Builder(this).setTitle("退出登录").setMessage("确定要退出登陆吗？").setPositive("确定", new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 UmengShareHelper.logout(HomeAty.this);
@@ -117,11 +121,12 @@ public class HomeAty extends MaterialNavigationDrawer {
         DrawableHelper.displayImage2Circle(getApplicationContext(), userphoto, R.drawable.app_icon);
         notifyAccountDataChanged();
     }
+
     private void setSinaUserLogin() {
         account.setTitle(UserDataHelper.readUser().getScreenName());
         notifyAccountDataChanged();
-        String profile= UserDataHelper.readUser().getSinaProfileImageUrl();
-        if(profile != null && profile.length() > 0) {
+        String profile = UserDataHelper.readUser().getProfileImageUrl();
+        if (profile != null && profile.length() > 0) {
             DrawableHelper.displayImage2Circle(getApplicationContext(), userphoto, profile);
         }
     }
@@ -134,17 +139,17 @@ public class HomeAty extends MaterialNavigationDrawer {
         if (user != null) {
             username = user.getScreenName();
 
-            if(username == null){
+            if (username == null) {
                 username = "立即登录";
             }
-            profile = user.getSinaProfileImageUrl();
+            profile = user.getProfileImageUrl();
         }
 
         // add accounts
         account = new MaterialAccount(this.getResources(), username, "", R.drawable.app_icon, R.drawable.bg_leftmenu_header);
         this.addAccount(account);
 
-        if(profile != null && profile.length() > 0) {
+        if (profile != null && profile.length() > 0) {
             DrawableHelper.displayImage2Circle(getApplicationContext(), userphoto, profile);
         }
 
@@ -166,9 +171,9 @@ public class HomeAty extends MaterialNavigationDrawer {
         //this.addBottomSection(newSection("Bottom Section",R.drawable.ic_settings_black_24dp,new Intent(this,Settings.class)));
 
         this.disableLearningPattern();
-        IntentFilter filter=new IntentFilter();
+        IntentFilter filter = new IntentFilter();
         filter.addAction(ACTION_USER_LOGIN);
-        this.registerReceiver(mBroRecUserLogin,filter);
+        this.registerReceiver(mBroRecUserLogin, filter);
     }
 
     @Override
@@ -185,7 +190,7 @@ public class HomeAty extends MaterialNavigationDrawer {
         if ((pressedBackKeyTime - mLastPressedBackKeyTime) < 2000) {
             finish();
         } else {
-           ToastUtil.showToastWithIcon(getString(R.string.press_back_again_exit), R.drawable.release_time_logo);// (this, getString(R.string.press_back_again_exit));
+            ToastUtil.showToastWithIcon(getString(R.string.press_back_again_exit), R.drawable.release_time_logo);// (this, getString(R.string.press_back_again_exit));
             //ToastUtil.toastLong(R.string.press_back_again_exit);
         }
         mLastPressedBackKeyTime = pressedBackKeyTime;
@@ -201,7 +206,7 @@ public class HomeAty extends MaterialNavigationDrawer {
         MobclickAgent.onPause(this);
     }
 
-    public Context getContext(){
+    public Context getContext() {
         return HomeAty.this;
     }
 

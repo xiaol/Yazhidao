@@ -89,13 +89,7 @@
             android:theme="@style/KitkatStatusBar">
 
         </activity>
-        <activity
-            android:name=".pages.UserLoginAty"
-            android:screenOrientation="portrait"></activity>
 
-        <activity
-            android:name=".pages.GuidePageAty"
-            android:screenOrientation="portrait"></activity>
 
         <activity
             android:name=".pages.SplashAty"

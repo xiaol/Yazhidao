@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/bg_feedstream_list_table"
+    android:orientation="vertical">
+
+    <RelativeLayout
+        android:id="@+id/mTableChannelNameWrapper"
+        android:layout_width="match_parent"
+        android:layout_height="40dp">
+
+        <TextView
+            android:id="@+id/mTableChannelName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:text="不在城市也知城事"
+            android:textColor="@color/news_list_table_channelname"
+            android:textSize="18sp" />
+
+        <FrameLayout
+            android:id="@+id/mTableSetting"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:layout_alignParentRight="true"
+            android:layout_centerInParent="true"
+            >
+
+            <ImageView
+                android:layout_width="16dp"
+                android:layout_height="13dp"
+                android:layout_gravity="center"
+                android:src="@drawable/ic_news_list_table_more" />
+
+        </FrameLayout>
+    </RelativeLayout>
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="2px"
+        android:layout_marginBottom="10dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:src="@drawable/di_feedsteam_list_table" />
+
+    <RelativeLayout
+        android:id="@+id/mTableHeaderWrapper"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp">
+
+        <ImageView
+            android:id="@+id/mTableHeaderImg"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:scaleType="centerCrop"
+            android:src="@drawable/default_load_image" />
+
+        <TextView
+            android:id="@+id/mTableHeaderTitle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:gravity="center_vertical"
+            android:background="@drawable/bg_news_list_table_main_title"
+            android:ellipsize="end"
+            android:lines="1"
+            android:paddingLeft="10dp"
+            android:text="燕郊至北京动车今首发 早班侧最受欢迎早班侧最受欢迎"
+            android:textStyle="bold"
+            android:textColor="@color/white"
+            android:textSize="22sp" />
+    </RelativeLayout>
+
+    <ImageView
+        android:id="@+id/mTableHeaderBottom"
+        android:layout_width="match_parent"
+        android:layout_height="1px"
+        android:layout_marginTop="10dp"
+        android:src="@drawable/di_feedsteam_list_table" />
+    <LinearLayout android:id="@+id/mTableCellWrapper" android:layout_width="match_parent" android:layout_height="match_parent" android:orientation="vertical">
+    </LinearLayout>
+
+</LinearLayout>

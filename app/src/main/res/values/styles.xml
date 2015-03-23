@@ -1,22 +1,12 @@
 <resources>
 
     <!-- Base application theme. -->
-    <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
-    </style>
+    <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar"></style>
 
     <style name="Theme.AppCompat.Light.NoActionBar">
         <item name="windowActionBar">false</item>
         <item name="android:windowNoTitle">true</item>
     </style>
-
-    <style name="AnimationAlpha">
-
-        <!-- PopupWindow左右弹出的效果 -->
-        <item name="android:windowEnterAnimation">@anim/animation_alpha_in</item>
-        <item name="android:windowExitAnimation">@anim/animation_alpha_out</item>
-    </style>
-
-
     <!-- Custom Drawer Header -->
     <style name="CustomHeaderLight" parent="MaterialNavigationDrawerTheme.Light.DarkActionBar">
         <item name="colorPrimary">#8bc34a</item>
@@ -31,7 +21,8 @@
         <item name="colorPrimary">#8bc34a</item>
         <item name="colorPrimaryDark">#558b2f</item>
         <item name="colorAccent">#FFFFFF</item>
-        <item name="singleAccount">true</item><!-- Remove the change account button -->
+        <item name="singleAccount">true</item>
+        <!-- Remove the change account button -->
     </style>
 
     <!-- Accounts -->
@@ -64,7 +55,8 @@
         <item name="colorPrimary">#8bc34a</item>
         <item name="colorPrimaryDark">#558b2f</item>
         <item name="colorAccent">#FFFFFF</item>
-        <item name="singleAccount">true</item><!-- Remove the change account button -->
+        <item name="singleAccount">true</item>
+        <!-- Remove the change account button -->
     </style>
 
     <!-- Accounts -->
@@ -102,7 +94,7 @@
     <!-- I used DRAWERTYPE_NO_HEADER only for get a simple tutorial, you can use any type of drawer obviously -->
 
     <!-- Unique Toolbar Color -->
-    <style name="UniqueToolbarColor" parent="MaterialNavigationDrawerTheme.Light.DarkActionBar" >
+    <style name="UniqueToolbarColor" parent="MaterialNavigationDrawerTheme.Light.DarkActionBar">
         <item name="colorPrimary">#8bc34a</item>
         <item name="colorPrimaryDark">#558b2f</item>
         <item name="colorAccent">#FFFFFF</item>
@@ -111,7 +103,7 @@
     </style>
 
     <!-- Ripple Backport support -->
-    <style name="RippleBackport" parent="MaterialNavigationDrawerTheme.Light.DarkActionBar" >
+    <style name="RippleBackport" parent="MaterialNavigationDrawerTheme.Light.DarkActionBar">
         <item name="colorPrimary">#8bc34a</item>
         <item name="colorPrimaryDark">#558b2f</item>
         <item name="colorAccent">#FFFFFF</item>
@@ -120,7 +112,7 @@
     </style>
 
     <!-- Multipane Support for tablets -->
-    <style name="MultiPane" parent="MaterialNavigationDrawerTheme.Light.DarkActionBar" >
+    <style name="MultiPane" parent="MaterialNavigationDrawerTheme.Light.DarkActionBar">
         <item name="colorPrimary">#8bc34a</item>
         <item name="colorPrimaryDark">#558b2f</item>
         <item name="colorAccent">#FFFFFF</item>
@@ -171,5 +163,15 @@
         <item name="android:maxHeight">400dp</item>
         <item name="android:minWidth">240dp</item>
         <item name="android:maxWidth">280dp</item>
+    </style>
+
+    <style name="DialogAnimation">
+        <item name="android:windowEnterAnimation">@anim/slide_up</item>
+        <item name="android:windowExitAnimation">@anim/slide_down</item>
+    </style>
+
+    <style name="AnimationAlpha">
+        <item name="android:windowEnterAnimation">@anim/alpha_in</item>
+        <item name="android:windowExitAnimation">@anim/alpha_out</item>
     </style>
 </resources>
